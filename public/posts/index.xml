@@ -13,10 +13,20 @@
     
     <item>
       <title>Fog Carport</title>
-      <link>http://localhost:1313/posts/fog-carport/</link>
+      <link>http://localhost:1313/posts/fogcarport/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>HalawiDD@gmail.com (Daniel Halawi)</author>
-      <guid>http://localhost:1313/posts/fog-carport/</guid>
+      <guid>http://localhost:1313/posts/fogcarport/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Warranty</title>
+      <link>http://localhost:1313/posts/warranty/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>HalawiDD@gmail.com (Daniel Halawi)</author>
+      <guid>http://localhost:1313/posts/warranty/</guid>
       <description></description>
       
     </item>

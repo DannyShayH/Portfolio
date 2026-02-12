@@ -67,3 +67,11 @@ enableEmoji = true
       name = 'fragmentrefs'
       type = 'fragments'
       weight = 10
+
+    [caches]
+      [caches.images]
+        dir = ':cacheDir/images'
+
+    [mediaTypes]
+      [mediaTypes."video/mp4"]
+        suffixes = ["mp4"]
