@@ -2,8 +2,9 @@
 title: Warranty
 description: I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.
 ---
-
-{{< video "videos/Warrantour.mp4" autoplay="true" loop="true" muted="true" >}}
+<div class="video-full-bleed">
+{{< video src="videos/Warrantour.mp4" autoplay="true" loop="true" muted="true" controls="false" >}}
+</div>
 
 # Warranty Project
 ## Full System Documentation & Development Report
