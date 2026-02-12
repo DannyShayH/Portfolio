@@ -32,3 +32,19 @@ h1, h2, h3, h4, h5, h6 {
     height: auto;
     display: block;
 }
+
+.image-center {
+    text-align: center;
+}
+
+.image-center img {
+    display: inline-block;
+    height: auto;
+}
+
+.row-image {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}

@@ -15,7 +15,7 @@ description: I pride myself in creating websites and trying out new ways to impr
 
 ## 1. Introduction
 The **Warranty Project** is being developed by me during my third semester of Computer Science. The Project aims to help people **keep track of their warranties** at any given time without having to worry about paper. 
-At first I was not sure what to build but at some point I came with the idea since I was not very good at keeping track of my own warranties at some point and this project is for my own sanity in a sense. 
+At first I was not sure what to build, but I to the conclusion that I was not very good at keeping track of my own warranties at some point and this project is for my own sanity in a sense. 
 So that I never have to look at paper again.
 
 **Objectives:**
@@ -56,6 +56,36 @@ Normally you would have to keep track of:
 ---
 
 ## Week One
+
+## The Idea
+As mentioned in the introduction, on the third semester we had to personally choose a project to work on in Java backend where we have to implement the use of **Hibernate and JPA**. With that being said, the idea stems from my lack of tracking warranties and just plainly being lazy as one might say.
+
+**Progress:**
+
+My progress throughout the blog will mainly be written in a bullet poitnt form to make it easy and simple to understand where I'm at, and perhaps every once in a while I'll add a few images so that it's easier to visualize.
+
+- Wrote a document with what I would need for the project to work.
+- Figured out which Entities I needed for my project **(User, Product, Warranty, Receipt)**.
+- Created Intellij-project, used a template we made in class with hibernate already implemented.
+- Created a repository on github and connected it to my intellij project.
+- Created portfolio repository and worked on learning markdown in Visual Studio Code.
+- After feedback from my teacher I constructed a **Domain Model** and a **Class Diagram** which looks as follows:
+
+<div class="row-image">
+<div class="image-center">
+<img src="/class_diagram1.png" alt="Image" width="300">
+</div>
+
+<div class="image-center">
+<img src="/domain_model1.png" alt="Image model" width="300">
+</div>
+</div>
+
+**Reasoning:**
+
+- Keep my **Entities** simple. **User** has a **product, warrant and receipt**.
+- The fields were filled as placeholders for the time being.
+- Most of my focus was on the portfolio **(Markdown)** to set it all up.
 
 ---
 
