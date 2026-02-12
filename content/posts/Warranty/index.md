@@ -73,11 +73,11 @@ My progress throughout the blog will mainly be written in a bullet poitnt form t
 
 <div class="row-image">
 <div class="image-center">
-<img src="/class_diagram1.png" alt="Image" width="300">
+<img src="../../class_diagram1.png" alt="Image" width="300">
 </div>
 
 <div class="image-center">
-<img src="/domain_model1.png" alt="Image model" width="300">
+<img src="../../domain_model1.png" alt="Image model" width="300">
 </div>
 </div>
 
