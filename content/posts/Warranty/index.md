@@ -85,7 +85,7 @@ My progress throughout the blog will mainly be written in a bullet poitnt form t
 
 - Keep my **Entities** simple. **User** has a **product, warrant and receipt**.
 - The fields were filled as placeholders for the time being.
-- Most of my focus was on the portfolio **(Markdown)** to set it all up.
+- Most of my focus was on the portfolio**(Markdown)** to set it all up.
 
 ---
 
