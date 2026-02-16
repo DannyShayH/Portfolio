@@ -4,7 +4,7 @@
   dir="ltr"
   class="scroll-smooth"
   data-default-appearance="dark"
-  data-auto-appearance="false"><head>
+  data-auto-appearance="false"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   
     <meta http-equiv="content-language" content="en">
@@ -26,7 +26,7 @@
   
   
   
-  <link rel="canonical" href="https://example.org/posts/warranty/">
+  <link rel="canonical" href="http://localhost:1313/posts/warranty/">
   
 
   
@@ -48,7 +48,7 @@
   
 
   
-  <meta property="og:url" content="https://example.org/posts/warranty/">
+  <meta property="og:url" content="http://localhost:1313/posts/warranty/">
   <meta property="og:site_name" content="Daniel Halawi">
   <meta property="og:title" content="Warranty">
   <meta property="og:description" content="I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.">
@@ -215,7 +215,7 @@
     "headline": "Warranty",
     "description": "I pride myself in creating websites and trying out new ways to improve UX\/UI, currently I am a student and making headway towards programming and learning new things.",
     "inLanguage": "en",
-    "url" : "https://example.org/posts/warranty/",
+    "url" : "http://localhost:1313/posts/warranty/",
     "author" : {
       "@type": "Person",
       "name": "Daniel Halawi"
@@ -229,19 +229,13 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "528"
+    "wordCount": "703"
   }]
   </script>
 
 
 
   
-  
-    
-
-
-
-
   
 
   
@@ -639,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <span>528 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span><span class="px-2 text-primary-500">&middot;</span><span>
+      <span>703 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">4 mins</span><span class="px-2 text-primary-500">&middot;</span><span>
   
   
     
@@ -843,17 +837,17 @@ Normally you would have to keep track of:</p>
 </ul>
 <div class="row-image">
 <div class="image-center">
-<img src="/class_diagram1.png" alt="Image" width="300">
+<img src="../../class_diagram1.png" alt="Image" width="300">
 </div>
 <div class="image-center">
-<img src="/domain_model1.png" alt="Image model" width="300">
+<img src="../../domain_model1.png" alt="Image model" width="300">
 </div>
 </div>
 <p><strong>Reasoning:</strong></p>
 <ul>
 <li>Keep my <strong>Entities</strong> simple. <strong>User</strong> has a <strong>product, warrant and receipt</strong>.</li>
 <li>The fields were filled as placeholders for the time being.</li>
-<li>Most of my focus was on the portfolio**(Markdown)** to set it all up.</li>
+<li>Most of my focus was on the portfolio <strong>(Markdown)</strong> to set it all up.</li>
 </ul>
 <hr>
 
@@ -866,6 +860,46 @@ Normally you would have to keep track of:</p>
     </span>
     
 </h2>
+
+<h2 class="relative group">Feedback
+    <div id="feedback" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#feedback" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>After having feedback with my teacher, and he viewed the progress of my project from week one. He came to the conclusion that I need to add an extra <strong>entity</strong> so that my project would have some more to offer rather than the initial 4 entities I had. I worked with what he had in mind.</p>
+<p><strong>Progress:</strong></p>
+<ul>
+<li>Looked back at my document and added a <strong>ProductRegistration</strong> entity.</li>
+<li>Implemented it into my intellij project and gave it it&rsquo;s respective annotations.</li>
+<li>Gave <strong>ProductRegistration</strong> relation to <strong>Product</strong>. Gave <strong>Product</strong> relation to <strong>Warranty</strong>.</li>
+<li>Set up all of my <strong>DAO&rsquo;s</strong> to my respective entities.</li>
+<li>Added <strong>IDAO Interface</strong> with given methods for all of my DAO&rsquo;s.</li>
+<li>Updated <strong>Domain Model</strong> and yet to update <strong>Class Diagram</strong>.</li>
+<li>Again updated <strong>Domain Model</strong> after feed back. Gave <strong>Warranty</strong> relation to <strong>Product</strong>.</li>
+</ul>
+<div class="row-image">
+<div class="image-center">
+<img src="../../IDAO_interface.png" alt="Image" width="400">
+</div>
+<div class="image-center">
+<img src="../../domain_model2.png" alt="Image model" width="400">
+</div>
+<div class="image-center">
+<img src="../../domain_model3.png" alt="Image model" width="400">
+</div>
+</div>
+<p><strong>Reasoning:</strong></p>
+<ul>
+<li>Added <strong>ProductRegistration</strong>. Registration is the <strong>User&rsquo;s Action</strong>.</li>
+<li>Would be awkward to add <strong>userId</strong> directly to product.</li>
+<li>Can register multiple of the same product.</li>
+<li>Better view of what <strong>entity</strong> owns which entity.</li>
+<li>Helps link <strong>User</strong> and <strong>Product</strong> when <strong>Registering a product</strong>.</li>
+</ul>
 <hr>
 
 <h2 class="relative group">Week Three
@@ -1014,7 +1048,7 @@ Normally you would have to keep track of:</p>
 <div
   id="search-wrapper"
   class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
-  data-url="https://example.org/">
+  data-url="http://localhost:1313/">
   <div
     id="search-modal"
     class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
