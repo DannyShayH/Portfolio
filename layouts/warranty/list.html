@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{/* Sort pages by Weight ascending */}}
+  {{ $sorted := sort .Pages "Weight" "asc" }}
+
+  <div class="cards-container">
+    {{ range $sorted }}
+      {{ .Render "summary" }}
+    {{ end }}
+  </div>
+{{ end }}
