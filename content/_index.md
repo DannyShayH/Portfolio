@@ -2,6 +2,17 @@
 description: I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.
 ---
 
+<div class="banner">
+  <div class="pulse-wrapper">
+    <div class="pulse-circle"></div>
+  </div>
+</div>
+
+<div class="ripple-wrapper">
+  <div class="ripple-circle"></div>
+  <div class="ripple-circle" style="animation-delay: 0.5s;"></div>
+  <div class="ripple-circle" style="animation-delay: 1s;"></div>
+</div>
 
 ## Hey I'm Daniel, Some Call Me Shay
 

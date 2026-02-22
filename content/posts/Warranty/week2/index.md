@@ -34,7 +34,6 @@ After having feedback with my teacher, and he viewed the progress of my project 
 </div>
 </div>
 
-
 **Reasoning:**
 
 - Added **ProductRegistration**. Registration is the **User's Action**.
