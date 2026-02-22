@@ -336,24 +336,6 @@
   
 
     
-      
-  
-    <a
-      href="/test/"
-      
-      class="flex items-center bf-icon-color-hover"
-      aria-label="test"
-      title="Tests">
-      
-      
-        <span class="text-base font-medium break-normal">
-          test
-        </span>
-      
-    </a>
-  
-
-    
   
 
   
@@ -441,23 +423,6 @@
         
         <span title="Posts" class="text-2xl font-bold tracking-tight">
           Projects
-        </span>
-        
-      </a>
-
-      
-    </div>
-  
-    
-    <div class="px-2">
-      <a
-        href="/test/"
-        aria-label="test"
-        
-        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
-        
-        <span title="Tests" class="text-2xl font-bold tracking-tight">
-          test
         </span>
         
       </a>
@@ -761,6 +726,58 @@
 <img src="domain_model3.png" alt="Image model" width="400">
 </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const ball = document.createElement("div");
+  document.body.appendChild(ball);
+
+  ball.style.position = "fixed";
+  ball.style.top = "0px";
+  ball.style.left = "50%";
+  ball.style.width = "40px";
+  ball.style.height = "40px";
+  ball.style.borderRadius = "50%";
+  ball.style.transform = "translateX(-50%)";
+  ball.style.zIndex = "9999";
+  ball.style.pointerEvents = "none";
+
+  let position = 0;
+  let velocity = 1;
+  const gravity = 1.1;
+
+  function animate() {
+    velocity *= gravity;
+    position += velocity;
+
+    const bottom = window.innerHeight - 40;
+    const top = window.innerHeight - 840;
+
+
+    if (position >= bottom) {
+      position = bottom;
+      velocity = -0.2;
+    }
+
+  if(position <= top){
+        position = top;
+        velocity = 5;
+    }
+
+    // Convert position to 0 → 1 range
+    let progress = position / bottom;
+
+    // Change hue from blue (240) to red (0)
+    let hue = 240 - (progress * 240);
+
+    ball.style.background = `hsl(${hue}, 80%, 50%)`;
+    ball.style.top = position + "px";
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+});
+</script>
 <p><strong>Reasoning:</strong></p>
 <ul>
 <li>Added <strong>ProductRegistration</strong>. Registration is the <strong>User&rsquo;s Action</strong>.</li>

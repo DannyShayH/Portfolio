@@ -34,6 +34,59 @@ After having feedback with my teacher, and he viewed the progress of my project 
 </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const ball = document.createElement("div");
+  document.body.appendChild(ball);
+
+  ball.style.position = "fixed";
+  ball.style.top = "0px";
+  ball.style.left = "50%";
+  ball.style.width = "40px";
+  ball.style.height = "40px";
+  ball.style.borderRadius = "50%";
+  ball.style.transform = "translateX(-50%)";
+  ball.style.zIndex = "9999";
+  ball.style.pointerEvents = "none";
+
+  let position = 0;
+  let velocity = 1;
+  const gravity = 1.1;
+
+  function animate() {
+    velocity *= gravity;
+    position += velocity;
+
+    const bottom = window.innerHeight - 40;
+    const top = window.innerHeight - 840;
+
+
+    if (position >= bottom) {
+      position = bottom;
+      velocity = -0.2;
+    }
+
+  if(position <= top){
+        position = top;
+        velocity = 5;
+    }
+
+    // Convert position to 0 → 1 range
+    let progress = position / bottom;
+
+    // Change hue from blue (240) to red (0)
+    let hue = 240 - (progress * 240);
+
+    ball.style.background = `hsl(${hue}, 80%, 50%)`;
+    ball.style.top = position + "px";
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+});
+</script>
+
 
 **Reasoning:**
 
