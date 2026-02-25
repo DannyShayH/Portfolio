@@ -49,7 +49,7 @@ private static final HttpClient client = HttpClient.newHttpClient();
         return null;
     }
 ```
-Created a new class that uses **DocumentBuilder** library to extract and parse XML files, and returns it into my **LawDataDTO** object.
+Created a class that uses **DocumentBuilder** library to extract and parse XML files, and returns it into my **LawDataDTO** object.
 ```java
 public static LawDataDTO extract(String xml) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -76,7 +76,7 @@ public static LawDataDTO extract(String xml) throws IOException, SAXException, P
     }
 ```
 
-- Created an **IRetrieveDAO** interface with methods that **IRetrieveDAO** implements.
+- Created a **IRetrieveDAO** interface with methods that **IRetrieveDAO** implements.
 
 An example of one of a few IRetrieveDAO implementations that have been created.
 These methods were used to get specific data out of the database using **JPQL** queries.
@@ -93,5 +93,22 @@ These methods were used to get specific data out of the database using **JPQL** 
     }
 ```
 
+ Video representation of the different classes and methods.
+
+<div class="video-full-bleed">
+{{< video src="videos/code_preview.mp4" autoplay="true" loop="true" muted="true" controls="false" >}}
+</div>
+
 
 **Reasoning:**
+
+- Added password hashing to demonstrate, I'm able to hash passwords using BCrypt.
+- While working with **retsinformation.dk** API, I realised that they use XML and not Json.
+- Worked with **DocumentBuilder** library. Created a **XML Extractor** method to extract from the API.
+- While this API does not work well with this project, it still shows some sort of determination of implementation.
+
+## Plan for next week
+
+Planning to use another API. **SendGrid** to implement a notification system for the project.
+This API will work in favor with my program while using **Cron job**. User's receive a notification, of
+when their warranty expires. Either for 1 month, 1 week, 3 days. 

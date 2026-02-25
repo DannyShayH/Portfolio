@@ -227,7 +227,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "328"
+    "wordCount": "451"
   }]
   </script>
 
@@ -633,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>328 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">2 mins</span>
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>451 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     
@@ -742,7 +742,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
-<p>Created a new class that uses <strong>DocumentBuilder</strong> library to extract and parse XML files, and returns it into my <strong>LawDataDTO</strong> object.</p>
+<p>Created a class that uses <strong>DocumentBuilder</strong> library to extract and parse XML files, and returns it into my <strong>LawDataDTO</strong> object.</p>
 <div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">LawDataDTO</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">xml</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">SAXException</span><span class="p">,</span><span class="w"> </span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span><span class="w">
@@ -767,7 +767,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LawDataDTO</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">warrantyText</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
 <ul>
-<li>Created an <strong>IRetrieveDAO</strong> interface with methods that <strong>IRetrieveDAO</strong> implements.</li>
+<li>Created a <strong>IRetrieveDAO</strong> interface with methods that <strong>IRetrieveDAO</strong> implements.</li>
 </ul>
 <p>An example of one of a few IRetrieveDAO implementations that have been created.
 These methods were used to get specific data out of the database using <strong>JPQL</strong> queries.</p>
@@ -781,7 +781,37 @@ These methods were used to get specific data out of the database using <strong>J
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">getResultList</span><span class="p">());</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
+<p>Video representation of the different classes and methods.</p>
+<div class="video-full-bleed">
+<figure>
+  <video
+    class="w-full rounded-md aspect-video object-contain"preload="metadata" autoplay loop muted playsinline>
+    <source src="/videos/code_preview.mp4">
+    <p>Your browser cannot play this video. <a href="/videos/code_preview.mp4">Download video</a>.</p>
+  </video>
+</figure>
+
+</div>
 <p><strong>Reasoning:</strong></p>
+<ul>
+<li>Added password hashing to demonstrate, I&rsquo;m able to hash passwords using BCrypt.</li>
+<li>While working with <strong>retsinformation.dk</strong> API, I realised that they use XML and not Json.</li>
+<li>Worked with <strong>DocumentBuilder</strong> library. Created a <strong>XML Extractor</strong> method to extract from the API.</li>
+<li>While this API does not work well with this project, it still shows some sort of determination of implementation.</li>
+</ul>
+
+<h2 class="relative group">Plan for next week
+    <div id="plan-for-next-week" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#plan-for-next-week" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Planning to use another API. <strong>SendGrid</strong> to implement a notification system for the project.
+This API will work in favor with my program while using <strong>Cron job</strong>. User&rsquo;s receive a notification, of
+when their warranty expires. Either for 1 month, 1 week, 3 days.</p>
 
           
           
