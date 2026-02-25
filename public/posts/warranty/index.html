@@ -659,32 +659,9 @@
   <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row mb-10">
     
     <div class="min-w-0 min-h-0 max-w-prose w-full">
-      <div id="video-container"></div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("video-container");
-  if (!container) return;
-  const video = document.createElement("video");
-  video.src = "/videos/Warrantour.mp4";
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  video.preload = "none";
-  video.style.width = "100%";
-  video.style.display = "block";
-  container.appendChild(video);
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        video.play();
-      } else {
-        video.pause();
-      }
-    });
-  }, { threshold: 0.4 });
-  observer.observe(video);
-});
-</script>
+      <div class="image-center">
+<img src="Warrantour.png" alt="Image" width="1200">
+</div>
 
 <h1 class="relative group">Warranty Project
     <div id="warranty-project" class="anchor"></div>
@@ -1148,7 +1125,7 @@ Normally you would have to keep track of:</p>
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>443 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>451 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     

@@ -4,32 +4,9 @@ description: I pride myself in creating websites and trying out new ways to impr
 date: 2026-02-03
 lastmod: 2026-02-19
 ---
-<div id="video-container"></div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("video-container");
-  if (!container) return;
-  const video = document.createElement("video");
-  video.src = "/videos/Warrantour.mp4";
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  video.preload = "none";
-  video.style.width = "100%";
-  video.style.display = "block";
-  container.appendChild(video);
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        video.play();
-      } else {
-        video.pause();
-      }
-    });
-  }, { threshold: 0.4 });
-  observer.observe(video);
-});
-</script>
+<div class="image-center">
+<img src="Warrantour.png" alt="Image" width="1200">
+</div>
 
 # Warranty Project
 ## Full System Documentation & Development Report

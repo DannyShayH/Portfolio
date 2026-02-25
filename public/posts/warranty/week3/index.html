@@ -227,7 +227,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "443"
+    "wordCount": "451"
   }]
   </script>
 
@@ -633,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>443 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>451 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     
@@ -782,32 +782,16 @@ These methods were used to get specific data out of the database using <strong>J
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
 <p>Video representation of the different classes and methods.</p>
-<div id="video-container"></div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("video-container");
-  if (!container) return;
-  const video = document.createElement("video");
-  video.src = "/videos/code_preview.mp4";
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  video.preload = "none";
-  video.style.width = "100%";
-  video.style.display = "block";
-  container.appendChild(video);
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        video.play();
-      } else {
-        video.pause();
-      }
-    });
-  }, { threshold: 0.4 });
-  observer.observe(video);
-});
-</script>
+<div class="video-full-bleed">
+<figure>
+  <video
+    class="w-full rounded-md aspect-video object-contain"preload="metadata" loop muted controls playsinline>
+    <source src="/videos/code_preview.mp4">
+    <p>Your browser cannot play this video. <a href="/videos/code_preview.mp4">Download video</a>.</p>
+  </video>
+</figure>
+
+</div>
 <p><strong>Reasoning:</strong></p>
 <ul>
 <li>Added password hashing to demonstrate, I&rsquo;m able to hash passwords using BCrypt.</li>
