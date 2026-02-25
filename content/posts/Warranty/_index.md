@@ -6,7 +6,7 @@ lastmod: 2026-02-19
 ---
 <div class="image-center">
 <img 
-  src="/posts/warranty/Warrantour.webp"
+  src="Warrantour.webp"
   loading="lazy"
   decoding="async"
   width="1200"
