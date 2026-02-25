@@ -90,3 +90,9 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
   }
 }
+
+/* Keep the gradient but make it static */
+.single_hero_background > div {
+  opacity: 0.8 !important;      /* fixed opacity */
+  transition: none !important;   /* remove any animation/transition */
+}
