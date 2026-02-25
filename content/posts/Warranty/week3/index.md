@@ -95,9 +95,32 @@ These methods were used to get specific data out of the database using **JPQL** 
 
  Video representation of the different classes and methods.
 
-<div class="video-full-bleed">
-{{< video src="videos/code_preview.mp4" autoplay="true" loop="true" muted="true" controls="false" >}}
-</div>
+<div id="video-container"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("video-container");
+  if (!container) return;
+  const video = document.createElement("video");
+  video.src = "/videos/code_preview.mp4";
+  video.loop = true;
+  video.muted = true;
+  video.playsInline = true;
+  video.preload = "none";
+  video.style.width = "100%";
+  video.style.display = "block";
+  container.appendChild(video);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.4 });
+  observer.observe(video);
+});
+</script>
 
 
 **Reasoning:**
