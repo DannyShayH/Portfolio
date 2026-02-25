@@ -3,7 +3,7 @@ title: Fog Carport
 description: I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.
 date: 2026-02-03
 ---
-![Cover Image](/fog.png)
+![Cover Image](/fog.webp)
 # FOG Carport Project
 ## Full System Documentation & Development Report
 
