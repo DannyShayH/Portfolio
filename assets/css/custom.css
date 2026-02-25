@@ -3,6 +3,12 @@ body * {
     justify-content: center;
 }
 
+/* Kill all backdrop filters */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
@@ -13,24 +19,6 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-}
-
-
-.video-full-bleed {
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    width: 100vw;
-    max-width: 100vw;
-    padding: 0;
-}
-
-.video-full-bleed video {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 .image-center {

@@ -104,8 +104,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.3c1e21f6da893c0ede054cbbf5a9e9aa9cb96421cb4e52dd8ae6a0b911f7f3c14df734744a821ae344b45eea3bf5237ab7b76f4f41239f59df888999053f3a3c.css"
-    integrity="sha512-PB4h9tqJPA7eBUy79anpqpy5ZCHLTlLdiuaguRH388FN9zR0SoIa40S0Xuo79SN6t7dvT0Ejn1nfiImZBT86PA==">
+    href="/css/main.bundle.min.75062cd1b362bb96537e18ad3247535b1da8c1d3b83c04603d62c2a1de76ec4e10b57122c73679177aefabc03daf5fbcf8ebc038b4ccf57274ad4fd2d1f48844.css"
+    integrity="sha512-dQYs0bNiu5ZTfhitMkdTWx2owdO4PARgPWLCod527E4QtXEixzZ5F3rvq8A9r1&#43;8&#43;OvAOLTM9XJ0rU/S0fSIRA==">
 
   
   
@@ -227,7 +227,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "451"
+    "wordCount": "435"
   }]
   </script>
 
@@ -545,7 +545,7 @@
     
     <img
       id="background-image"
-      src="/portfolioWallpaper5_hu_fd4fa09d05d66472.jpg"
+      src="/portfolioWallpaper5_hu_208be49a8ee21a9c.webp"
       role="presentation"
       loading="eager"
       decoding="async"
@@ -570,7 +570,7 @@
       integrity="sha512-YFs7lCgY8KtacXrkRhNexGuO5aKtEq5W&#43;5DcKnbOMMOI&#43;f7IvMGNsVvUfj&#43;ooJ13n6EqqcGEz2FKMVvHLGwWPQ=="
       data-blur-id="background-blur"
       data-image-id="background-image"
-      data-image-url="/portfolioWallpaper5_hu_fd4fa09d05d66472.jpg"></script>
+      data-image-url="/portfolioWallpaper5_hu_208be49a8ee21a9c.webp"></script>
   
       
     
@@ -633,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>451 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-19T00:00:00&#43;00:00">Updated: 19 February 2026</time><span class="px-2 text-primary-500">&middot;</span><span>435 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     
@@ -772,26 +772,15 @@
 <p>An example of one of a few IRetrieveDAO implementations that have been created.
 These methods were used to get specific data out of the database using <strong>JPQL</strong> queries.</p>
 <div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Warranty</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllWarrantiesForUsers</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">EntityManager</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emf</span><span class="p">.</span><span class="na">createEntityManager</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">TypedQuery</span><span class="o">&lt;</span><span class="n">Warranty</span><span class="o">&gt;</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">em</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&#34;SELECT DISTINCT pr.product.warranty &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="s">&#34;FROM ProductRegistration pr &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="s">&#34;WHERE pr.owner.id = :userId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Warranty</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">query</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&#34;userId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">getResultList</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
-<p>Video representation of the different classes and methods.</p>
-<div class="video-full-bleed">
-<figure>
-  <video
-    class="w-full rounded-md aspect-video object-contain"preload="metadata" loop muted controls playsinline>
-    <source src="/videos/code_preview.mp4">
-    <p>Your browser cannot play this video. <a href="/videos/code_preview.mp4">Download video</a>.</p>
-  </video>
-</figure>
-
-</div>
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Warranty</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllWarrantiesForUsers</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">EntityManager</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emf</span><span class="p">.</span><span class="na">createEntityManager</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">TypedQuery</span><span class="o">&lt;</span><span class="n">Warranty</span><span class="o">&gt;</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">em</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&#34;SELECT DISTINCT pr.product.warranty &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;FROM ProductRegistration pr &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;WHERE pr.owner.id = :userId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Warranty</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">query</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&#34;userId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">getResultList</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
 <p><strong>Reasoning:</strong></p>
 <ul>
 <li>Added password hashing to demonstrate, I&rsquo;m able to hash passwords using BCrypt.</li>

@@ -82,23 +82,16 @@ An example of one of a few IRetrieveDAO implementations that have been created.
 These methods were used to get specific data out of the database using **JPQL** queries.
 ```java
 @Override
-    public Set<Warranty> getAllWarrantiesForUsers(long userId) {
-        try (EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Warranty> query = em.createQuery("SELECT DISTINCT pr.product.warranty " +
-                    "FROM ProductRegistration pr " +
-                    "WHERE pr.owner.id = :userId", Warranty.class);
-            query.setParameter("userId", userId);
-            return new HashSet<>(query.getResultList());
-        }
-    }
+public Set<Warranty> getAllWarrantiesForUsers(long userId) {
+try (EntityManager em = emf.createEntityManager()) {
+TypedQuery<Warranty> query = em.createQuery("SELECT DISTINCT pr.product.warranty " +
+"FROM ProductRegistration pr " +
+"WHERE pr.owner.id = :userId", Warranty.class);
+query.setParameter("userId", userId);
+return new HashSet<>(query.getResultList());
+}
+}
 ```
-
- Video representation of the different classes and methods.
-
-<div class="video-full-bleed">
-{{< video src="videos/code_preview.mp4" autoplay="false" loop="true" muted="true" controls="true" >}}
-</div>
-
 
 **Reasoning:**
 

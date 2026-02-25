@@ -5,7 +5,12 @@ date: 2026-02-03
 lastmod: 2026-02-19
 ---
 <div class="image-center">
-<img src="Warrantour.png" alt="Image" width="1200">
+<img 
+  src="/posts/warranty/Warrantour.webp"
+  loading="lazy"
+  decoding="async"
+  width="1200"
+  height="800">
 </div>
 
 # Warranty Project

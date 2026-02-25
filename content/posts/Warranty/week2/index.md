@@ -22,15 +22,15 @@ After having feedback with my teacher, and he viewed the progress of my project 
 
 <div class="row-image">
 <div class="image-center">
-<img src="IDAO_interface.png" alt="Image" width="400">
+<img src="IDAO_interface.webp" alt="Image" width="400">
 </div>
 
 <div class="image-center">
-<img src="domain_model2.png" alt="Image model" width="400">
+<img src="domain_model2.webp" alt="Image model" width="400">
 </div>
 
 <div class="image-center">
-<img src="domain_model3.png" alt="Image model" width="400">
+<img src="domain_model3.webp" alt="Image model" width="400">
 </div>
 </div>
 
