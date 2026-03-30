@@ -3,6 +3,12 @@ body * {
     justify-content: center;
 }
 
+/* Kill all backdrop filters */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
@@ -40,26 +46,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .pt-3 {
     gap: 15px;
-}
-
-/* Performance-friendly background blur:
-   Avoid full-viewport backdrop-filter (expensive on scroll) by drawing a blurred copy of the background image.
-   JS sets `--blur-bg-image` on #background-blur at load time. */
-#background-blur {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  overflow: hidden;
-}
-
-#background-blur::before {
-  content: "";
-  position: absolute;
-  inset: -48px;
-  background-image: var(--blur-bg-image);
-  background-size: cover;
-  background-position: center;
-  filter: blur(28px);
-  transform: scale(1.08);
 }
 
 /* Keep the gradient but make it static */
