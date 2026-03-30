@@ -1,6 +1,6 @@
 ---
 title: Warranty - Introduction
-description: I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.
+description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
 date: 2026-02-03
 lastmod: 2026-02-19
 ---

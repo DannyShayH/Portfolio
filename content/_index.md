@@ -1,28 +1,20 @@
 ---
-description: I pride myself in creating websites and trying out new ways to improve UX/UI, currently I am a student and making headway towards programming and learning new things.
+description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
 ---
 
-<div class="banner">
-  <div class="pulse-wrapper">
-    <div class="pulse-circle"></div>
-  </div>
-</div>
+## Hey, I'm Daniel — Some Call Me Shay
 
-<div class="ripple-wrapper">
-  <div class="ripple-circle"></div>
-  <div class="ripple-circle" style="animation-delay: 0.5s;"></div>
-  <div class="ripple-circle" style="animation-delay: 1s;"></div>
-</div>
+My journey into tech started early, driven by a fascination with computers and, admittedly, mostly games.
+At the time, I had no real understanding of the creativity and effort that goes into building technology —
+that perspective came later.
 
-## Hey I'm Daniel, Some Call Me Shay
+My first hands-on experience with software came from setting up Linux on my personal machine.
+It was challenging and at times overwhelming, but working through it built a solid foundation
+and a problem-solving mindset that has stayed with me since.
 
-My journey into tech started when I was younger, fascinated by computers — mostly games, because I didn’t know any better at the time.
-Back then, I had no idea how much work, creativity, and passion goes into building technology from scratch.
-My first real encounter with code came when I decided to set up my PC with Linux — probably the most chaotic place to begin. It was confusing, frustrating, and overwhelming… but I pushed through.
+I am an aspiring Full-Stack Developer with a strong focus on Frontend Development.
+I enjoy building websites from the ground up — crafting responsive, accessible, and interactive
+user experiences. Translating ideas into clean, functional interfaces is where I do my best work.
 
-Safe to say, I survived — and I’m never changing my setup again (mostly joking).
-
-I am an up and coming Full-Stack Developer with a strong focus on Frontend Development.
-I enjoy building websites from the ground up, creating responsive, accessible, and interactive user experiences. Transforming ideas into clean and functional interfaces is where I thrive the most.
-
-At the same time, I do know how to build backend systems that support performance, scalability, and structure.
+Alongside frontend development, I have experience building backend systems with an emphasis
+on performance, scalability, and clean architecture.

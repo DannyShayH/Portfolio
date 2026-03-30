@@ -16,12 +16,12 @@ After having feedback with my teacher, I got more confirmation based on the back
 - Used **BCrypt** library to achieve hashing.
 ```java
 public String hash(String password){
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
+    return BCrypt.hashpw(password, BCrypt.gensalt());
+}
 
-    public boolean verify(String password, String hash){
-        return BCrypt.checkpw(password, hash);
-    }
+public boolean verify(String password, String hash){
+    return BCrypt.checkpw(password, hash);
+}
 ```
 - Started working on how to use **API**
 - Added a **XMLExtractor** to get data from **API**
@@ -30,16 +30,26 @@ Used our **HttpClient** made together in class but altered it to take an XML fil
 ```java
 private static final HttpClient client = HttpClient.newHttpClient();
 
-    public static String getXml(String url) throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request = HttpRequest
-                .newBuilder()
-                .uri(new URI(url))
-                .header("Accept", "application/xml")
-                .GET()
-                .build();
+    public static String getXml(String url){
+        HttpRequest request = null;
+        try {
+            request = HttpRequest
+                    .newBuilder()
+                    .uri(new URI(url))
+                    .header("Accept", "application/xml")
+                    .GET()
+                    .build();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (response.statusCode() == 200) {
             return response.body();
@@ -51,10 +61,22 @@ private static final HttpClient client = HttpClient.newHttpClient();
 ```
 Created a class that uses **DocumentBuilder** library to extract and parse XML files, and returns it into my **LawDataDTO** object.
 ```java
-public static LawDataDTO extract(String xml) throws IOException, SAXException, ParserConfigurationException {
+ public LawDataDTO extract(String xml){
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new InputSource(new StringReader(xml)));
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        Document doc = null;
+        try {
+            doc = builder.parse(new InputSource(new StringReader(xml)));
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         String title = "";
         NodeList titleNodes = doc.getElementsByTagName("DocumentTitle");
@@ -103,5 +125,5 @@ return new HashSet<>(query.getResultList());
 ## Plan for next week
 
 Planning to use another API. **SendGrid** to implement a notification system for the project.
-This API will work in favor with my program while using **Cron job**. User's receive a notification, of
-when their warranty expires. Either for 1 month, 1 week, 3 days. 
+This API will work in favor with my program. User's receive a notification, of
+when their warranty expires. Either for 90 Days, 60 days, etc. 
