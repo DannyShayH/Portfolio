@@ -1,38 +1,76 @@
 ---
-title: Week 1
+title: Introduction
 weight: 1
 date: 2026-02-03
-lastmod: 2026-02-19
+lastmod: 2026-04-02
 ---
 
-## Week One
+## JPA - JPQL - DAO
 
-## The Idea
-As mentioned in the introduction, on the third semester we had to personally choose a project to work on in Java backend where we have to implement the use of **Hibernate and JPA**. With that being said, the idea stems from my lack of tracking warranties and just plainly being lazy as one might say.
+The goal of this phase was to make the persistence layer reflect the real domain: users, register, products.
+ Registrations may have receipts, and products have warranties. I implemented JPA mappings between `User`, `Product`, `ProductRegistration`, `Receipt`, and `Warranty`, then built a DAO layer that standardizes CRUD operations through `IDAO<T>` and uses JPQL for queries that traverse relationships (implemented in `RetrieveDAO` and selected methods in `UserDAO`/`SecurityDAO`).
 
-**Progress:**
+ <div class="row-image">
+<div class="image-center">
+<img 
+src="domain_model4.webp"
+loading="lazy"
+decoding="async"
+width="300"
+height="300">
+</div>
 
-My progress throughout the blog will mainly be written in a bullet poitnt form to make it easy and simple to understand where I'm at, and perhaps every once in a while I'll add a few images so that it's easier to visualize.
+A key focus was avoiding overly complex objects: data are handled explicitly (for example with `JOIN FETCH` when needed), and delete behavior is handled deliberately to avoid unintended cascades.
 
-- Wrote a document with what I would need for the project to work.
-- Figured out which Entities I needed for my project **(User, Product, Warranty, Receipt)**.
-- Created Intellij-project, used a template we made in class with hibernate already implemented.
-- Created a repository on github and connected it to my intellij project.
-- Created portfolio repository and worked on learning markdown in Visual Studio Code.
-- After feedback from my teacher I constructed a **Domain Model** and a **Class Diagram** which looks as follows:
+```java
+public User getByIDWithRegistrations(Long id) {
+    try (EntityManager em = emf.createEntityManager()) {
+        try {
+            return em.createQuery(
+                "SELECT DISTINCT u FROM User u " +
+                "LEFT JOIN FETCH u.registrationlist " +
+                "WHERE u.id = :id",
+                        User.class)
+                        .setParameter("id", id)
+                        .getSingleResult();
+        } catch (NoResultException e) {
+            throw new EntityNotFoundException("No entity found with id: " + id);
+        }
+    }
+}
+```
+
+Issues related to retrieving users with or without a registrationlist caused `LazyInitializationException` when trying to retrieve users with a registrationlist, using `LEFT JOIN FETCH` ensures that a user is still returned even if the specific user has no registrationlist.
+
+## What
+
+Implemented the persistence layer using JPA by defining the entities `User`, `Product`, `ProductRegistration`, `Receipt`, and `Warranty`, along with their relationships. A DAO structure was introduced through `IDAO<T>`, with concrete implementations such as `RetrieveDAO`, `UserDAO`, and `SecurityDAO`.
 
 <div class="row-image">
 <div class="image-center">
-<img src="class_diagram1.webp" alt="Image" width="300">
+<img 
+src="class_diagram_final.webp"
+loading="lazy"
+decoding="async"
+width="1000"
+height="1000">
 </div>
 
-<div class="image-center">
-<img src="domain_model1.webp" alt="Image model" width="300">
-</div>
-</div>
+Custom JPQL queries were added to handle relational data, including `getByIDWithRegistrations(Long id)`, which uses `LEFT JOIN FETCH` to retrieve a `User` together with its `registrationlist`.
 
-**Reasoning:**
+## Why
 
-- Keep my **Entities** simple. **User** has a **product, warrant and receipt**.
-- The fields were filled as placeholders for the time being.
-- Most of my focus was on the portfolio **(Markdown)** to set it all up.
+The main problem was ensuring reliable retrieval of related data without encountering `LazyInitializationException`, while keeping the domain model simple and maintainable. There was also a need to avoid excessive cascading and unintended side effects in persistence operations.
+
+Constraints included maintaining clear entity relationships, ensuring predictable data access for API use, and supporting testability without overly complex configurations.
+
+## Design reasoning (tradeoffs)
+
+| Aspect                | Description                                                                                                                                        |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Choice**            | Use explicit JPQL queries with `JOIN FETCH` for controlled loading of relationships                                                                |
+| **Alternative(s)**    | Default fetch types (`EAGER` / `LAZY`) and cascading strategies                                                                                    |
+| **Not chosen**    | Default strategies can cause inefficient queries or `LazyInitializationException`, while cascading may introduce unintended persistence operations |
+| **Risks  downsides** | More verbose queries and tighter coupling between query logic and entities                                                                         |
+| **Mitigations**       | Centralize query logic in DAO classes and reuse methods for consistency                                                                            |
+| **Next step**         | Introduce DTOs to handle larger datasets and improve performance                                                                     |
