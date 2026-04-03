@@ -1,129 +1,32 @@
 ---
-title: Week 3
+title: Security
 weight: 3
 date: 2026-02-03
-lastmod: 2026-02-19
+lastmod: 2026-04-03
 ---
 
-## Week Three
+## BCrypt & JWT
 
-## Feedback
-After having feedback with my teacher, I got more confirmation based on the backend setup I was building pertaining to my **ProductRegistration** and **Product**. His advice: **Remember to log more to make sure no details go lost**.
+Implemented core security features in the backend. A `PasswordService` was added to hash and verify user passwords using BCrypt before persistence. JWT-based authentication was introduced through `SecurityControllerService`, which handles token creation and validation using `JwtTokenService`. Tokens are generated during authentication and verified on protected endpoints by extracting them from the `Authorization` header. Role-based access control was also introduced to restrict endpoint access based on user roles.
 
-**Progress:**
+A record-based DTO, AuthUserDTO, was introduced to represent authenticated user data (email and roles) within the token. This DTO is used when generating and validating JWTs, and when enforcing role-based access control on protected endpoints.
 
-- Added a **PasswordService** that hashes a user's password.
-- Used **BCrypt** library to achieve hashing.
+Tokens are extracted from the Authorization header and validated per request to ensure secure access to the API.
+
 ```java
-public String hash(String password){
-    return BCrypt.hashpw(password, BCrypt.gensalt());
-}
-
-public boolean verify(String password, String hash){
-    return BCrypt.checkpw(password, hash);
-}
-```
-- Started working on how to use **API**
-- Added a **XMLExtractor** to get data from **API**
-
-Used our **HttpClient** made together in class but altered it to take an XML file instead of a Json file.
-```java
-private static final HttpClient client = HttpClient.newHttpClient();
-
-    public static String getXml(String url){
-        HttpRequest request = null;
-        try {
-            request = HttpRequest
-                    .newBuilder()
-                    .uri(new URI(url))
-                    .header("Accept", "application/xml")
-                    .GET()
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-
-        HttpResponse<String> response = null;
-        try {
-            response = client
-                    .send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (response.statusCode() == 200) {
-            return response.body();
-        } else {
-            System.out.println("Error in: " + response.statusCode());
-        }
-        return null;
-    }
-```
-Created a class that uses **DocumentBuilder** library to extract and parse XML files, and returns it into my **LawDataDTO** object.
-```java
- public LawDataDTO extract(String xml){
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-        Document doc = null;
-        try {
-            doc = builder.parse(new InputSource(new StringReader(xml)));
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        String title = "";
-        NodeList titleNodes = doc.getElementsByTagName("DocumentTitle");
-        if(titleNodes.getLength() > 0){
-            title = titleNodes.item(0).getTextContent();
-        }
-
-        NodeList textNodes = doc.getElementsByTagName("Char");
-        StringBuilder warrantyText = new StringBuilder();
-
-        for(int i = 0; i < textNodes.getLength(); i++){
-        String text = textNodes.item(i).getTextContent();
-
-        if(text.toLowerCase().contains("garanti")){
-            warrantyText.append(text).append("\n\n");
-            }
-        }
-        return new LawDataDTO(title, warrantyText.toString());
-    }
+public record AuthUserDTO(String email, Set<String> roles){}
 ```
 
-- Created a **IRetrieveDAO** interface with methods that **IRetrieveDAO** implements.
+## Why
 
-An example of one of a few IRetrieveDAO implementations that have been created.
-These methods were used to get specific data out of the database using **JPQL** queries.
-```java
-@Override
-public Set<Warranty> getAllWarrantiesForUsers(long userId) {
-try (EntityManager em = emf.createEntityManager()) {
-TypedQuery<Warranty> query = em.createQuery("SELECT DISTINCT pr.product.warranty " +
-"FROM ProductRegistration pr " +
-"WHERE pr.owner.id = :userId", Warranty.class);
-query.setParameter("userId", userId);
-return new HashSet<>(query.getResultList());
-}
-}
-```
+The goal was to secure user data and ensure safe authentication within the application. `Storing raw passwords is insecure`, making hashing necessary to protect user credentials. JWT authentication enables stateless and scalable session management, which is suitable for REST APIs. Constraints included ensuring secure handling of secrets, preventing unauthorized access, and maintaining a clear separation between authentication logic and business logic.
 
-**Reasoning:**
+## Design reasoning (tradeoffs)
 
-- Added password hashing to demonstrate, I'm able to hash passwords using BCrypt.
-- While working with **retsinformation.dk** API, I realised that they use XML and not Json.
-- Worked with **DocumentBuilder** library. Created a **XML Extractor** method to extract from the API.
-- While this API does not work well with this project, it still shows some sort of determination of implementation.
-
-## Plan for next week
-
-Planning to use another API. **SendGrid** to implement a notification system for the project.
-This API will work in favor with my program. User's receive a notification, of
-when their warranty expires. Either for 90 Days, 60 days, etc. 
+| Aspect                | Description                                                                                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Choice**            | Use BCrypt for password hashing, JWT for authentication, and a record-based DTO (`AuthUserDTO`) to represent authenticated user data                              |
+| **Alternative(s)**    | Store plain-text passwords, use session-based authentication, or use a mutable class instead of a record for the DTO                                              |
+| **Not chosen**    | Plain-text storage is insecure; session-based authentication is less scalable; mutable DTOs increase the risk of unintended modification of security-related data |
+| **Risks downsides** | JWTs cannot easily be invalidated before expiration; records are less flexible if the DTO structure needs to change                                               |
+| **Mitigations**       | Use token expiration, validate tokens on each request, store secrets securely, and extend the record if additional fields are required                            |
