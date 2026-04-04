@@ -10,7 +10,7 @@ lastmod: 2026-04-02
 The goal of this phase was to make the persistence layer reflect the real domain: users, register, products.
  Registrations may have receipts, and products have warranties. I implemented JPA mappings between `User`, `Product`, `ProductRegistration`, `Receipt`, and `Warranty`, then built a DAO layer that standardizes CRUD operations through `IDAO<T>` and uses JPQL for queries that traverse relationships (implemented in `RetrieveDAO` and selected methods in `UserDAO`/`SecurityDAO`).
 
- <div class="row-image">
+<div class="row-image">
 <div class="image-center">
 <img 
 src="domain_model4.webp"

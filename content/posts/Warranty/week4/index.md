@@ -1,131 +1,50 @@
 ---
-title: Week 4
+title: REST & Test
 weight: 4
 date: 2026-02-03
-lastmod: 2026-03-08
+lastmod: 2026-04-04
 ---
 
-## Week Four
+## Requests & Tests
 
-**Progress:**
+Implemented RESTful endpoints for the application using Javalin, covering user and security operations such as `/security/register`, `/security/login`, `/user/all`, and `/user/{id}`. Requests are tested using an HTTP client setup (`http-client.env.json`) to support both local and deployed environments, with JWT tokens included in the `Authorization` header for protected routes.
 
-- Added **SendGrid API**, created class **EmailService** to handle how to send Emails.
-- Created **WarrantyScheduler** that checks warranties and their expiration date.
-- Created **TestClassFactory** that tests by sending an expired warranty notification to user's email.
-- Created Junit test with Mockito to see if sending an email passes.
+Integration tests were implemented using JUnit and RestAssured. A containerized PostgreSQL database (Testcontainers) is used to run tests in an isolated environment. Tests cover authentication, endpoint protection, and validation, including scenarios such as successful login, unauthorized access, and invalid input handling.
 
-### Code snippet of EmailService
+<div class="row-image">
+<div class="image-center">
+<img 
+src="terminal_commands.webp"
+loading="lazy"
+decoding="async"
+width="1000"
+height="1000">
+</div>
 
-```java
-public class EmailService {
+>The image demonstrates manual testing of the REST API using `curl`, performed due to the absence of a frontend. A user is registered and then logs in to be authenticated, after which a JWT token is returned and used to authorize access to protected endpoints.
 
-    private final String apiKey;
+<div class="row-image">
+<div class="image-center">
+<img 
+src="web_browser_test.webp"
+loading="lazy"
+decoding="async"
+width="1000"
+height="1000">
+</div>
 
-    public EmailService(String apiKey){
-        this.apiKey = apiKey;
-    }
+>The image shows testing of a protected REST endpoint using the browser’s developer console. A `fetch` request is sent to `/user/all` with a JWT token included in the `Authorization` header. The successful response demonstrates that authentication is working and that access to protected resources is granted when a valid token is provided.
 
-    public void sendWarrantyReminder(String toEmail, String productName, long daysLeft){
-        try{
-            Email from = new Email("tourwarranty@gmail.com");
-            Email to = new Email(toEmail);
-            String subject = "Warranty Reminder";
+## Why
 
-            String contextText = "Your Warranty For " + productName + " Expires in " + daysLeft + " Days.";
+The goal was to expose application functionality through a REST API and ensure it behaves correctly under different scenarios. REST endpoints allow structured communication between client and backend, while testing ensures reliability and prevents regressions. Constraints included maintaining stateless authentication using JWT, ensuring endpoints are properly secured, and running tests in an environment that closely resembles production.
 
-            Content content = new Content("text/plain", contextText);
-            Mail mail = new Mail(from, subject, to, content);
+## Design reasoning (tradeoffs)
 
-            SendGrid sg = new SendGrid(apiKey);
-            Request request = new Request();
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-
-            sg.api(request);
-        } catch(IOException e){
-            try {
-                throw e;
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-}
-```
-
----
-
-### Code snippet of WarrantyScheduler, checkWarranties method
-
-```java
-public void checkWarranties(){
-        Set<Warranty> warranties = warrantyDAO.get();
-        LocalDate today = LocalDate.now();
-
-        for(Warranty warranty : warranties){
-            long daysLeft = ChronoUnit.DAYS.between(today, warranty.calculateEndDate());
-
-            if(daysLeft == 90 && !warranty.isNotified90Days()) {
-            sendAndMark(warranty, 90);
-            } else if(daysLeft == 60 && !warranty.isNotified60Days()){
-                sendAndMark(warranty, 60);
-            } else if(daysLeft == 30 && !warranty.isNotified30Days()){
-                sendAndMark(warranty, 30);
-            } else if(daysLeft == 0 && !warranty.isNotifiedExpired()){
-                sendAndMark(warranty, 0);
-            }
-        }
-    }
-```
-
----
-
-### Code snippet of TestClass
-
-```java
-public class TestClassFactory {
-    static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-   static final WarrantyDAO warrantyDAO = new WarrantyDAO(emf);
-    static final ProductDAO productDAO = new ProductDAO(emf);
-    static final UserDAO userDAO = new UserDAO(emf);
-
-    static final EmailService emailService = new EmailService(System.getenv("SENDGRID_API_KEY"));
-    static final WarrantyScheduler scheduler = new WarrantyScheduler(warrantyDAO, emailService);
-
-    public static void testClassWarranty() {
-        User testUser = new User();
-
-        testUser.setEmail("danielhalawi22@gmail.com");
-        testUser.setCreatedAt(LocalDateTime.now());
-        testUser.setPassword("12345678");
-        userDAO.create(testUser);
-
-        Warranty testWarranty = new Warranty();
-        testWarranty.setStartDate(LocalDate.now().minusMonths(3));
-        testWarranty.setWarrantyMonths(3);
-        testWarranty.calculateEndDate();
-
-        Product product = new Product();
-        product.setOwner(testUser);
-        product.setProductName("Test Product");
-        product.setWarranty(testWarranty);
-        testWarranty.setProduct(product);
-        productDAO.create(product);
-
-
-        scheduler.checkWarranties();
-
-        System.out.println("Test Sent to Email");
-    }
-}
-```
-
----
-
-**Reasoning:**
-
-- From last discovery(XML), implementing **notification system** based on warranties suits the program.
-- Used **SendGrid** because it's a familiar API that worked really well with **digitalOcean**.
-- Used **Mockito** to test it out for the first time, also to not send in real data.
-- Created **TestClass** to test with real data, on expiration date.
+| Aspect                | Description                                                                                                                                                           |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Choice**            | Use REST principles with Javalin, JWT for securing endpoints, and integration testing with JUnit + RestAssured + Testcontainers                                       |
+| **Alternative(s)**    | Manual testing only, in-memory database testing, or session-based authentication                                                                                      |
+| **Not chosen**    | Manual testing is unreliable and not repeatable; in-memory databases do not reflect real database behavior; session-based authentication breaks REST stateless design |
+| **Risks downsides** | Increased setup complexity for tests (containers, ports); slower test execution due to real database usage                                                            |
+| **Mitigations**       | Use Testcontainers for consistent environments, dynamic ports to avoid conflicts, and automated test setup/teardown to ensure isolation                               |

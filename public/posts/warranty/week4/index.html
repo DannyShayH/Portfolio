@@ -15,8 +15,8 @@
 
   
   
-    <title>Week 4 &middot; Daniel Halawi</title>
-    <meta name="title" content="Week 4 &middot; Daniel Halawi">
+    <title>REST & Test &middot; Daniel Halawi</title>
+    <meta name="title" content="REST & Test &middot; Daniel Halawi">
   
 
   
@@ -48,16 +48,16 @@
   
   <meta property="og:url" content="http://localhost:1313/posts/warranty/week4/">
   <meta property="og:site_name" content="Daniel Halawi">
-  <meta property="og:title" content="Week 4">
+  <meta property="og:title" content="REST & Test">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-02-03T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-03-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-04T00:00:00+00:00">
 
   
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Week 4">
+  <meta name="twitter:title" content="REST & Test">
 
   
   
@@ -209,8 +209,8 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "articleSection": "Posts",
-    "name": "Week 4",
-    "headline": "Week 4",
+    "name": "REST \u0026 Test",
+    "headline": "REST \u0026 Test",
     
     "inLanguage": "en",
     "url" : "http://localhost:1313/posts/warranty/week4/",
@@ -222,12 +222,12 @@
     "dateCreated": "2026-02-03T00:00:00\u002b00:00",
     "datePublished": "2026-02-03T00:00:00\u002b00:00",
     
-    "dateModified": "2026-03-08T00:00:00\u002b00:00",
+    "dateModified": "2026-04-04T00:00:00\u002b00:00",
     
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "369"
+    "wordCount": "341"
   }]
   </script>
 
@@ -579,7 +579,7 @@
     <header id="single_header" class="mt-5 max-w-prose">
       
       <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
-        Week 4
+        REST & Test
       </h1>
       <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
         
@@ -633,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-03-08T00:00:00&#43;00:00">Updated: 8 March 2026</time><span class="px-2 text-primary-500">&middot;</span><span>369 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">2 mins</span>
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-04-04T00:00:00&#43;00:00">Updated: 4 April 2026</time><span class="px-2 text-primary-500">&middot;</span><span>341 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">2 mins</span>
     
 
     
@@ -685,150 +685,88 @@
 
         <div class="article-content max-w-prose mb-20">
           
-<h2 class="relative group">Week Four
-    <div id="week-four" class="anchor"></div>
+<h2 class="relative group">Requests &amp; Tests
+    <div id="requests--tests" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#week-four" aria-label="Anchor">#</a>
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#requests--tests" aria-label="Anchor">#</a>
     </span>
     
 </h2>
-<p><strong>Progress:</strong></p>
-<ul>
-<li>Added <strong>SendGrid API</strong>, created class <strong>EmailService</strong> to handle how to send Emails.</li>
-<li>Created <strong>WarrantyScheduler</strong> that checks warranties and their expiration date.</li>
-<li>Created <strong>TestClassFactory</strong> that tests by sending an expired warranty notification to user&rsquo;s email.</li>
-<li>Created Junit test with Mockito to see if sending an email passes.</li>
-</ul>
-
-<h3 class="relative group">Code snippet of EmailService
-    <div id="code-snippet-of-emailservice" class="anchor"></div>
+<p>Implemented RESTful endpoints for the application using Javalin, covering user and security operations such as <code>/security/register</code>, <code>/security/login</code>, <code>/user/all</code>, and <code>/user/{id}</code>. Requests are tested using an HTTP client setup (<code>http-client.env.json</code>) to support both local and deployed environments, with JWT tokens included in the <code>Authorization</code> header for protected routes.</p>
+<p>Integration tests were implemented using JUnit and RestAssured. A containerized PostgreSQL database (Testcontainers) is used to run tests in an isolated environment. Tests cover authentication, endpoint protection, and validation, including scenarios such as successful login, unauthorized access, and invalid input handling.</p>
+<div class="row-image">
+<div class="image-center">
+<img 
+src="terminal_commands.webp"
+loading="lazy"
+decoding="async"
+width="1000"
+height="1000">
+</div>
+<blockquote><p>The image demonstrates manual testing of the REST API using <code>curl</code>, performed due to the absence of a frontend. A user is registered and then logs in to be authenticated, after which a JWT token is returned and used to authorize access to protected endpoints.</p>
+</blockquote><div class="row-image">
+<div class="image-center">
+<img 
+src="web_browser_test.webp"
+loading="lazy"
+decoding="async"
+width="1000"
+height="1000">
+</div>
+<blockquote><p>The image shows testing of a protected REST endpoint using the browser’s developer console. A <code>fetch</code> request is sent to <code>/user/all</code> with a JWT token included in the <code>Authorization</code> header. The successful response demonstrates that authentication is working and that access to protected resources is granted when a valid token is provided.</p>
+</blockquote>
+<h2 class="relative group">Why
+    <div id="why" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#code-snippet-of-emailservice" aria-label="Anchor">#</a>
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#why" aria-label="Anchor">#</a>
     </span>
     
-</h3>
-<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EmailService</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">apiKey</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">EmailService</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">apiKey</span><span class="p">){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apiKey</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendWarrantyReminder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">toEmail</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productName</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">daysLeft</span><span class="p">){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Email</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Email</span><span class="p">(</span><span class="s">&#34;tourwarranty@gmail.com&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Email</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Email</span><span class="p">(</span><span class="n">toEmail</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">subject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Warranty Reminder&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">contextText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Your Warranty For &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">productName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; Expires in &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">daysLeft</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; Days.&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Content</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Content</span><span class="p">(</span><span class="s">&#34;text/plain&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">contextText</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Mail</span><span class="w"> </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Mail</span><span class="p">(</span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">subject</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">SendGrid</span><span class="w"> </span><span class="n">sg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SendGrid</span><span class="p">(</span><span class="n">apiKey</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Request</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="na">setMethod</span><span class="p">(</span><span class="n">Method</span><span class="p">.</span><span class="na">POST</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="na">setEndpoint</span><span class="p">(</span><span class="s">&#34;mail/send&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="na">setBody</span><span class="p">(</span><span class="n">mail</span><span class="p">.</span><span class="na">build</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sg</span><span class="p">.</span><span class="na">api</span><span class="p">(</span><span class="n">request</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">ex</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
-<hr>
+</h2>
+<p>The goal was to expose application functionality through a REST API and ensure it behaves correctly under different scenarios. REST endpoints allow structured communication between client and backend, while testing ensures reliability and prevents regressions. Constraints included maintaining stateless authentication using JWT, ensuring endpoints are properly secured, and running tests in an environment that closely resembles production.</p>
 
-<h3 class="relative group">Code snippet of WarrantyScheduler, checkWarranties method
-    <div id="code-snippet-of-warrantyscheduler-checkwarranties-method" class="anchor"></div>
+<h2 class="relative group">Design reasoning (tradeoffs)
+    <div id="design-reasoning-tradeoffs" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#code-snippet-of-warrantyscheduler-checkwarranties-method" aria-label="Anchor">#</a>
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#design-reasoning-tradeoffs" aria-label="Anchor">#</a>
     </span>
     
-</h3>
-<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkWarranties</span><span class="p">(){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Warranty</span><span class="o">&gt;</span><span class="w"> </span><span class="n">warranties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">warrantyDAO</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LocalDate</span><span class="w"> </span><span class="n">today</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">now</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="n">Warranty</span><span class="w"> </span><span class="n">warranty</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">warranties</span><span class="p">){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">long</span><span class="w"> </span><span class="n">daysLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ChronoUnit</span><span class="p">.</span><span class="na">DAYS</span><span class="p">.</span><span class="na">between</span><span class="p">(</span><span class="n">today</span><span class="p">,</span><span class="w"> </span><span class="n">warranty</span><span class="p">.</span><span class="na">calculateEndDate</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">daysLeft</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">90</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">warranty</span><span class="p">.</span><span class="na">isNotified90Days</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sendAndMark</span><span class="p">(</span><span class="n">warranty</span><span class="p">,</span><span class="w"> </span><span class="n">90</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">daysLeft</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">60</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">warranty</span><span class="p">.</span><span class="na">isNotified60Days</span><span class="p">()){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">sendAndMark</span><span class="p">(</span><span class="n">warranty</span><span class="p">,</span><span class="w"> </span><span class="n">60</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">daysLeft</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">30</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">warranty</span><span class="p">.</span><span class="na">isNotified30Days</span><span class="p">()){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">sendAndMark</span><span class="p">(</span><span class="n">warranty</span><span class="p">,</span><span class="w"> </span><span class="n">30</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">daysLeft</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">warranty</span><span class="p">.</span><span class="na">isNotifiedExpired</span><span class="p">()){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">sendAndMark</span><span class="p">(</span><span class="n">warranty</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span></span></span></code></pre></div></div>
-<hr>
-
-<h3 class="relative group">Code snippet of TestClass
-    <div id="code-snippet-of-testclass" class="anchor"></div>
-    
-    <span
-        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#code-snippet-of-testclass" aria-label="Anchor">#</a>
-    </span>
-    
-</h3>
-<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestClassFactory</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">EntityManagerFactory</span><span class="w"> </span><span class="n">emf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HibernateConfig</span><span class="p">.</span><span class="na">getEntityManagerFactory</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">WarrantyDAO</span><span class="w"> </span><span class="n">warrantyDAO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WarrantyDAO</span><span class="p">(</span><span class="n">emf</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ProductDAO</span><span class="w"> </span><span class="n">productDAO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProductDAO</span><span class="p">(</span><span class="n">emf</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">UserDAO</span><span class="w"> </span><span class="n">userDAO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserDAO</span><span class="p">(</span><span class="n">emf</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">EmailService</span><span class="w"> </span><span class="n">emailService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EmailService</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">getenv</span><span class="p">(</span><span class="s">&#34;SENDGRID_API_KEY&#34;</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">WarrantyScheduler</span><span class="w"> </span><span class="n">scheduler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WarrantyScheduler</span><span class="p">(</span><span class="n">warrantyDAO</span><span class="p">,</span><span class="w"> </span><span class="n">emailService</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testClassWarranty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">testUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testUser</span><span class="p">.</span><span class="na">setEmail</span><span class="p">(</span><span class="s">&#34;danielhalawi22@gmail.com&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testUser</span><span class="p">.</span><span class="na">setCreatedAt</span><span class="p">(</span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">now</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testUser</span><span class="p">.</span><span class="na">setPassword</span><span class="p">(</span><span class="s">&#34;12345678&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userDAO</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">testUser</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Warranty</span><span class="w"> </span><span class="n">testWarranty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Warranty</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testWarranty</span><span class="p">.</span><span class="na">setStartDate</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">now</span><span class="p">().</span><span class="na">minusMonths</span><span class="p">(</span><span class="n">3</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testWarranty</span><span class="p">.</span><span class="na">setWarrantyMonths</span><span class="p">(</span><span class="n">3</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testWarranty</span><span class="p">.</span><span class="na">calculateEndDate</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Product</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Product</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">product</span><span class="p">.</span><span class="na">setOwner</span><span class="p">(</span><span class="n">testUser</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">product</span><span class="p">.</span><span class="na">setProductName</span><span class="p">(</span><span class="s">&#34;Test Product&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">product</span><span class="p">.</span><span class="na">setWarranty</span><span class="p">(</span><span class="n">testWarranty</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">testWarranty</span><span class="p">.</span><span class="na">setProduct</span><span class="p">(</span><span class="n">product</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">productDAO</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">product</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">scheduler</span><span class="p">.</span><span class="na">checkWarranties</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Test Sent to Email&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
-<hr>
-<p><strong>Reasoning:</strong></p>
-<ul>
-<li>From last discovery(XML), implementing <strong>notification system</strong> based on warranties suits the program.</li>
-<li>Used <strong>SendGrid</strong> because it&rsquo;s a familiar API that worked really well with <strong>digitalOcean</strong>.</li>
-<li>Used <strong>Mockito</strong> to test it out for the first time, also to not send in real data.</li>
-<li>Created <strong>TestClass</strong> to test with real data, on expiration date.</li>
-</ul>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Choice</strong></td>
+          <td>Use REST principles with Javalin, JWT for securing endpoints, and integration testing with JUnit + RestAssured + Testcontainers</td>
+      </tr>
+      <tr>
+          <td><strong>Alternative(s)</strong></td>
+          <td>Manual testing only, in-memory database testing, or session-based authentication</td>
+      </tr>
+      <tr>
+          <td><strong>Not chosen</strong></td>
+          <td>Manual testing is unreliable and not repeatable; in-memory databases do not reflect real database behavior; session-based authentication breaks REST stateless design</td>
+      </tr>
+      <tr>
+          <td><strong>Risks downsides</strong></td>
+          <td>Increased setup complexity for tests (containers, ports); slower test execution due to real database usage</td>
+      </tr>
+      <tr>
+          <td><strong>Mitigations</strong></td>
+          <td>Use Testcontainers for consistent environments, dynamic ports to avoid conflicts, and automated test setup/teardown to ensure isolation</td>
+      </tr>
+  </tbody>
+</table>
 
           
           
