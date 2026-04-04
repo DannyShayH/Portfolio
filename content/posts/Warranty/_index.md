@@ -21,43 +21,43 @@ lastmod: 2026-02-19
 ---
 
 ## 1. Introduction
-The **Warranty Project** is being developed by me during my third semester of Computer Science. The Project aims to help people **keep track of their warranties** at any given time without having to worry about paper. 
-At first I was not sure what to build, but I to the conclusion that I was not very good at keeping track of my own warranties at some point and this project is for my own sanity in a sense. 
-So that I never have to look at paper again.
+The **Warranty Project** is developed as part of a third-semester Computer Science program. The purpose of the project is to provide a system that allows users to **track and manage product warranties digitally**, reducing reliance on physical documentation.
+
+The application focuses on simplifying warranty management by centralizing information such as products, registrations, and expiration dates. This enables users to easily monitor their warranties and avoid losing important information stored on paper.
 
 **Objectives:**
-- Digitize the process of keeping track of warranties
-- Ensure that users can keep track of warranties if anything were to happen
-- Model a real site that people can view, which is automated after registering a product
-- Implement a maintainable, scalable architecture for further improvements
+- Digitize the process of tracking warranties
+- Ensure that users can keep track of warranties in case they are lost or misplaced
+- Model a real-world application that automates warranty tracking after product registration
+- Implement a maintainable and scalable architecture for future improvements
 
 ---
 
 ## 2. Background
-Warrantour aims to keep track of **products**, **warranties** and **receipts**.  
-Normally you would have to keep track of:
+Warrantour aims to keep track of **products**, **warranties**, and **receipts**.  
+Normally, users must keep track of:
 
-- Where did I throw the receipt?
+- Where did I put the receipt?
 - When does my warranty expire?
-- Calculating when the expiration expires.
-- Always having to fiddle with or look for warranties on E-mail or paper.
+- Manually calculating expiration dates
+- Searching through emails or paper documents for warranty information
 
-**Project goal:** Automate this process so the mundane task of keeping overview and remembering isn't an issue.
+**Project goal:** so that maintaining an overview and remembering important details is no longer an issue.
 
 ---
 
 ## 3. Business Understanding
 **Customer Journey:**
 
-1. Register Products
-2. While registering products, register warranty date and receipt
-3. View products on profile  
-4. Delete or keep products with warranties that have expired
+1. Register products
+2. During registration, provide warranty date and receipt
+3. View products on profile
+4. Delete or keep products with expired warranties
 
 **Business Requirements:**
-- Warranty expiry date calculated by purchase date and warranty expiry date
+- Warranty expiry is calculated based on purchase date and warranty duration
 - Purchase date cannot be changed after registering a product
 - Expired warranties are read-only
-- Only the owner has access to product- and warranty data
+- Only the owner has access to product and warranty data
 
 ---

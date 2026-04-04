@@ -15,8 +15,8 @@
 
   
   
-    <title>Week 5 &middot; Daniel Halawi</title>
-    <meta name="title" content="Week 5 &middot; Daniel Halawi">
+    <title>Deployment & DevOps &middot; Daniel Halawi</title>
+    <meta name="title" content="Deployment & DevOps &middot; Daniel Halawi">
   
 
   
@@ -48,16 +48,16 @@
   
   <meta property="og:url" content="http://localhost:1313/posts/warranty/week5/">
   <meta property="og:site_name" content="Daniel Halawi">
-  <meta property="og:title" content="Week 5">
+  <meta property="og:title" content="Deployment & DevOps">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-03-08T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-03-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-04T00:00:00+00:00">
 
   
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Week 5">
+  <meta name="twitter:title" content="Deployment & DevOps">
 
   
   
@@ -209,8 +209,8 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "articleSection": "Posts",
-    "name": "Week 5",
-    "headline": "Week 5",
+    "name": "Deployment \u0026 DevOps",
+    "headline": "Deployment \u0026 DevOps",
     
     "inLanguage": "en",
     "url" : "http://localhost:1313/posts/warranty/week5/",
@@ -222,12 +222,12 @@
     "dateCreated": "2026-03-08T00:00:00\u002b00:00",
     "datePublished": "2026-03-08T00:00:00\u002b00:00",
     
-    "dateModified": "2026-03-08T00:00:00\u002b00:00",
+    "dateModified": "2026-04-04T00:00:00\u002b00:00",
     
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "59"
+    "wordCount": "432"
   }]
   </script>
 
@@ -579,7 +579,7 @@
     <header id="single_header" class="mt-5 max-w-prose">
       
       <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
-        Week 5
+        Deployment & DevOps
       </h1>
       <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
         
@@ -608,6 +608,8 @@
   
 
   
+    
+  
 
   
     
@@ -631,7 +633,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-03-08T00:00:00&#43;00:00">8 March 2026</time><span class="px-2 text-primary-500">&middot;</span><span>59 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">1 min</span>
+      <time datetime="2026-03-08T00:00:00&#43;00:00">8 March 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-04-04T00:00:00&#43;00:00">Updated: 4 April 2026</time><span class="px-2 text-primary-500">&middot;</span><span>432 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     
@@ -683,23 +685,87 @@
 
         <div class="article-content max-w-prose mb-20">
           
-<h2 class="relative group">Week Five
-    <div id="week-five" class="anchor"></div>
+<h2 class="relative group">Deployment &amp; DevOps
+    <div id="deployment--devops" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#week-five" aria-label="Anchor">#</a>
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#deployment--devops" aria-label="Anchor">#</a>
     </span>
     
 </h2>
-<p><strong>Progress:</strong></p>
-<ul>
-<li>Created <strong>entityService package</strong> with respective classes that have <strong>CRUD Methods</strong></li>
-<li><strong>entityService classes</strong> make use of <strong>converter classes</strong> from <strong>dtoConverter package</strong>.</li>
-<li>Created <strong>Controller classes</strong> for respective classes with <strong>CRUD methods and loggers</strong>.</li>
-<li>implemented each controller into <strong>Routes class</strong> and given the respective <strong>endPoint to each controller</strong>.</li>
-<li>Altered <strong>DAOS</strong> for specific classes (will be shown below ⬇).</li>
-</ul>
+<p>Implemented a full deployment pipeline for the application using Docker and cloud infrastructure. The application is containerized using a <code>Dockerfile</code> and deployed on an Ubuntu VM hosted on DigitalOcean.</p>
+<p><code>Continuous Integration and Deployment (CI/CD)</code> is handled using GitHub Actions, where the application is built using Maven, containerized, and pushed to Docker Hub on each push to the main branch. The deployed environment uses Docker Compose to manage services, including the application container and Watchtower, which automatically monitors Docker Hub for new image versions and updates the running container without manual intervention.</p>
+<p>A reverse proxy is configured using Caddy, which routes traffic from a domain (<code>warrantyproject.greymansshop.dk</code>) to the application container. HTTPS is automatically handled via SSL certificates. Environment variables are managed through a <code>.env</code> file to securely configure database connections, JWT secrets, and API keys.</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Login to Docker Hub</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">docker/login-action@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.DOCKERHUB_USERNAME }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.DOCKERHUB_TOKEN }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>-<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Set up Docker Buildx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">docker/setup-buildx-action@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>-<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build and push</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">docker/build-push-action@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l">./Dockerfile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">push</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.DOCKERHUB_USERNAME }}/warranty_project:latest</span></span></span></code></pre></div></div>
+<blockquote><p>The snippet shows the <code>CI/CD workflow</code> responsible for building and deploying the application. After authenticating with Docker Hub, the workflow sets up Docker Buildx, builds the application image from the Dockerfile, and pushes it to Docker Hub. This updated image is then automatically detected by Watchtower on the server, which pulls the latest version and redeploys the container without manual intervention.</p>
+</blockquote>
+<h2 class="relative group">Why
+    <div id="why" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#why" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>The goal was to create a scalable and automated deployment process that minimizes manual intervention. Containerization ensures consistency across environments, while CI/CD automates the build and deployment pipeline. <code>Watchtower</code> further reduces manual deployment effort by automatically updating containers when new images are available. Using a reverse proxy with HTTPS improves security and accessibility, and cloud hosting enables the application to be publicly available.</p>
+<p>Constraints included ensuring secure handling of sensitive data (e.g., API keys and secrets), maintaining near zero-downtime updates, and keeping the deployment process reproducible and maintainable.</p>
+
+<h2 class="relative group">Design reasoning (tradeoffs)
+    <div id="design-reasoning-tradeoffs" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#design-reasoning-tradeoffs" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Choice</strong></td>
+          <td>Use Docker for containerization, GitHub Actions for CI/CD, Docker Hub for image storage, Watchtower for automated container updates, and Caddy for reverse proxy and HTTPS</td>
+      </tr>
+      <tr>
+          <td><strong>Alternative(s)</strong></td>
+          <td>Manual deployment via SSH, traditional VM setups without containers, or using Nginx instead of Caddy</td>
+      </tr>
+      <tr>
+          <td><strong>Not chosen</strong></td>
+          <td>Manual deployment is error-prone and not scalable; non-containerized setups reduce portability; Nginx requires more manual configuration for SSL compared to Caddy</td>
+      </tr>
+      <tr>
+          <td><strong>Risks downsides</strong></td>
+          <td>Increased system complexity; reliance on external services; automatic updates may introduce unstable versions</td>
+      </tr>
+      <tr>
+          <td><strong>Mitigations</strong></td>
+          <td>Use health checks, controlled update intervals in Watchtower, and environment variables for secure configuration</td>
+      </tr>
+  </tbody>
+</table>
 
           
           
