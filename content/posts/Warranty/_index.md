@@ -61,3 +61,13 @@ Normally, users must keep track of:
 - Only the owner has access to product and warranty data
 
 ---
+<div style="border:3px solid #64748B; padding:20px; border-radius:15px; background-color: #334155; box-shadow: inset 5px 10px 15px rgba(0,0,0,0.5)">
+
+# 🔗 Warranty Project Links
+
+| Resource           | Link                                                                 |
+|--------------------|----------------------------------------------------------------------|
+| 🌐 Portfolio       | https://dannyshayh.github.io/Portfolio/posts/warranty/              |
+| 💻 Code Repository | https://github.com/DannyShayH/WarrantyProject                       |
+| 🎥 YouTube Video   | https://youtu.be/9xVua2tuYdw                                         |
+</div>
