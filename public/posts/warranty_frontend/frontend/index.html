@@ -1,0 +1,1591 @@
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="false"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="en">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>Warranty Frontend &middot; Daniel Halawi</title>
+    <meta name="title" content="Warranty Frontend &middot; Daniel Halawi">
+  
+
+  
+  
+  
+  
+  
+  <link rel="canonical" href="http://localhost:1313/posts/warranty_frontend/frontend/">
+  
+
+  
+  
+    <meta name="author" content="Daniel Halawi">
+  
+  
+    
+      
+        
+      
+    
+      
+        
+          <link href="https://github.com/DannyShayH" rel="me">
+        
+      
+    
+  
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/warranty_frontend/frontend/">
+  <meta property="og:site_name" content="Daniel Halawi">
+  <meta property="og:title" content="Warranty Frontend">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-21T00:00:00+00:00">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Warranty Frontend">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+  
+    
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.e047e85b507c46951f83b07de77739ab739420c85c75a82c0d50d356bd5ea45aa3e10eee5221bc955a804e5994365dc0de00557d7ce034eb450911951b15eed6.css"
+    integrity="sha512-4EfoW1B8RpUfg7B953c5q3OUIMhcdagsDVDTVr1epFqj4Q7uUiG8lVqATlmUNl3A3gBVfXzgNOtFCRGVGxXu1g==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js"
+    integrity="sha512-b0EXSzoFtoCCD&#43;CMrb&#43;l&#43;3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script>
+  
+  
+  
+  
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.67624a357c928d29b9fe19ba01a1e32c05ad1329ca2a712bf10446df0c6872903d0c14b21f76896b57a5a0710940805416cee38851d9067db6555881188e35a5.js"
+      integrity="sha512-Z2JKNXySjSm5/hm6AaHjLAWtEynKKnEr8QRG3wxocpA9DBSyH3aJa1eloHEJQIBUFs7jiFHZBn22VViBGI41pQ=="
+      data-copy="Copy"
+      data-copied="Copied"></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Warranty Frontend",
+    "headline": "Warranty Frontend",
+    
+    "inLanguage": "en",
+    "url" : "http://localhost:1313/posts/warranty_frontend/frontend/",
+    "author" : {
+      "@type": "Person",
+      "name": "Daniel Halawi"
+    },
+    "copyrightYear": "2026",
+    "dateCreated": "2026-02-03T00:00:00\u002b00:00",
+    "datePublished": "2026-02-03T00:00:00\u002b00:00",
+    
+    "dateModified": "2026-05-21T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1537"
+  }]
+  </script>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral bf-scrollbar">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        Skip to main content
+      </a>
+    </div>
+    
+    
+      <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 z-100">
+  <div
+    id="menu-blur"
+    class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl bg-neutral/25 dark:bg-neutral-800/25"></div>
+  <div class="relative m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32">
+    <div class="main-menu flex items-center w-full gap-2 p-1 pl-0">
+  
+  
+    <a href="/" class="text-base font-medium truncate min-w-0 shrink">
+      Daniel Halawi
+    </a>
+  
+  <div class="flex items-center ms-auto">
+    <div class="hidden md:flex">
+      <nav class="flex items-center gap-x-5 h-12">
+  
+    
+      
+  
+    <a
+      href="/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="Home"
+      title="">
+      
+      
+        <span class="text-base font-medium break-normal">
+          Home
+        </span>
+      
+    </a>
+  
+
+    
+      
+  
+    <a
+      href="/posts/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="Projects"
+      title="Posts">
+      
+      
+        <span class="text-base font-medium break-normal">
+          Projects
+        </span>
+      
+    </a>
+  
+
+    
+      
+  
+    <a
+      href="/posts/exam/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="Exam Portfolio"
+      title="Warranty - Exam">
+      
+      
+        <span class="text-base font-medium break-normal">
+          Exam Portfolio
+        </span>
+      
+    </a>
+  
+
+    
+  
+
+  
+
+  
+
+  
+    <button
+      id="search-button"
+      aria-label="Search"
+      class="text-base bf-icon-color-hover"
+      title="Search (/)">
+      <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+    </button>
+  
+
+  
+</nav>
+
+
+
+    </div>
+    <div class="flex md:hidden">
+      <div class="flex items-center h-14 gap-4">
+  
+    <button
+      id="search-button-mobile"
+      aria-label="Search"
+      class="flex items-center justify-center bf-icon-color-hover"
+      title="Search (/)">
+      <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+    </button>
+  
+
+  
+
+  
+    <input type="checkbox" id="mobile-menu-toggle" autocomplete="off" class="hidden peer">
+    <label for="mobile-menu-toggle" class="flex items-center justify-center cursor-pointer bf-icon-color-hover">
+      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+    </label>
+
+    <div
+      role="dialog"
+      aria-modal="true"
+      style="scrollbar-gutter: stable;"
+      class="fixed inset-0 z-50 invisible overflow-y-auto px-6 py-20 opacity-0 transition-[opacity,visibility] duration-300 peer-checked:visible peer-checked:opacity-100 bg-neutral-50/97 dark:bg-neutral-900/99
+      bf-scrollbar">
+      <label
+        for="mobile-menu-toggle"
+        class="fixed end-8 top-5 flex items-center justify-center z-50 h-12 w-12 cursor-pointer select-none rounded-full bf-icon-color-hover border bf-border-color bf-border-color-hover bg-neutral-50 dark:bg-neutral-900">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </label>
+      <nav class="mx-auto max-w-md space-y-6">
+        
+  
+    
+    <div class="px-2">
+      <a
+        href="/"
+        aria-label="Home"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="" class="text-2xl font-bold tracking-tight">
+          Home
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href="/posts/"
+        aria-label="Projects"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="Posts" class="text-2xl font-bold tracking-tight">
+          Projects
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href="/posts/exam/"
+        aria-label="Exam Portfolio"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="Warranty - Exam" class="text-2xl font-bold tracking-tight">
+          Exam Portfolio
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+
+        
+  
+
+        
+  
+
+      </nav>
+    </div>
+  
+</div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <script>
+    (function () {
+      var mainmenu = document.querySelector(".main-menu");
+      if (!mainmenu) return;
+
+      var path = window.location.pathname;
+      var links = mainmenu.querySelectorAll('a[href="' + path + '"]');
+
+      links.forEach(function (link) {
+        var targets = link.querySelectorAll("span");
+        targets.forEach(function (el) {
+          el.classList.add("active");
+        });
+      });
+    })();
+  </script>
+
+
+  </div>
+</div>
+
+
+<script
+  type="text/javascript"
+  src="/js/background-blur.min.5e93b56ceeead8641dcfcd7095056ecf964c204eda4ee4ac96af8aa06d8cb788f642e9db353c0dbfeda0c0922ba7db894f088bf3b3d17867b5c44b8e0d726401.js"
+  integrity="sha512-XpO1bO7q2GQdz81wlQVuz5ZMIE7aTuSslq&#43;KoG2Mt4j2QunbNTwNv&#43;2gwJIrp9uJTwiL87PReGe1xEuODXJkAQ=="
+  data-blur-id="menu-blur"></script>
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+      
+      
+      
+      
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  
+  
+    
+    
+  
+
+
+
+
+  
+    
+    
+      
+      
+    
+  
+
+
+
+
+
+    <div id="hero" class="h-[150px] md:h-[200px]"></div>
+  
+  <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom">
+    
+    
+    
+    <img
+      id="background-image"
+      src="/portfolioWallpaper5_hu_208be49a8ee21a9c.webp"
+      role="presentation"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="absolute inset-0 w-full h-full object-cover"
+      >
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-neutral dark:from-neutral-800 to-transparent mix-blend-normal"></div>
+    <div
+      class="absolute inset-0 opacity-60 bg-gradient-to-t from-neutral dark:from-neutral-800 to-neutral-100 dark:to-neutral-800 mix-blend-normal"></div>
+  </div>
+
+  
+    <div
+      id="background-blur"
+      class="fixed opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-xl bg-neutral-100/75 dark:bg-neutral-800/60"></div>
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/background-blur.min.5e93b56ceeead8641dcfcd7095056ecf964c204eda4ee4ac96af8aa06d8cb788f642e9db353c0dbfeda0c0922ba7db894f088bf3b3d17867b5c44b8e0d726401.js"
+      integrity="sha512-XpO1bO7q2GQdz81wlQVuz5ZMIE7aTuSslq&#43;KoG2Mt4j2QunbNTwNv&#43;2gwJIrp9uJTwiL87PReGe1xEuODXJkAQ=="
+      data-blur-id="background-blur"
+      data-image-id="background-image"
+      data-image-url="/portfolioWallpaper5_hu_208be49a8ee21a9c.webp"></script>
+  
+      
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Warranty Frontend
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-05-21T00:00:00&#43;00:00">Updated: 21 May 2026</time><span class="px-2 text-primary-500">&middot;</span><span>1537 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+
+        <div class="article-content max-w-prose mb-20">
+          
+<h1 class="relative group">Warrantour — Project Documentation
+    <div id="warrantour--project-documentation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#warrantour--project-documentation" aria-label="Anchor">#</a>
+    </span>
+    
+</h1>
+
+<h2 class="relative group">Overview
+    <div id="overview" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#overview" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Warrantour is a full-stack web application for tracking product warranties and receipts. Users can register products, set warranty durations, attach receipt information, and monitor expiry dates — all from a clean, responsive dashboard.</p>
+<p><strong>Live URL:</strong> <a href="https://warrantyproject.greymansshop.dk"  target="_blank" rel="noreferrer">https://warrantyproject.greymansshop.dk</a><br>
+<strong>Frontend:</strong> React (Vite), deployed via GitHub Actions<br>
+<strong>Backend:</strong> Java + Javalin, deployed via Docker (Jetty) + Watchtower<br>
+<strong>Database:</strong> PostgreSQL on Digital Ocean</p>
+<hr>
+
+<h2 class="relative group">Tech Stack
+    <div id="tech-stack" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#tech-stack" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Frontend</td>
+          <td>React 19, React Router v7, Vite 8</td>
+      </tr>
+      <tr>
+          <td>Auth</td>
+          <td>JWT — created and validated on backend via nimbus-jose-jwt, decoded on frontend via jwt-decode for inspection only</td>
+      </tr>
+      <tr>
+          <td>Backend</td>
+          <td>Java, Javalin 7, Hibernate ORM</td>
+      </tr>
+      <tr>
+          <td>Database</td>
+          <td>PostgreSQL 16</td>
+      </tr>
+      <tr>
+          <td>Deployment</td>
+          <td>Jetty, Docker, Watchtower, Caddy (reverse proxy)</td>
+      </tr>
+      <tr>
+          <td>Hosting</td>
+          <td>Digital Ocean Droplet</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+
+<h2 class="relative group">Architecture
+    <div id="architecture" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#architecture" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">Frontend Structure
+    <div id="frontend-structure" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#frontend-structure" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">src/
+</span></span><span class="line"><span class="cl">  context/
+</span></span><span class="line"><span class="cl">    AuthContext.js       ← global auth + product state
+</span></span><span class="line"><span class="cl">  components/
+</span></span><span class="line"><span class="cl">    WarrantyTable.jsx    ← product list with filtering, sorting, detail overlay
+</span></span><span class="line"><span class="cl">    ui.jsx               ← shared UI primitives (Input, PillButton, Field, etc.)
+</span></span><span class="line"><span class="cl">  pages/
+</span></span><span class="line"><span class="cl">    PageLogin.jsx
+</span></span><span class="line"><span class="cl">    PageSignUp.jsx
+</span></span><span class="line"><span class="cl">    PageProfile.jsx
+</span></span><span class="line"><span class="cl">    PageRegister.jsx
+</span></span><span class="line"><span class="cl">    PageContact.jsx</span></span></code></pre></div></div>
+
+<h3 class="relative group">Backend Structure
+    <div id="backend-structure" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#backend-structure" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">app/
+</span></span><span class="line"><span class="cl">  controllers/        ← Javalin HTTP handlers
+</span></span><span class="line"><span class="cl">  daos/               ← Database access objects (Hibernate)
+</span></span><span class="line"><span class="cl">  dto/                ← Data transfer objects
+</span></span><span class="line"><span class="cl">  entity/             ← JPA entities
+</span></span><span class="line"><span class="cl">  routes/             ← Route definitions with role-based access
+</span></span><span class="line"><span class="cl">  services/
+</span></span><span class="line"><span class="cl">    entityServices/   ← Business logic
+</span></span><span class="line"><span class="cl">    dtoConverter/     ← Entity ↔ DTO mapping
+</span></span><span class="line"><span class="cl">    securityService/  ← JWT creation and validation
+</span></span><span class="line"><span class="cl">  config/
+</span></span><span class="line"><span class="cl">    ApplicationConfig.java  ← Javalin setup, CORS, routing
+</span></span><span class="line"><span class="cl">    HibernateConfig.java    ← Database connection</span></span></code></pre></div></div>
+<hr>
+
+<h2 class="relative group">Authentication Flow
+    <div id="authentication-flow" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#authentication-flow" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">Registration
+    <div id="registration" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#registration" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<ol>
+<li>User submits email + password on <code>/signup</code></li>
+<li><code>POST /security/register</code> creates user with <code>USER</code> role in database</li>
+<li><code>login()</code> is called automatically after successful registration</li>
+<li>Token and email stored in <code>localStorage</code></li>
+<li>User ID fetched from <code>/user/all</code> and stored in <code>localStorage</code></li>
+</ol>
+
+<h3 class="relative group">Login
+    <div id="login" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#login" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<ol>
+<li>User submits credentials on <code>/login</code></li>
+<li><code>POST /security/login</code> validates credentials using case-insensitive email query</li>
+<li>Backend returns <code>{ token, email, id }</code></li>
+<li>Frontend stores token, email and userId in <code>localStorage</code></li>
+<li>User state set in <code>AuthContext</code></li>
+</ol>
+
+<h3 class="relative group">Session Restore
+    <div id="session-restore" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#session-restore" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>On page load, <code>AuthContext</code> reads email from <code>localStorage</code> and restores the user session without a server round-trip. The token is sent as a <code>Bearer</code> header on all authenticated requests.</p>
+
+<h3 class="relative group">Logout
+    <div id="logout" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#logout" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Clears <code>token</code>, <code>email</code> and <code>userId</code> from <code>localStorage</code> and resets React state.</p>
+<hr>
+
+<h2 class="relative group">Data Model
+    <div id="data-model" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#data-model" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">Entity Relationships
+    <div id="entity-relationships" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#entity-relationships" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">User ──&lt; ProductRegistration &gt;── Product ──── Warranty
+</span></span><span class="line"><span class="cl">                │
+</span></span><span class="line"><span class="cl">               Receipt</span></span></code></pre></div></div>
+<ul>
+<li>A <code>User</code> can have many <code>ProductRegistration</code> entries</li>
+<li>Each <code>ProductRegistration</code> links a <code>User</code>, a <code>Product</code>, and optionally a <code>Receipt</code></li>
+<li>Each <code>Product</code> has one <code>Warranty</code></li>
+<li>Each <code>Receipt</code> belongs to one <code>ProductRegistration</code></li>
+</ul>
+
+<h3 class="relative group">Adding a Product (Frontend Flow)
+    <div id="adding-a-product-frontend-flow" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#adding-a-product-frontend-flow" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>When a user registers a product, the frontend makes four sequential API calls:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">1. POST /product          → creates product, returns { id, productName, userId, warrantyId }
+</span></span><span class="line"><span class="cl">2. POST /warranty         → creates warranty linked to productId
+</span></span><span class="line"><span class="cl">3. POST /product-registration → links userId + productId, returns { id }
+</span></span><span class="line"><span class="cl">4. POST /receipt          → links to registrationId (only if price provided)
+</span></span><span class="line"><span class="cl">   PUT  /product-registration/{id} → updates registration with receiptId</span></span></code></pre></div></div>
+
+<h3 class="relative group">Product Data Merge
+    <div id="product-data-merge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#product-data-merge" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Products fetched from the API are merged on the frontend with warranty, receipt and registration data:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">merged</span> <span class="o">=</span> <span class="nx">products</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">p</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">warranty</span> <span class="o">=</span> <span class="nx">warranties</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">w</span> <span class="p">=&gt;</span> <span class="nx">w</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">p</span><span class="p">.</span><span class="nx">warrantyId</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">registration</span> <span class="o">=</span> <span class="nx">registrations</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">r</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">productId</span> <span class="o">===</span> <span class="nx">p</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">receipt</span> <span class="o">=</span> <span class="nx">registration</span> <span class="o">?</span> <span class="nx">receipts</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">r</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">registration</span><span class="p">.</span><span class="nx">receiptId</span><span class="p">)</span> <span class="o">:</span> <span class="kc">null</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span><span class="nx">p</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">purchased</span><span class="o">:</span> <span class="nx">warranty</span><span class="o">?</span><span class="p">.</span><span class="nx">startDate</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">expires</span><span class="o">:</span> <span class="nx">warranty</span><span class="o">?</span><span class="p">.</span><span class="nx">endDate</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">warrantyMonths</span><span class="o">:</span> <span class="nx">warranty</span><span class="o">?</span><span class="p">.</span><span class="nx">warrantyMonths</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">price</span><span class="o">:</span> <span class="nx">receipt</span><span class="o">?</span><span class="p">.</span><span class="nx">price</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">retailer</span><span class="o">:</span> <span class="nx">receipt</span><span class="o">?</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre></div></div>
+<hr>
+
+<h2 class="relative group">Key Components
+    <div id="key-components" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#key-components" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">AuthContext.js
+    <div id="authcontextjs" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#authcontextjs" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Central state manager for the application. Exposes:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Value</th>
+          <th>Type</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>user</code></td>
+          <td>object</td>
+          <td><code>{ email, id }</code> or <code>null</code></td>
+      </tr>
+      <tr>
+          <td><code>products</code></td>
+          <td>array</td>
+          <td>Merged product objects</td>
+      </tr>
+      <tr>
+          <td><code>login</code></td>
+          <td>function</td>
+          <td>Authenticates and stores session</td>
+      </tr>
+      <tr>
+          <td><code>logout</code></td>
+          <td>function</td>
+          <td>Clears session</td>
+      </tr>
+      <tr>
+          <td><code>register</code></td>
+          <td>function</td>
+          <td>Creates account then logs in</td>
+      </tr>
+      <tr>
+          <td><code>addProduct</code></td>
+          <td>function</td>
+          <td>Runs the 4-step product creation flow</td>
+      </tr>
+      <tr>
+          <td><code>removeProduct</code></td>
+          <td>function</td>
+          <td>Deletes product by ID</td>
+      </tr>
+  </tbody>
+</table>
+
+<h3 class="relative group">WarrantyTable.jsx
+    <div id="warrantytablejsx" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#warrantytablejsx" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Displays the user&rsquo;s products with:</p>
+<ul>
+<li>Search by product name</li>
+<li>Filter by status (all, expiring soon, active, expired)</li>
+<li>Sort by urgency, newest, or name</li>
+<li>Stat cards (total, expiring soon, expired)</li>
+<li>Colour-coded time left badges</li>
+<li>Two-step delete confirmation</li>
+<li>Click-to-open detail overlay</li>
+</ul>
+
+<h3 class="relative group">ProductDetail Overlay
+    <div id="productdetail-overlay" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#productdetail-overlay" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Opens when clicking a product row. Shows:</p>
+<ul>
+<li>Product name and time left badge</li>
+<li>Purchased and expiry dates</li>
+<li>Editable retailer, order number and description fields</li>
+</ul>
+<hr>
+
+<h2 class="relative group">Deployment
+    <div id="deployment" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#deployment" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">Backend (Java + Docker)
+    <div id="backend-java--docker" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#backend-java--docker" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>The backend is containerised and deployed to a Digital Ocean droplet. Watchtower polls Docker Hub every 5 minutes and automatically redeploys when a new image is pushed.</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build and push new image</span>
+</span></span><span class="line"><span class="cl">mvn clean package -DskipTests
+</span></span><span class="line"><span class="cl">docker build -t shaylah/warranty_project:latest .
+</span></span><span class="line"><span class="cl">docker push shaylah/warranty_project:latest</span></span></code></pre></div></div>
+
+<h3 class="relative group">Frontend (React + Vite)
+    <div id="frontend-react--vite" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#frontend-react--vite" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>The frontend is built locally and deployed manually using <code>scp</code>:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build the frontend</span>
+</span></span><span class="line"><span class="cl">npm run build
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="c1"># Copy dist to server</span>
+</span></span><span class="line"><span class="cl">scp -r dist/* jetty@dat2semshop:~/deployment/site/warrantyproject/dist</span></span></code></pre></div></div>
+<p>The built files live at <code>~/deployment/site/warrantyproject/dist</code> on the server and are served as static files by Caddy.</p>
+
+<h3 class="relative group">Caddy (Reverse Proxy + Static File Server)
+    <div id="caddy-reverse-proxy--static-file-server" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#caddy-reverse-proxy--static-file-server" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Caddy handles HTTPS, serves the frontend as static files, and proxies API requests to the Javalin container. The <code>try_files</code> directive ensures React Router works correctly by redirecting unknown paths to <code>index.html</code>:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">warrantyproject.greymansshop.dk {
+</span></span><span class="line"><span class="cl">    root * /srv/warrantyproject/dist
+</span></span><span class="line"><span class="cl">    file_server
+</span></span><span class="line"><span class="cl">    try_files {path} /index.html
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">warrantyproject-api.greymansshop.dk {
+</span></span><span class="line"><span class="cl">    reverse_proxy warranty_project:7070
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></div></div>
+<p>The frontend and API are on separate subdomains — <code>warrantyproject.greymansshop.dk</code> for the React app and <code>warrantyproject-api.greymansshop.dk</code> for the Javalin backend.</p>
+<hr>
+
+<h2 class="relative group">Challenges &amp; Solutions
+    <div id="challenges--solutions" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#challenges--solutions" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">Separate Subdomains for Frontend and API
+    <div id="separate-subdomains-for-frontend-and-api" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#separate-subdomains-for-frontend-and-api" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> Initially the frontend and backend were both pointed at the same subdomain (<code>warrantyproject.greymansshop.dk</code>), which made it impossible to serve both the static React files and proxy API requests from the same Caddy block cleanly.<br>
+<strong>Cause:</strong> Caddy can either serve static files or reverse proxy from a given block — having both on the same domain caused conflicts and CORS issues because the browser saw requests to the same origin going to two different destinations.<br>
+<strong>Solution:</strong> Split them into two separate subdomains in the Caddyfile — <code>warrantyproject.greymansshop.dk</code> serves the static frontend files, and <code>warrantyproject-api.greymansshop.dk</code> proxies to the Javalin container. The API URL in <code>AuthContext.js</code> was updated to point to the new API subdomain.</p>
+
+<h3 class="relative group">CORS
+    <div id="cors" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#cors" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> The frontend was blocked by CORS even after configuring Javalin&rsquo;s <code>anyHost()</code> rule.<br>
+<strong>Cause:</strong> Caddy was also adding <code>Access-Control-Allow-Origin: *</code>, resulting in a duplicate header <code>*, *</code> that browsers reject.<br>
+<strong>Solution:</strong> Handled CORS at the Javalin level with <code>anyHost()</code> and removed duplicate headers from Caddy.</p>
+
+<h3 class="relative group">React <code>useEffect</code> and setState
+    <div id="react-useeffect-and-setstate" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#react-useeffect-and-setstate" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> Calling <code>setLoading(false)</code> or <code>setProducts([])</code> directly at the top of a <code>useEffect</code> caused a React warning about cascading renders.<br>
+<strong>Cause:</strong> React doesn&rsquo;t allow synchronous state updates at the top of an effect body — only inside callbacks like <code>.then()</code>.<br>
+<strong>Solution:</strong> Moved synchronous state updates out of effects — for example, moving <code>setProducts([])</code> into the <code>logout</code> function instead of the effect.</p>
+
+<h3 class="relative group">Stale Token / 403 Errors
+    <div id="stale-token--403-errors" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#stale-token--403-errors" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> Authenticated requests returned 403 after switching between local and deployed backends.<br>
+<strong>Cause:</strong> The token in <code>localStorage</code> was issued by one backend but sent to a different one with a different JWT secret.<br>
+<strong>Solution:</strong> Always clear <code>localStorage</code> when switching environments and log in fresh to get a valid token.</p>
+
+<h3 class="relative group">Product-Registration-Receipt Chicken-and-Egg
+    <div id="product-registration-receipt-chicken-and-egg" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#product-registration-receipt-chicken-and-egg" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> Creating a receipt requires a <code>productRegistrationId</code>, but the registration needs a <code>receiptId</code> to link them.<br>
+<strong>Solution:</strong> Create the registration first without a receipt, then create the receipt with the registration ID, then update the registration via <code>PUT</code> to add the receipt ID.</p>
+
+<h3 class="relative group">Hibernate Query Type Mismatch
+    <div id="hibernate-query-type-mismatch" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#hibernate-query-type-mismatch" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> The backend crashed on startup with <code>QueryTypeMismatchException</code> — the <code>createUser</code> check query was typed as <code>Long.class</code> but the JPQL query selected <code>User</code> objects.<br>
+<strong>Fix:</strong> Changed <code>Long.class</code> to <code>User.class</code> in the query.</p>
+
+<h3 class="relative group">Populator Running on Every Startup
+    <div id="populator-running-on-every-startup" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#populator-running-on-every-startup" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> The <code>Populator</code> ran on every container start, trying to create seeded users that already existed, causing the app to crash before Javalin could start.<br>
+<strong>Solution:</strong> Commented out <code>populateAndCreateEntities()</code> in <code>App.java</code> for production.</p>
+
+<h3 class="relative group">JSX in <code>.js</code> Files
+    <div id="jsx-in-js-files" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#jsx-in-js-files" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p><strong>Problem:</strong> Renaming <code>AuthContext.jsx</code> to <code>AuthContext.js</code> broke the Vite build because Vite 8 with rolldown doesn&rsquo;t support JSX syntax in plain <code>.js</code> files.<br>
+<strong>Solution:</strong> Replaced the JSX return statement with <code>React.createElement()</code> so the file contains no JSX and is valid plain JavaScript:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">AuthCtx</span><span class="p">.</span><span class="nx">Provider</span><span class="p">,</span> <span class="p">{</span> <span class="nx">value</span> <span class="p">},</span> <span class="nx">children</span><span class="p">)</span></span></span></code></pre></div></div>
+<hr>
+
+<h2 class="relative group">API Endpoints
+    <div id="api-endpoints" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#api-endpoints" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Method</th>
+          <th>Path</th>
+          <th>Auth</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>POST</td>
+          <td><code>/security/register</code></td>
+          <td>None</td>
+          <td>Create account</td>
+      </tr>
+      <tr>
+          <td>POST</td>
+          <td><code>/security/login</code></td>
+          <td>None</td>
+          <td>Login, returns token + email + id</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/security/healthcheck</code></td>
+          <td>None</td>
+          <td>Health check</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/product/all</code></td>
+          <td>USER</td>
+          <td>All products</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/product/user/{id}</code></td>
+          <td>USER</td>
+          <td>Products by user ID</td>
+      </tr>
+      <tr>
+          <td>POST</td>
+          <td><code>/product</code></td>
+          <td>USER</td>
+          <td>Create product</td>
+      </tr>
+      <tr>
+          <td>DELETE</td>
+          <td><code>/product/{id}</code></td>
+          <td>USER</td>
+          <td>Delete product</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/warranty/all</code></td>
+          <td>USER</td>
+          <td>All warranties</td>
+      </tr>
+      <tr>
+          <td>POST</td>
+          <td><code>/warranty</code></td>
+          <td>USER</td>
+          <td>Create warranty</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/receipt/all</code></td>
+          <td>USER</td>
+          <td>All receipts</td>
+      </tr>
+      <tr>
+          <td>POST</td>
+          <td><code>/receipt</code></td>
+          <td>USER</td>
+          <td>Create receipt</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/product-registration/all</code></td>
+          <td>USER</td>
+          <td>All registrations</td>
+      </tr>
+      <tr>
+          <td>POST</td>
+          <td><code>/product-registration</code></td>
+          <td>USER</td>
+          <td>Create registration</td>
+      </tr>
+      <tr>
+          <td>PUT</td>
+          <td><code>/product-registration/{id}</code></td>
+          <td>USER</td>
+          <td>Update registration</td>
+      </tr>
+      <tr>
+          <td>GET</td>
+          <td><code>/user/all</code></td>
+          <td>USER</td>
+          <td>All users</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+
+<h2 class="relative group">What I Learned
+    <div id="what-i-learned" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#what-i-learned" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<ul>
+<li>How JWT authentication works end-to-end — from issuing and signing a token on the backend to storing and sending it from the frontend, and the difference between decoding (reading the payload) and validating (verifying the signature)</li>
+<li>How to manage global state in React using Context and <code>useState</code></li>
+<li>How <code>useEffect</code> dependencies and the rules around state updates inside effects work in practice</li>
+<li>How CORS works at the HTTP level and why both the application server and the reverse proxy can interfere with it independently</li>
+<li>How Docker, Watchtower and Caddy work together to create a deployment pipeline</li>
+<li>How to debug a containerised Java application using <code>docker logs</code></li>
+<li>How to design a relational data model with one-to-one and one-to-many relationships and map them with Hibernate JPA</li>
+<li>How to serve a React SPA correctly behind a reverse proxy using <code>try_files</code> to support client-side routing</li>
+<li>How to separate frontend and backend concerns at the infrastructure level using distinct subdomains and Caddy blocks</li>
+</ul>
+
+          
+          
+          
+        </div>
+        
+        
+
+        
+
+        
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/Warranty_Frontend/frontend/index.md"
+          data-oid-likes="likes_posts/Warranty_Frontend/frontend/index.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+    
+    
+    
+      
+      
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+      <div class="flex justify-between pt-3">
+        <span class="flex flex-col">
+          
+        </span>
+        <span class="flex flex-col items-end">
+          
+            <a
+              class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/exam/">
+              <span class="leading-6">
+                Warranty - Exam&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+              </span>
+            </a>
+            
+              <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2026-02-03T00:00:00&#43;00:00">3 February 2026</time>
+              </span>
+            
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+      
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top"
+    title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+      
+      
+        
+      
+      
+      
+      
+      <nav class="flex flex-row pb-4 text-base font-medium text-neutral-500 dark:text-neutral-400 overflow-x-auto py-2">
+        <ul class="flex list-none flex-row">
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 me-4">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href=""
+                title="">
+                
+                
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          © 2026 Daniel Halawi. All Rights Reserved.
+      </p>
+    
+
+    
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="http://localhost:1313/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
