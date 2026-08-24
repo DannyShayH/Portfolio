@@ -3,61 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>http://localhost:1313/posts/warranty/week1/</loc>
+    <loc>https://example.org/posts/warranty/week1/</loc>
     <lastmod>2026-04-02T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty_frontend/frontend/</loc>
+    <loc>https://example.org/posts/warranty_frontend/frontend/</loc>
     <lastmod>2026-05-21T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty/week2/</loc>
+    <loc>https://example.org/posts/warranty/week2/</loc>
     <lastmod>2026-04-02T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty/week3/</loc>
+    <loc>https://example.org/posts/warranty/week3/</loc>
     <lastmod>2026-04-03T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty/week4/</loc>
+    <loc>https://example.org/posts/warranty/week4/</loc>
     <lastmod>2026-04-04T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty/week5/</loc>
+    <loc>https://example.org/posts/warranty/week5/</loc>
     <lastmod>2026-04-04T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://example.org/</loc>
     <lastmod>2026-05-21T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://example.org/posts/</loc>
     <lastmod>2026-05-21T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/exam/</loc>
+    <loc>https://example.org/posts/exam/</loc>
     <lastmod>2026-04-10T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/warranty/</loc>
+    <loc>https://example.org/posts/warranty/</loc>
     <lastmod>2026-02-19T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
