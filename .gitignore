@@ -1,0 +1,15 @@
+# Claude Code local settings
+.claude/
+
+# Hugo build output & generated resource cache
+/public/
+/resources/_gen/
+/.hugo_build.lock
+hugo_stats.json
+.hugolock
+
+# Python virtualenv
+.venv/
+
+# macOS
+.DS_Store

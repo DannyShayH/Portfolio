@@ -3,6 +3,8 @@ title: Deployment & DevOps
 weight: 5
 date: 2026-03-08
 lastmod: 2026-04-04
+tags: ["devops", "docker", "ci-cd", "deployment", "caddy"]
+categories: ["Projects"]
 ---
 
 ## Deployment & DevOps

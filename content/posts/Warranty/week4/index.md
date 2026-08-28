@@ -3,6 +3,8 @@ title: REST & Test
 weight: 4
 date: 2026-02-03
 lastmod: 2026-04-04
+tags: ["java", "rest-api", "testing", "testcontainers", "junit"]
+categories: ["Projects"]
 ---
 
 ## Requests & Tests

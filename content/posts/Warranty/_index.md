@@ -3,6 +3,8 @@ title: Warranty - Introduction
 description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
 date: 2026-02-03
 lastmod: 2026-02-19
+tags: ["java", "javalin", "full-stack", "project"]
+categories: ["Projects"]
 ---
 <div class="image-center">
 <img 

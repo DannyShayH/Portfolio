@@ -4,9 +4,19 @@ pageRef = "/"
 weight = 1
 
 [[main]]
+name = "Blog"
+pageRef = "blog"
+weight = 5
+
+[[main]]
 name = "Projects"
 pageRef = "posts"
 weight = 10
+
+[[main]]
+name = "Tags"
+pageRef = "tags"
+weight = 30
 
 [[main]]
 name = "Exam Portfolio"

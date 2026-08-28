@@ -3,6 +3,8 @@ title: Introduction
 weight: 1
 date: 2026-02-03
 lastmod: 2026-04-02
+tags: ["java", "jpa", "hibernate", "dao", "database"]
+categories: ["Projects"]
 ---
 
 ## JPA - JPQL - DAO

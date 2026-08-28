@@ -3,6 +3,8 @@ title: Security
 weight: 3
 date: 2026-02-03
 lastmod: 2026-04-03
+tags: ["java", "security", "jwt", "bcrypt", "authentication"]
+categories: ["Projects"]
 ---
 
 ## BCrypt & JWT

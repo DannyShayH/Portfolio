@@ -3,6 +3,8 @@ title: Restful API
 weight: 2
 date: 2026-02-03
 lastmod: 2026-04-02
+tags: ["java", "rest-api", "xml", "sendgrid", "integrations"]
+categories: ["Projects"]
 ---
 
 ## SendGrid & Retsinformation

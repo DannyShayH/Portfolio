@@ -3,6 +3,8 @@ title: Warranty Frontend
 weight: 1
 date: 2026-02-03
 lastmod: 2026-05-21
+tags: ["react", "vite", "frontend", "jwt", "full-stack"]
+categories: ["Projects"]
 ---
 
 # Warrantour — Project Documentation

@@ -1,0 +1,43 @@
+{{/*
+  Project override of themes/blowfish/layouts/_default/index.json
+  Adds "tags" and "categories" to the search index so the site search box can
+  match on taxonomy terms (see assets/js/search.js Fuse keys).
+  Re-diff against the theme file on any Blowfish upgrade.
+*/}}
+{{- $index := slice -}}
+{{ $pages := .Site.Pages }}
+{{ range .Site.Home.Translations }}
+{{ $pages = $pages | lang.Merge .Site.Pages }}
+{{ end }}
+{{- range $pages -}}
+  {{- if not .Params.excludeFromSearch -}}
+    {{- $section := .Site.GetPage "section" .Section -}}
+    {{- if .Date -}}
+      {{- $index = $index | append (dict
+      "date" (.Date | time.Format (.Site.Language.Params.dateFormat | default ":date_long"))
+      "title" (.Title | emojify | safeJS)
+      "section" ($section.Title | emojify | safeJS)
+      "summary" (.Summary | plainify | htmlUnescape | safeJS)
+      "content" (.Plain | safeJS)
+      "permalink" .RelPermalink
+      "externalUrl" .Params.externalUrl
+      "type" .Type
+      "tags" (.Params.tags)
+      "categories" (.Params.categories)
+      ) -}}
+    {{- else -}}
+      {{- $index = $index | append (dict
+      "title" (.Title | emojify | safeJS)
+      "section" ($section.Title | emojify | safeJS)
+      "summary" (.Summary | plainify | htmlUnescape | safeJS)
+      "content" (.Plain | safeJS)
+      "permalink" .RelPermalink
+      "externalUrl" .Params.externalUrl
+      "type" .Type
+      "tags" (.Params.tags)
+      "categories" (.Params.categories)
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $index | jsonify -}}
