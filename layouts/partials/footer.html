@@ -12,12 +12,58 @@
   </script>
 
   <style>
+  /* --- Dify chat widget, themed to match the site (Blowfish scheme, dark default) --- */
+
+  /* Launcher bubble: site primary blue → secondary cyan, same accents as links/headings */
   #dify-chatbot-bubble-button {
-    background-color: #1C64F2 !important;
+    background-color: rgb(37, 99, 235) !important; /* primary-600 */
+    background-image: linear-gradient(135deg, rgb(37, 99, 235) 0%, rgb(8, 145, 178) 100%) !important; /* primary-600 → secondary-600 */
+    box-shadow:
+      0 10px 25px -5px rgba(37, 99, 235, 0.45),
+      0 4px 10px -2px rgba(15, 23, 42, 0.35) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
   }
 
+  #dify-chatbot-bubble-button:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    filter: brightness(1.05) !important;
+    box-shadow:
+      0 16px 34px -6px rgba(37, 99, 235, 0.55),
+      0 6px 14px -2px rgba(15, 23, 42, 0.4) !important;
+  }
+
+  #dify-chatbot-bubble-button:active {
+    transform: translateY(0) scale(0.98) !important;
+  }
+
+  /* Chat panel: matches the site's cards / search modal
+     (rounded-lg, 1px neutral border, soft elevated shadow) */
   #dify-chatbot-bubble-window {
     width: 24rem !important;
     height: 40rem !important;
+    max-width: calc(100vw - 2rem) !important;
+    max-height: calc(100dvh - 6rem) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(203, 213, 225, 0.7) !important; /* neutral-300 */
+    box-shadow:
+      0 24px 60px -15px rgba(15, 23, 42, 0.35),
+      0 10px 24px -12px rgba(15, 23, 42, 0.25) !important;
+    overflow: hidden !important;
+  }
+
+  /* Site ships dark by default; Blowfish toggles the `dark` class on <html> */
+  html.dark #dify-chatbot-bubble-window {
+    border-color: rgba(71, 85, 105, 0.7) !important; /* neutral-600 */
+    box-shadow:
+      0 24px 60px -15px rgba(0, 0, 0, 0.6),
+      0 10px 24px -12px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* Phone screens: fill the viewport minus a comfortable margin */
+  @media (max-width: 640px) {
+    #dify-chatbot-bubble-window {
+      width: calc(100vw - 1.5rem) !important;
+      height: calc(100dvh - 5.5rem) !important;
+    }
   }
   </style>
