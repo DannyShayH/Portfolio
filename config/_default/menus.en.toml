@@ -4,11 +4,6 @@ pageRef = "/"
 weight = 1
 
 [[main]]
-name = "Blog"
-pageRef = "blog"
-weight = 5
-
-[[main]]
 name = "Projects"
 pageRef = "posts"
 weight = 10
@@ -17,12 +12,6 @@ weight = 10
 name = "Tags"
 pageRef = "tags"
 weight = 30
-
-[[main]]
-name = "Exam Portfolio"
-pageRef = "exam"
-identifier = "LCjEWbroPp"
-weight = 9_999
 
 [[footer]]
 none = "none"

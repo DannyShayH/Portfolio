@@ -3,6 +3,8 @@ title: Warranty - Exam
 description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
 date: 2026-02-03
 lastmod: 2026-04-10
+draft: true
+weight: 2
 tags: ["java", "rest-api", "security", "jwt", "testing"]
 categories: ["Projects"]
 ---

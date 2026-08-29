@@ -11,5 +11,8 @@ hugo_stats.json
 # Python virtualenv
 .venv/
 
+# Local RAG tooling (contains a Dify API key — keep out of version control)
+upload_to_dify.py
+
 # macOS
 .DS_Store
