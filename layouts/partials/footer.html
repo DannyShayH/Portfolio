@@ -51,8 +51,9 @@
     overflow: hidden !important;
   }
 
-  /* Site ships dark by default; Blowfish toggles the `dark` class on <html> */
-  html.dark #dify-chatbot-bubble-window {
+  /* Site ships dark by default (autoSwitchAppearance = false, defaultAppearance = "dark") */
+  html.dark #dify-chatbot-bubble-window,
+  :root:not(.light) #dify-chatbot-bubble-window {
     border-color: rgba(71, 85, 105, 0.7) !important; /* neutral-600 */
     box-shadow:
       0 24px 60px -15px rgba(0, 0, 0, 0.6),
