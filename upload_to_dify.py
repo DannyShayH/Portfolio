@@ -14,8 +14,9 @@ import mimetypes
 import os
 import re
 import sys
+import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import requests
 
@@ -23,6 +24,8 @@ import requests
 PROJECT_ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = PROJECT_ROOT / "content"
 DEFAULT_BASE_URL = "https://api.dify.ai/v1"
+MAX_ATTEMPTS = 6
+RETRYABLE_STATUS_CODES = {429, 503}
 SUPPORTED_EXTENSIONS = {
     ".csv",
     ".htm",
@@ -84,14 +87,48 @@ class DifyClient:
     def _url(self, suffix: str) -> str:
         return f"{self.base_url}/datasets/{self.dataset_id}{suffix}"
 
+    def _request_with_retry(
+        self,
+        request: Callable[[], requests.Response],
+        operation: str,
+    ) -> requests.Response:
+        """Retry Dify's documented temporary capacity-check responses."""
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            response = request()
+            if (
+                response.status_code not in RETRYABLE_STATUS_CODES
+                or attempt == MAX_ATTEMPTS
+            ):
+                return response
+
+            retry_after = response.headers.get("Retry-After", "")
+            try:
+                delay = max(1.0, min(float(retry_after), 120.0))
+            except ValueError:
+                delay = min(5 * (2 ** (attempt - 1)), 60)
+
+            print(
+                f"Dify returned {response.status_code} while {operation}; "
+                f"retrying in {delay:g}s "
+                f"(attempt {attempt + 1}/{MAX_ATTEMPTS}).",
+                file=sys.stderr,
+                flush=True,
+            )
+            time.sleep(delay)
+
+        raise RuntimeError("Retry loop ended unexpectedly")
+
     def list_documents(self) -> list[dict[str, Any]]:
         documents: list[dict[str, Any]] = []
         page = 1
         while True:
-            response = self.session.get(
-                self._url("/documents"),
-                params={"page": page, "limit": 100},
-                timeout=(10, 60),
+            response = self._request_with_retry(
+                lambda: self.session.get(
+                    self._url("/documents"),
+                    params={"page": page, "limit": 100},
+                    timeout=(10, 60),
+                ),
+                "listing documents",
             )
             response.raise_for_status()
             payload = response.json()
@@ -108,14 +145,21 @@ class DifyClient:
             "indexing_technique": "high_quality",
             "process_rule": PROCESS_RULE,
         }
-        with path.open("rb") as handle:
-            response = self.session.request(
-                method,
-                self._url(suffix),
-                data={"data": json.dumps(request_data)},
-                files={"file": (upload_name, handle, mime_type)},
-                timeout=(10, 180),
-            )
+        def send_file() -> requests.Response:
+            # Reopen the file for every attempt so the upload always starts at
+            # byte zero rather than retrying with an exhausted file handle.
+            with path.open("rb") as handle:
+                return self.session.request(
+                    method,
+                    self._url(suffix),
+                    data={"data": json.dumps(request_data)},
+                    files={"file": (upload_name, handle, mime_type)},
+                    timeout=(10, 180),
+                )
+
+        response = self._request_with_retry(
+            send_file, f"uploading {path.relative_to(PROJECT_ROOT)}"
+        )
         response.raise_for_status()
         return response.json()
 
@@ -132,8 +176,11 @@ class DifyClient:
         )
 
     def delete_document(self, document_id: str) -> None:
-        response = self.session.delete(
-            self._url(f"/documents/{document_id}"), timeout=(10, 60)
+        response = self._request_with_retry(
+            lambda: self.session.delete(
+                self._url(f"/documents/{document_id}"), timeout=(10, 60)
+            ),
+            f"deleting duplicate document {document_id}",
         )
         response.raise_for_status()
 
