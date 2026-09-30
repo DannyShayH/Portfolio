@@ -67,6 +67,30 @@ def source_files() -> list[Path]:
     )
 
 
+def selected_source_files(requested: list[str] | None) -> list[Path]:
+    """Validate explicitly requested files and keep them inside content/."""
+    if not requested:
+        return source_files()
+
+    selected: list[Path] = []
+    content_root = CONTENT_DIR.resolve()
+    for value in requested:
+        candidate = Path(value)
+        if not candidate.is_absolute():
+            candidate = PROJECT_ROOT / candidate
+        candidate = candidate.resolve()
+        try:
+            candidate.relative_to(content_root)
+        except ValueError as error:
+            raise ValueError(f"Content file is outside content/: {value}") from error
+        if not candidate.is_file():
+            raise ValueError(f"Content file does not exist: {value}")
+        if candidate.suffix.lower() not in SUPPORTED_EXTENSIONS:
+            raise ValueError(f"Unsupported content file type: {value}")
+        selected.append(candidate)
+    return sorted(set(selected))
+
+
 def safe_part(value: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9._-]+", "-", value).strip("-.")
     return cleaned or "document"
@@ -280,6 +304,17 @@ def sync(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
+        "--file",
+        action="append",
+        dest="files",
+        help="sync only this content file; may be supplied more than once",
+    )
+    parser.add_argument(
+        "--list-files-json",
+        action="store_true",
+        help="print the supported content-file list as JSON and exit",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="show stable upload names without contacting Dify",
@@ -293,7 +328,20 @@ def main() -> int:
         print(f"Content directory not found: {CONTENT_DIR}", file=sys.stderr)
         return 1
 
-    files = source_files()
+    if args.list_files_json:
+        print(
+            json.dumps(
+                [str(path.relative_to(PROJECT_ROOT)) for path in source_files()],
+                separators=(",", ":"),
+            )
+        )
+        return 0
+
+    try:
+        files = selected_source_files(args.files)
+    except ValueError as error:
+        print(error, file=sys.stderr)
+        return 2
     if not files:
         print("No supported content files found.")
         return 0
