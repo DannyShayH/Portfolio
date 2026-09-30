@@ -1,0 +1,100 @@
+{{ $posts := .Site.GetPage "section" "posts" }}
+{{ $email := .Site.Params.Author.email }}
+{{ $github := "https://github.com/DannyShayH" }}
+{{ range .Site.Params.Author.links }}
+  {{ range $name, $url := . }}
+    {{ if eq $name "github" }}{{ $github = $url }}{{ end }}
+  {{ end }}
+{{ end }}
+
+<article class="portfolio-home">
+  <section class="portfolio-hero" aria-labelledby="portfolio-hero-title">
+    <div class="portfolio-hero__copy">
+      <p class="portfolio-eyebrow">Full-stack developer · Copenhagen</p>
+      <h1 id="portfolio-hero-title">I build useful digital experiences from interface to infrastructure.</h1>
+      <p class="portfolio-hero__lede">{{ .Description }}</p>
+      <div class="portfolio-actions">
+        <a class="portfolio-button portfolio-button--primary" href="{{ "posts/" | relLangURL }}">View projects <span aria-hidden="true">↗</span></a>
+        <a class="portfolio-button portfolio-button--secondary" href="mailto:{{ $email }}">Send an email</a>
+      </div>
+    </div>
+
+    <div class="portfolio-portrait-wrap">
+      {{ with .Site.Params.Author.image }}
+        {{ $portrait := resources.Get . }}
+        {{ with $portrait }}
+          {{ $portraitSmall := .Resize "560x webp q88" }}
+          {{ $portraitLarge := .Resize "900x webp q90" }}
+          <img
+            class="portfolio-portrait nozoom"
+            src="{{ $portraitSmall.RelPermalink }}"
+            srcset="{{ $portraitSmall.RelPermalink }} {{ $portraitSmall.Width }}w, {{ $portraitLarge.RelPermalink }} {{ $portraitLarge.Width }}w"
+            sizes="(max-width: 800px) 92vw, 42vw"
+            width="{{ $portraitLarge.Width }}"
+            height="{{ $portraitLarge.Height }}"
+            alt="Daniel Halawi"
+            fetchpriority="high"
+            decoding="async">
+        {{ end }}
+      {{ end }}
+      <span class="portfolio-portrait-caption">Daniel Halawi<br><span>Software developer</span></span>
+    </div>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="explore-title">
+    <div class="portfolio-section__heading">
+      <div>
+        <p class="portfolio-eyebrow">Explore</p>
+        <h2 id="explore-title">Choose where to go next.</h2>
+      </div>
+      <p>Projects, background, technologies, or a direct conversation.</p>
+    </div>
+    <div class="portfolio-destination-grid">
+      <a class="portfolio-destination" href="{{ "posts/" | relLangURL }}"><span>01</span><strong>Projects</strong><small>See what I have built</small><i aria-hidden="true">↗</i></a>
+      <a class="portfolio-destination" href="#about"><span>02</span><strong>About</strong><small>How I approach the work</small><i aria-hidden="true">↓</i></a>
+      <a class="portfolio-destination" href="{{ "tags/" | relLangURL }}"><span>03</span><strong>Skills &amp; Tags</strong><small>Browse the technologies</small><i aria-hidden="true">↗</i></a>
+      <a class="portfolio-destination" href="#contact"><span>04</span><strong>Contact</strong><small>Start a conversation</small><i aria-hidden="true">↓</i></a>
+    </div>
+  </section>
+
+  {{ with $posts }}
+    <section class="portfolio-section" aria-labelledby="featured-projects-title">
+      <div class="portfolio-section__heading">
+        <div>
+          <p class="portfolio-eyebrow">Selected work</p>
+          <h2 id="featured-projects-title">Projects in focus.</h2>
+        </div>
+        <a class="portfolio-text-link" href="{{ .RelPermalink }}">View all projects <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="portfolio-project-grid">
+        {{ range .Pages.ByWeight }}
+          {{ partial "portfolio-project-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+
+  <section id="about" class="portfolio-section portfolio-about" aria-labelledby="about-title">
+    <div>
+      <p class="portfolio-eyebrow">About</p>
+      <h2 id="about-title">Curious by nature, deliberate in the details.</h2>
+    </div>
+    <div class="portfolio-about__content prose dark:prose-invert">{{ .Content }}</div>
+  </section>
+
+  <section id="contact" class="portfolio-contact" aria-labelledby="contact-title">
+    <div>
+      <p class="portfolio-eyebrow">Contact</p>
+      <h2 id="contact-title">Have a role, project, or idea in mind?</h2>
+      <p>Let’s talk about it.</p>
+    </div>
+    <div class="portfolio-contact__links">
+      <a href="mailto:{{ $email }}" aria-label="Send Daniel an email">
+        {{ partial "icon.html" "email" }} <span>Email me</span>
+      </a>
+      <a href="{{ $github }}" target="_blank" rel="me noopener noreferrer" aria-label="View Daniel's GitHub profile">
+        {{ partial "icon.html" "github" }} <span>GitHub</span>
+      </a>
+    </div>
+  </section>
+</article>

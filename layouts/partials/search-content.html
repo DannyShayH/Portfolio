@@ -1,0 +1,15 @@
+{{ $suffix := .suffix }}
+<div class="portfolio-search-filters" role="group" aria-label="Filter search results">
+  {{ range slice "all" "project" "article" "tag" }}
+    {{ $label := cond (eq . "all") "All" (cond (eq . "project") "Projects" (cond (eq . "article") "Articles" "Tags")) }}
+    <button
+      type="button"
+      class="portfolio-filter-chip"
+      data-search-filter="{{ . }}"
+      aria-pressed="{{ if eq . "all" }}true{{ else }}false{{ end }}">
+      {{ $label }}
+    </button>
+  {{ end }}
+</div>
+<p class="portfolio-search-status" data-search-status role="status" aria-live="polite">Start typing to explore the portfolio.</p>
+<ul class="portfolio-search-results" data-search-results aria-label="Search results"></ul>

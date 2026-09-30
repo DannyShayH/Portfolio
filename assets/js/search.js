@@ -1,224 +1,274 @@
-// Project override of themes/blowfish/assets/js/search.js
-// Changes vs theme:
-//   1. Fuse keys include "tags" and "categories" so the search box matches taxonomy terms.
-//   2. executeQuery() renders tag chips in each result row.
-// Re-diff against the theme file on any Blowfish upgrade.
+(function () {
+  "use strict";
 
-var fuse;
-var showButton = document.getElementById("search-button");
-var showButtonMobile = document.getElementById("search-button-mobile");
-var hideButton = document.getElementById("close-search-button");
-var wrapper = document.getElementById("search-wrapper");
-var modal = document.getElementById("search-modal");
-var input = document.getElementById("search-query");
-var output = document.getElementById("search-results");
-var first = output.firstChild;
-var last = output.lastChild;
-var searchVisible = false;
-var indexed = false;
-var hasResults = false;
+  var roots = Array.from(document.querySelectorAll("[data-search-root]"));
+  var desktopRoot = document.querySelector(".portfolio-search-desktop");
+  var mobileOverlay = document.getElementById("search-wrapper");
+  var mobileOpenButton = document.getElementById("search-button-mobile");
+  var mobileCloseButton = document.getElementById("close-search-button");
+  var menuButton = document.getElementById("portfolio-menu-button");
+  var mobileMenu = document.getElementById("portfolio-mobile-menu");
+  var fuse = null;
+  var indexPromise = null;
+  var activeFilter = "all";
+  var activeQuery = "";
+  var lastTrigger = null;
 
-// Listen for events
-showButton ? showButton.addEventListener("click", displaySearch) : null;
-showButtonMobile ? showButtonMobile.addEventListener("click", displaySearch) : null;
-hideButton.addEventListener("click", hideSearch);
-wrapper.addEventListener("click", hideSearch);
-modal.addEventListener("click", function (event) {
-  event.stopPropagation();
-  event.stopImmediatePropagation();
-  return false;
-});
-document.addEventListener("keydown", function (event) {
-  // Forward slash to open search wrapper
-  if (event.key == "/") {
-    const active = document.activeElement;
-    const tag = active.tagName;
-    const isInputField = tag === "INPUT" || tag === "TEXTAREA" || active.isContentEditable;
+  if (!roots.length) return;
 
-    if (!searchVisible && !isInputField) {
-      event.preventDefault();
-      displaySearch();
+  function getBaseURL() {
+    var root = roots.find(function (item) { return item.dataset.url; });
+    return (root ? root.dataset.url : "/").replace(/\/?$/, "/");
+  }
+
+  function setStatus(root, message) {
+    var status = root.querySelector("[data-search-status]");
+    if (status) status.textContent = message;
+  }
+
+  function loadIndex() {
+    if (fuse) return Promise.resolve(fuse);
+    if (indexPromise) return indexPromise;
+
+    roots.forEach(function (root) { setStatus(root, "Loading search…"); });
+    indexPromise = fetch(getBaseURL() + "index.json", { credentials: "same-origin" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Search index could not be loaded.");
+        return response.json();
+      })
+      .then(function (data) {
+        fuse = new Fuse(data, {
+          shouldSort: true,
+          ignoreLocation: true,
+          threshold: 0.25,
+          minMatchCharLength: 2,
+          keys: [
+            { name: "title", weight: 0.9 },
+            { name: "tags", weight: 0.65 },
+            { name: "summary", weight: 0.55 },
+            { name: "content", weight: 0.35 },
+            { name: "categories", weight: 0.3 }
+          ]
+        });
+        renderAll();
+        return fuse;
+      })
+      .catch(function () {
+        roots.forEach(function (root) { setStatus(root, "Search is unavailable right now."); });
+        indexPromise = null;
+      });
+    return indexPromise;
+  }
+
+  function resultLabel(type) {
+    return type === "project" ? "Project" : type === "article" ? "Article" : "Tag";
+  }
+
+  function makeResult(item) {
+    var li = document.createElement("li");
+    var link = document.createElement("a");
+    var meta = document.createElement("span");
+    var title = document.createElement("strong");
+    var summary = document.createElement("span");
+    var arrow = document.createElement("i");
+
+    link.href = item.externalUrl || item.permalink;
+    link.dataset.searchResult = "";
+    if (item.externalUrl) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
     }
+    meta.className = "portfolio-search-result__meta";
+    meta.textContent = resultLabel(item.resultType) + (item.date ? " · " + item.date : "");
+    title.textContent = item.title;
+    summary.className = "portfolio-search-result__summary";
+    summary.textContent = item.summary || (item.resultType === "tag" ? "Browse posts tagged " + item.title + "." : "Open this result.");
+    arrow.className = "portfolio-search-result__arrow";
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+
+    link.append(meta, title, summary, arrow);
+    li.appendChild(link);
+    return li;
   }
 
-  // Esc to close search wrapper
-  if (event.key == "Escape") {
-    hideSearch();
-  }
+  function render(root) {
+    var list = root.querySelector("[data-search-results]");
+    if (!list) return;
+    list.replaceChildren();
 
-  // Down arrow to move down results list
-  if (event.key == "ArrowDown") {
-    if (searchVisible && hasResults) {
-      event.preventDefault();
-      if (document.activeElement == input) {
-        first.focus();
-      } else if (document.activeElement == last) {
-        last.focus();
-      } else {
-        document.activeElement.parentElement.nextSibling.firstElementChild.focus();
-      }
+    if (!activeQuery.trim()) {
+      setStatus(root, "Start typing to explore the portfolio.");
+      return;
     }
-  }
-
-  // Up arrow to move up results list
-  if (event.key == "ArrowUp") {
-    if (searchVisible && hasResults) {
-      event.preventDefault();
-      if (document.activeElement == input) {
-        input.focus();
-      } else if (document.activeElement == first) {
-        input.focus();
-      } else {
-        document.activeElement.parentElement.previousSibling.firstElementChild.focus();
-      }
+    if (!fuse) {
+      setStatus(root, "Loading search…");
+      return;
     }
+
+    var results = fuse.search(activeQuery.trim())
+      .map(function (result) { return result.item; })
+      .filter(function (item) { return activeFilter === "all" || item.resultType === activeFilter; })
+      .slice(0, 10);
+
+    setStatus(root, results.length ? results.length + (results.length === 1 ? " result" : " results") : "No results found. Try another term or filter.");
+    results.forEach(function (item) { list.appendChild(makeResult(item)); });
   }
 
-  // Enter to get to results
-  if (event.key == "Enter") {
-    if (searchVisible && hasResults) {
-      event.preventDefault();
-      if (document.activeElement == input) {
-        first.focus();
-      } else {
-        document.activeElement.click();
-      }
-    }
+  function renderAll() {
+    roots.forEach(render);
   }
-});
 
-// Update search on each keypress
-input.onkeyup = function (event) {
-  executeQuery(this.value);
-};
-
-function displaySearch() {
-  if (!indexed) {
-    buildIndex();
-  }
-  if (!searchVisible) {
-    document.body.style.overflow = "hidden";
-    wrapper.style.visibility = "visible";
-    input.focus();
-    searchVisible = true;
-  }
-}
-
-function hideSearch() {
-  if (searchVisible) {
-    document.body.style.overflow = "visible";
-    wrapper.style.visibility = "hidden";
-    input.value = "";
-    output.innerHTML = "";
-    document.activeElement.blur();
-    searchVisible = false;
-  }
-}
-
-function fetchJSON(path, callback) {
-  var httpRequest = new XMLHttpRequest();
-  httpRequest.onreadystatechange = function () {
-    if (httpRequest.readyState === 4) {
-      if (httpRequest.status === 200) {
-        var data = JSON.parse(httpRequest.responseText);
-        if (callback) callback(data);
-      }
-    }
-  };
-  httpRequest.open("GET", path);
-  httpRequest.send();
-}
-
-function buildIndex() {
-  var baseURL = wrapper.getAttribute("data-url");
-  baseURL = baseURL.replace(/\/?$/, "/");
-  fetchJSON(baseURL + "index.json", function (data) {
-    var options = {
-      shouldSort: true,
-      ignoreLocation: true,
-      threshold: 0.0,
-      includeMatches: true,
-      keys: [
-        { name: "title", weight: 0.8 },
-        { name: "section", weight: 0.2 },
-        { name: "summary", weight: 0.6 },
-        { name: "content", weight: 0.4 },
-        { name: "tags", weight: 0.5 },
-        { name: "categories", weight: 0.3 },
-      ],
-    };
-    /*var finalIndex = [];
-    for (var i in data) {
-      if(data[i].type != "users" && data[i].type != "tags" && data[i].type != "categories"){
-        finalIndex.push(data[i]);
-      }
-    }*/
-    fuse = new Fuse(data, options);
-    indexed = true;
-  });
-}
-
-function executeQuery(term) {
-  let results = fuse.search(term);
-  let resultsHTML = "";
-
-  if (results.length > 0) {
-    results.forEach(function (value, key) {
-      var html = value.item.summary;
-      var div = document.createElement("div");
-      div.innerHTML = html;
-      value.item.summary = div.textContent || div.innerText || "";
-      var title = value.item.externalUrl
-        ? value.item.title +
-          '<span class="text-xs ml-2 align-center cursor-default text-neutral-400 dark:text-neutral-500">' +
-          value.item.externalUrl +
-          "</span>"
-        : value.item.title;
-      var linkconfig = value.item.externalUrl
-        ? 'target="_blank" rel="noopener" href="' + value.item.externalUrl + '"'
-        : 'href="' + value.item.permalink + '"';
-      var tags = Array.isArray(value.item.tags) ? value.item.tags : [];
-      var tagsHTML =
-        tags.length > 0
-          ? '<div class="mt-1 flex flex-row flex-wrap gap-1">' +
-            tags
-              .map(function (t) {
-                return (
-                  '<span class="rounded-md bg-primary-100 px-1.5 py-0.5 text-xs text-primary-700 dark:bg-primary-900 dark:text-primary-200">' +
-                  t +
-                  "</span>"
-                );
-              })
-              .join("") +
-            "</div>"
-          : "";
-      resultsHTML =
-        resultsHTML +
-        `<li class="mb-2">
-          <a class="flex items-center px-3 py-2 rounded-md appearance-none bg-neutral-100 dark:bg-neutral-700 focus:bg-primary-100 hover:bg-primary-100 dark:hover:bg-primary-900 dark:focus:bg-primary-900 focus:outline-dotted focus:outline-transparent focus:outline-2"
-          ${linkconfig} tabindex="0">
-            <div class="grow">
-              <div class="-mb-1 text-lg font-bold">
-                ${title}
-              </div>
-              <div class="text-sm text-neutral-500 dark:text-neutral-400">${value.item.section}<span class="px-2 text-primary-500">&middot;</span>${value.item.date ? value.item.date : ""}</span></div>
-              <div class="text-sm italic">${value.item.summary}</div>
-              ${tagsHTML}
-            </div>
-            <div class="ml-2 ltr:block rtl:hidden text-neutral-500">&rarr;</div>
-            <div class="mr-2 ltr:hidden rtl:block text-neutral-500">&larr;</div>
-          </a>
-        </li>`;
+  function syncInputs(source) {
+    roots.forEach(function (root) {
+      var input = root.querySelector("[data-search-input]");
+      if (input && input !== source) input.value = activeQuery;
     });
-    hasResults = true;
-  } else {
-    resultsHTML = "";
-    hasResults = false;
   }
 
-  output.innerHTML = resultsHTML;
-  if (results.length > 0) {
-    first = output.firstChild.firstElementChild;
-    last = output.lastChild.firstElementChild;
+  function setFilter(filter) {
+    activeFilter = filter;
+    document.querySelectorAll("[data-search-filter]").forEach(function (button) {
+      button.setAttribute("aria-pressed", button.dataset.searchFilter === filter ? "true" : "false");
+    });
+    renderAll();
   }
-}
+
+  function openDesktop() {
+    if (!desktopRoot || window.innerWidth < 768) return;
+    var panel = desktopRoot.querySelector("[data-search-panel]");
+    var input = desktopRoot.querySelector("[data-search-input]");
+    if (panel) panel.hidden = false;
+    if (input) input.setAttribute("aria-expanded", "true");
+    loadIndex();
+    render(desktopRoot);
+  }
+
+  function closeDesktop() {
+    if (!desktopRoot) return;
+    var panel = desktopRoot.querySelector("[data-search-panel]");
+    var input = desktopRoot.querySelector("[data-search-input]");
+    if (panel) panel.hidden = true;
+    if (input) input.setAttribute("aria-expanded", "false");
+  }
+
+  function openMobile(trigger) {
+    if (!mobileOverlay) return;
+    closeDesktop();
+    lastTrigger = trigger || document.activeElement;
+    mobileOverlay.hidden = false;
+    if (mobileOpenButton) mobileOpenButton.setAttribute("aria-expanded", "true");
+    document.body.classList.add("portfolio-no-scroll");
+    loadIndex();
+    render(mobileOverlay);
+    window.requestAnimationFrame(function () {
+      var input = mobileOverlay.querySelector("[data-search-input]");
+      if (input) input.focus();
+    });
+  }
+
+  function closeMobile() {
+    if (!mobileOverlay || mobileOverlay.hidden) return;
+    mobileOverlay.hidden = true;
+    if (mobileOpenButton) mobileOpenButton.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("portfolio-no-scroll");
+    if (lastTrigger && typeof lastTrigger.focus === "function") lastTrigger.focus();
+  }
+
+  function resultKeyNavigation(event, root) {
+    var results = Array.from(root.querySelectorAll("[data-search-result]"));
+    if (!results.length) return;
+    var current = results.indexOf(document.activeElement);
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      results[current < 0 || current === results.length - 1 ? 0 : current + 1].focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (current <= 0) root.querySelector("[data-search-input]").focus();
+      else results[current - 1].focus();
+    } else if (event.key === "Enter" && document.activeElement.matches("[data-search-input]")) {
+      event.preventDefault();
+      results[0].focus();
+    }
+  }
+
+  roots.forEach(function (root) {
+    var input = root.querySelector("[data-search-input]");
+    if (input) {
+      input.addEventListener("focus", function () {
+        if (root === desktopRoot) openDesktop();
+        else loadIndex();
+      });
+      input.addEventListener("input", function (event) {
+        activeQuery = event.target.value;
+        syncInputs(event.target);
+        renderAll();
+      });
+    }
+    root.addEventListener("click", function (event) {
+      var filter = event.target.closest("[data-search-filter]");
+      if (filter) setFilter(filter.dataset.searchFilter);
+    });
+    root.addEventListener("keydown", function (event) { resultKeyNavigation(event, root); });
+  });
+
+  if (mobileOpenButton) mobileOpenButton.addEventListener("click", function () { openMobile(mobileOpenButton); });
+  if (mobileCloseButton) mobileCloseButton.addEventListener("click", closeMobile);
+  if (mobileOverlay) {
+    mobileOverlay.addEventListener("click", function (event) {
+      if (event.target === mobileOverlay) closeMobile();
+    });
+    mobileOverlay.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab") return;
+      var focusable = Array.from(mobileOverlay.querySelectorAll("button, input, a[href]")).filter(function (item) { return !item.hidden; });
+      if (!focusable.length) return;
+      if (event.shiftKey && document.activeElement === focusable[0]) {
+        event.preventDefault();
+        focusable[focusable.length - 1].focus();
+      } else if (!event.shiftKey && document.activeElement === focusable[focusable.length - 1]) {
+        event.preventDefault();
+        focusable[0].focus();
+      }
+    });
+  }
+
+  function setMenuOpen(open) {
+    if (!menuButton || !mobileMenu) return;
+    menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+    menuButton.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    mobileMenu.hidden = !open;
+    menuButton.querySelector("[data-menu-open-icon]").hidden = open;
+    menuButton.querySelector("[data-menu-close-icon]").hidden = !open;
+  }
+
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener("click", function () {
+      setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
+    });
+  }
+
+  document.addEventListener("click", function (event) {
+    if (desktopRoot && !desktopRoot.contains(event.target)) closeDesktop();
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeDesktop();
+      closeMobile();
+      setMenuOpen(false);
+    }
+    if (event.key === "/" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      var active = document.activeElement;
+      var isTyping = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable);
+      if (!isTyping) {
+        event.preventDefault();
+        if (window.innerWidth >= 768 && desktopRoot) {
+          var desktopInput = desktopRoot.querySelector("[data-search-input]");
+          if (desktopInput) desktopInput.focus();
+        } else {
+          openMobile(active);
+        }
+      }
+    }
+  });
+})();

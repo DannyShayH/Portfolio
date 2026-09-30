@@ -11,7 +11,7 @@ title = "Daniel Halawi"
   dateFormat = "2 January 2006"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "My awesome website"
+  description = "Daniel Halawi's software development portfolio, featuring full-stack projects, frontend work, and technical write-ups."
   copyright = "&copy; 2026 Daniel Halawi. All Rights Reserved."
 
 [params.author]

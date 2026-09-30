@@ -1,0 +1,49 @@
+{{- with .Site.Params.chatbot -}}
+  {{- if and .enabled .token .baseURL -}}
+    <script>
+      window.difyChatbotConfig = {
+        token: {{ .token | jsonify | safeJS }},
+        baseUrl: {{ strings.TrimSuffix "/" .baseURL | jsonify | safeJS }},
+        inputs: {},
+        systemVariables: {},
+        userVariables: {}
+      };
+    </script>
+    <script
+      src="{{ strings.TrimSuffix "/" .baseURL }}/embed.min.js"
+      id="{{ .token }}"
+      defer
+    ></script>
+    <style>
+      #dify-chatbot-bubble-button {
+        right: max(1rem, env(safe-area-inset-right)) !important;
+        bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+        background-color: #2563eb !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45) !important;
+      }
+
+      #dify-chatbot-bubble-window {
+        right: max(1rem, env(safe-area-inset-right)) !important;
+        bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.25rem) !important;
+        width: min(24rem, calc(100vw - 2rem)) !important;
+        height: min(40rem, calc(100dvh - 6.5rem)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+        border-radius: 1rem !important;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55) !important;
+      }
+
+      @media (max-width: 640px) {
+        #dify-chatbot-bubble-window {
+          left: 0.75rem !important;
+          right: 0.75rem !important;
+          bottom: calc(max(0.75rem, env(safe-area-inset-bottom)) + 4.25rem) !important;
+          width: auto !important;
+          height: min(42rem, calc(100dvh - 6rem)) !important;
+        }
+      }
+    </style>
+  {{- end -}}
+{{- end -}}

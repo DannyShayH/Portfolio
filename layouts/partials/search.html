@@ -1,0 +1,33 @@
+<div
+  id="search-wrapper"
+  class="portfolio-search-overlay"
+  data-search-root
+  data-url="{{ "" | absLangURL }}"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="mobile-search-title"
+  hidden>
+  <div class="portfolio-search-modal" data-search-panel>
+    <div class="portfolio-search-modal__header">
+      <div>
+        <p class="portfolio-eyebrow">Find your way around</p>
+        <h2 id="mobile-search-title">Search</h2>
+      </div>
+      <button id="close-search-button" class="portfolio-icon-button" type="button" aria-label="Close search">
+        {{ partial "icon.html" "xmark" }}
+      </button>
+    </div>
+    <label class="portfolio-search-pill portfolio-search-pill--mobile" for="search-query-mobile">
+      <span aria-hidden="true">{{ partial "icon.html" "search" }}</span>
+      <span class="sr-only">Search projects, articles, and tags</span>
+      <input
+        id="search-query-mobile"
+        data-search-input
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        placeholder="Search projects, articles, and tags">
+    </label>
+    {{ partial "search-content.html" (dict "suffix" "mobile") }}
+  </div>
+</div>

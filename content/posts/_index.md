@@ -1,6 +1,6 @@
 ---
-title: Posts
-description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
+title: Projects
+description: Selected full-stack projects, implementation notes, and the lessons learned while building them.
 ---
 
-#### You are welcome to give me feedback on any of my projects!
+Explore the project overviews below, then open any project for its technical write-ups and development notes.
