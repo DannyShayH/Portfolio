@@ -854,7 +854,7 @@ input:focus-visible,
   font-weight: 800 !important;
   letter-spacing: -0.07em;
   line-height: 0.94;
-  text-align: left;
+  text-align: center;
   text-wrap: balance;
 }
 
@@ -862,6 +862,44 @@ input:focus-visible,
 .max-w-prose,
 .article-content {
   max-width: 72ch !important;
+}
+
+/* Keep project copy in a centered reading column while retaining left-aligned
+   typography. This applies to list introductions, article headers and bodies. */
+#main-content > header,
+#main-content > section.prose,
+#single_header,
+#main-content > article > footer.max-w-prose,
+#main-content > article > section.prose > div,
+.article-content {
+  width: min(100%, 72ch);
+  margin-inline: auto !important;
+}
+
+#main-content > article > section.prose {
+  align-items: stretch;
+  flex-direction: column !important;
+}
+
+#main-content > article > section.prose > div {
+  max-width: 72ch !important;
+}
+
+/* Keep the responsive table of contents in the same centered reading column
+   rather than reserving a permanent rail that offsets the article. */
+#main-content > article > section.prose > .order-first {
+  order: -1 !important;
+  padding-inline: 0 !important;
+}
+
+#main-content > header > ol,
+#single_header > ol {
+  text-align: center;
+}
+
+#main-content > header .flex,
+#single_header .flex {
+  justify-content: center;
 }
 
 #main-content .prose,
@@ -903,7 +941,44 @@ input:focus-visible,
 }
 
 #main-content .prose :where(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
   border-radius: 1rem;
+}
+
+#main-content .prose :where(figure, .row-image, .image-center) {
+  margin-inline: auto;
+}
+
+#main-content .prose .image-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* The chatbot owns the lower-right corner, so this control sits independently
+   at the viewport's bottom center. Its negative margin centers its 3rem width
+   without replacing Blowfish's vertical visibility transform. */
+#scroll-to-top {
+  right: auto !important;
+  bottom: max(1.5rem, env(safe-area-inset-bottom)) !important;
+  left: 50% !important;
+  margin-left: -1.5rem;
+}
+
+#scroll-to-top a {
+  border: 1px solid var(--portfolio-border-strong);
+  background: rgba(23, 23, 23, 0.9) !important;
+  color: var(--portfolio-text) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+#scroll-to-top a:hover {
+  border-color: var(--portfolio-text);
+  background: var(--portfolio-text) !important;
+  color: var(--portfolio-bg) !important;
 }
 
 #main-content .grid .portfolio-project-card {
@@ -911,15 +986,77 @@ input:focus-visible,
 }
 
 .toc {
-  padding: 1rem !important;
+  width: 100%;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  padding: 0 !important;
+  background: transparent;
+}
+
+.portfolio-toc {
+  width: 100%;
+  overflow: hidden;
   border: 1px solid var(--portfolio-border);
   border-radius: 1rem;
   background: var(--portfolio-surface);
 }
 
+.portfolio-toc__summary {
+  display: flex;
+  min-height: 3.5rem;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  color: var(--portfolio-text);
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+.portfolio-toc__summary::-webkit-details-marker {
+  display: none;
+}
+
+.portfolio-toc__summary:hover {
+  background: var(--portfolio-surface-raised);
+}
+
+.portfolio-toc__chevron {
+  color: var(--portfolio-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.portfolio-toc[open] .portfolio-toc__chevron {
+  transform: rotate(180deg);
+}
+
+.portfolio-toc__content {
+  padding: 0.25rem 1rem 1rem;
+  border-top: 1px solid var(--portfolio-border);
+}
+
+.portfolio-toc__content nav > ul {
+  margin-block: 0.7rem 0;
+}
+
+.portfolio-toc__content ul {
+  padding-inline-start: 1rem;
+}
+
+.portfolio-toc__content li {
+  margin-block: 0.25rem;
+}
+
 .toc a {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
   color: var(--portfolio-muted) !important;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   text-decoration: none !important;
 }
 

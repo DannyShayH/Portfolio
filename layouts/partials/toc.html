@@ -1,0 +1,67 @@
+<details class="portfolio-toc" open>
+  <summary class="portfolio-toc__summary">
+    <span>{{ i18n "article.table_of_contents" }}</span>
+    <span class="portfolio-toc__chevron" aria-hidden="true">⌄</span>
+  </summary>
+  <div class="portfolio-toc__content">
+    {{ .TableOfContents | emojify }}
+  </div>
+</details>
+
+{{ if .Site.Params.smartTOC }}
+  <script>
+    (() => {
+      const initPortfolioTOC = () => {
+        const component = document.querySelector('.portfolio-toc');
+        const toc = component?.querySelector('#TableOfContents');
+        if (!toc) return;
+
+        const links = [...toc.querySelectorAll('a[href^="#"]')];
+        const targets = links
+          .map((link) => {
+            const id = decodeURIComponent(link.hash.slice(1));
+            return { link, target: document.getElementById(id) };
+          })
+          .filter((item) => item.target);
+
+        if (!targets.length) return;
+
+        let framePending = false;
+        const updateActiveLink = () => {
+          framePending = false;
+          const threshold = window.scrollY + window.innerHeight * 0.33;
+          let active = targets[0];
+
+          for (const item of targets) {
+            const top = item.target.getBoundingClientRect().top + window.scrollY;
+            if (top <= threshold) active = item;
+          }
+
+          for (const item of targets) {
+            const isActive = item === active;
+            item.link.classList.toggle('active', isActive);
+            if (isActive) item.link.setAttribute('aria-current', 'location');
+            else item.link.removeAttribute('aria-current');
+          }
+        };
+
+        const requestUpdate = () => {
+          if (framePending) return;
+          framePending = true;
+          window.requestAnimationFrame(updateActiveLink);
+        };
+
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        window.addEventListener('resize', requestUpdate, { passive: true });
+        window.addEventListener('hashchange', requestUpdate);
+        updateActiveLink();
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPortfolioTOC, { once: true });
+      } else {
+        initPortfolioTOC();
+      }
+    })();
+  </script>
+{{ end }}
