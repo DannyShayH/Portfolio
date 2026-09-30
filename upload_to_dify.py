@@ -26,6 +26,12 @@ CONTENT_DIR = PROJECT_ROOT / "content"
 DEFAULT_BASE_URL = "https://api.dify.ai/v1"
 MAX_ATTEMPTS = 6
 RETRYABLE_STATUS_CODES = {429, 503}
+DEFAULT_WRITE_DELAY_SECONDS = 5.0
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/131.0.0.0 Safari/537.36 PortfolioKnowledgeSync/1.0"
+)
 SUPPORTED_EXTENSIONS = {
     ".csv",
     ".htm",
@@ -82,10 +88,34 @@ class DifyClient:
         self.dataset_id = dataset_id
         self.base_url = base_url.rstrip("/")
         self.session = requests.Session()
-        self.session.headers.update({"Authorization": f"Bearer {api_key}"})
+        self.session.headers.update(
+            {
+                "Authorization": f"Bearer {api_key}",
+                "Accept": "application/json",
+                "User-Agent": USER_AGENT,
+            }
+        )
 
     def _url(self, suffix: str) -> str:
         return f"{self.base_url}/datasets/{self.dataset_id}{suffix}"
+
+    @staticmethod
+    def is_cloudflare_block(response: requests.Response) -> bool:
+        """Distinguish Cloudflare HTML blocks from genuine Dify JSON 403s."""
+        if response.status_code != 403:
+            return False
+        content_type = response.headers.get("Content-Type", "").lower()
+        server = response.headers.get("Server", "").lower()
+        preview = response.text[:5000].lower()
+        return (
+            "cloudflare" in server
+            or "text/html" in content_type
+            and (
+                "attention required" in preview
+                or "cloudflare" in preview
+                or "cf-ray" in preview
+            )
+        )
 
     def _request_with_retry(
         self,
@@ -95,8 +125,10 @@ class DifyClient:
         """Retry Dify's documented temporary capacity-check responses."""
         for attempt in range(1, MAX_ATTEMPTS + 1):
             response = request()
+            cloudflare_block = self.is_cloudflare_block(response)
             if (
                 response.status_code not in RETRYABLE_STATUS_CODES
+                and not cloudflare_block
                 or attempt == MAX_ATTEMPTS
             ):
                 return response
@@ -105,10 +137,12 @@ class DifyClient:
             try:
                 delay = max(1.0, min(float(retry_after), 120.0))
             except ValueError:
-                delay = min(5 * (2 ** (attempt - 1)), 60)
+                base_delay = 15 if cloudflare_block else 5
+                delay = min(base_delay * (2 ** (attempt - 1)), 60)
 
+            reason = "Cloudflare block" if cloudflare_block else str(response.status_code)
             print(
-                f"Dify returned {response.status_code} while {operation}; "
+                f"Dify returned {reason} while {operation}; "
                 f"retrying in {delay:g}s "
                 f"(attempt {attempt + 1}/{MAX_ATTEMPTS}).",
                 file=sys.stderr,
@@ -185,7 +219,11 @@ class DifyClient:
         response.raise_for_status()
 
 
-def sync(client: DifyClient, files: list[Path]) -> tuple[int, int, int]:
+def sync(
+    client: DifyClient,
+    files: list[Path],
+    write_delay: float = 0,
+) -> tuple[int, int, int]:
     remote_documents = client.list_documents()
     by_name: dict[str, list[dict[str, Any]]] = {}
     for document in remote_documents:
@@ -194,7 +232,7 @@ def sync(client: DifyClient, files: list[Path]) -> tuple[int, int, int]:
             by_name.setdefault(name, []).append(document)
 
     created = updated = duplicates_removed = 0
-    for path in files:
+    for position, path in enumerate(files):
         name = canonical_name(path)
         old_name = legacy_name(path)
         matches = by_name.get(name, []) + (
@@ -208,6 +246,8 @@ def sync(client: DifyClient, files: list[Path]) -> tuple[int, int, int]:
             created += 1
             if document.get("id"):
                 by_name[name] = [document]
+            if write_delay and position < len(files) - 1:
+                time.sleep(write_delay)
             continue
 
         # Prefer a document that already has the canonical name. Updating the
@@ -230,6 +270,9 @@ def sync(client: DifyClient, files: list[Path]) -> tuple[int, int, int]:
                 client.delete_document(duplicate_id)
                 print(f"DELETE duplicate document {duplicate_id} ({duplicate.get('name')})")
                 duplicates_removed += 1
+
+        if write_delay and position < len(files) - 1:
+            time.sleep(write_delay)
 
     return created, updated, duplicates_removed
 
@@ -264,6 +307,18 @@ def main() -> int:
     api_key = os.environ.get("DIFY_API_KEY", "").strip()
     dataset_id = os.environ.get("DIFY_DATASET_ID", "").strip()
     base_url = os.environ.get("DIFY_BASE_URL", DEFAULT_BASE_URL).strip()
+    try:
+        write_delay = max(
+            0.0,
+            float(
+                os.environ.get(
+                    "DIFY_WRITE_DELAY_SECONDS", str(DEFAULT_WRITE_DELAY_SECONDS)
+                )
+            ),
+        )
+    except ValueError:
+        print("DIFY_WRITE_DELAY_SECONDS must be a number.", file=sys.stderr)
+        return 2
     missing = [
         name
         for name, value in (
@@ -281,10 +336,17 @@ def main() -> int:
 
     client = DifyClient(api_key, dataset_id, base_url)
     try:
-        created, updated, removed = sync(client, files)
+        created, updated, removed = sync(client, files, write_delay=write_delay)
     except requests.HTTPError as error:
         response = error.response
-        detail = response.text[:1000] if response is not None else str(error)
+        if response is not None and client.is_cloudflare_block(response):
+            ray_id = response.headers.get("CF-RAY", "not provided")
+            detail = (
+                "Cloudflare blocked the request before it reached Dify "
+                f"(Ray ID: {ray_id})."
+            )
+        else:
+            detail = response.text[:1000] if response is not None else str(error)
         status = response.status_code if response is not None else "unknown"
         print(f"Dify request failed ({status}): {detail}", file=sys.stderr)
         return 1

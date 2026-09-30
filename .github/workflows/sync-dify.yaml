@@ -20,6 +20,7 @@ jobs:
       DIFY_API_KEY: ${{ secrets.DIFY_API_KEY }}
       DIFY_DATASET_ID: d8da0442-1e75-4f3b-b152-48225e98487c
       DIFY_BASE_URL: https://api.dify.ai/v1
+      DIFY_WRITE_DELAY_SECONDS: "5"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
