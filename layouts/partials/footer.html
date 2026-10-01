@@ -1,15 +1,6 @@
-{{ $github := "https://github.com/DannyShayH" }}
-{{ range .Site.Params.Author.links }}
-  {{ range $name, $url := . }}
-    {{ if eq $name "github" }}{{ $github = $url }}{{ end }}
-  {{ end }}
-{{ end }}
 <footer id="site-footer" class="portfolio-footer print:hidden">
-  <a class="portfolio-wordmark" href="{{ "" | relLangURL }}"><span>Daniel</span><span class="portfolio-wordmark__muted">Halawi</span></a>
-  <p>{{ .Site.Params.copyright | markdownify }}</p>
-  <div class="portfolio-footer__links">
-    <a href="mailto:{{ .Site.Params.Author.email }}" aria-label="Send Daniel an email">{{ partial "icon.html" "email" }}</a>
-    <a href="{{ $github }}" target="_blank" rel="me noopener noreferrer" aria-label="View Daniel's GitHub profile">{{ partial "icon.html" "github" }}</a>
-  </div>
+  <p>© {{ now.Year }} All Rights Reserved.</p>
 </footer>
+{{ $portfolioJS := resources.Get "js/portfolio.js" | minify | fingerprint (.Site.Params.fingerprintAlgorithm | default "sha512") }}
+<script src="{{ $portfolioJS.RelPermalink }}" integrity="{{ $portfolioJS.Data.Integrity }}" data-projects-url="{{ "posts/" | relLangURL }}" defer></script>
 {{ partial "chatbot.html" . }}

@@ -1,5 +1,6 @@
 ---
 title: Warranty Frontend
+description: The React and Vite frontend for Warrantour, covering authentication, product workflows, API integration, deployment, and lessons learned.
 weight: 1
 date: 2026-02-03
 lastmod: 2026-05-21
@@ -19,8 +20,6 @@ Warrantour is a full-stack web application for tracking product warranties and r
 **Backend:** Java + Javalin, deployed via Docker (Jetty) + Watchtower  
 **Database:** PostgreSQL on Digital Ocean  
 
----
-
 ## Tech Stack
 
 | Layer | Technology |
@@ -31,8 +30,6 @@ Warrantour is a full-stack web application for tracking product warranties and r
 | Database | PostgreSQL 16 |
 | Deployment | Jetty, Docker, Watchtower, Caddy (reverse proxy) |
 | Hosting | Digital Ocean Droplet |
-
----
 
 ## Architecture
 
@@ -71,8 +68,6 @@ app/
     HibernateConfig.java    ← Database connection
 ```
 
----
-
 ## Authentication Flow
 
 ### Registration
@@ -98,8 +93,6 @@ On page load, `AuthContext` reads email from `localStorage` and restores the use
 ### Logout
 
 Clears `token`, `email` and `userId` from `localStorage` and resets React state.
-
----
 
 ## Data Model
 
@@ -148,8 +141,6 @@ const merged = products.map(p => {
 })
 ```
 
----
-
 ## Key Components
 
 ### AuthContext.js
@@ -183,8 +174,6 @@ Opens when clicking a product row. Shows:
 - Product name and time left badge
 - Purchased and expiry dates
 - Editable retailer, order number and description fields
-
----
 
 ## Deployment
 
@@ -230,8 +219,6 @@ warrantyproject-api.greymansshop.dk {
 ```
  
 The frontend and API are on separate subdomains — `warrantyproject.greymansshop.dk` for the React app and `warrantyproject-api.greymansshop.dk` for the Javalin backend.
-
----
 
 ## Challenges & Solutions
  
@@ -282,8 +269,6 @@ The frontend and API are on separate subdomains — `warrantyproject.greymanssho
 return React.createElement(AuthCtx.Provider, { value }, children)
 ```
  
----
- 
 ## API Endpoints
  
 | Method | Path | Auth | Description |
@@ -304,8 +289,6 @@ return React.createElement(AuthCtx.Provider, { value }, children)
 | PUT | `/product-registration/{id}` | USER | Update registration |
 | GET | `/user/all` | USER | All users |
  
----
- 
 ## What I Learned
  
 - How JWT authentication works end-to-end — from issuing and signing a token on the backend to storing and sending it from the frontend, and the difference between decoding (reading the payload) and validating (verifying the signature)
@@ -317,3 +300,9 @@ return React.createElement(AuthCtx.Provider, { value }, children)
 - How to design a relational data model with one-to-one and one-to-many relationships and map them with Hibernate JPA
 - How to serve a React SPA correctly behind a reverse proxy using `try_files` to support client-side routing
 - How to separate frontend and backend concerns at the infrastructure level using distinct subdomains and Caddy blocks
+
+## Final Result
+
+The frontend connects the backend's individual resources into a usable product workflow. Authentication state is shared through React Context, related API records are merged into a warranty-focused view, and the dashboard lets users search, filter, inspect, and remove registered products. Deploying the SPA behind Caddy also exposed practical issues—CORS, stale tokens, routing fallbacks, and environment-specific URLs—that would not appear in an isolated local interface.
+
+The largest architectural improvement would be to simplify the multi-request product creation flow. A single backend operation could create the product, warranty, registration, and optional receipt transactionally, reducing frontend coordination and preventing partially completed records if one request fails.

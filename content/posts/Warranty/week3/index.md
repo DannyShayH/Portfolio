@@ -15,6 +15,14 @@ A record-based DTO, AuthUserDTO, was introduced to represent authenticated user 
 
 Tokens are extracted from the Authorization header and validated per request to ensure secure access to the API.
 
+The resulting request flow is:
+
+1. A user registers or logs in with an email and password.
+2. BCrypt verifies the submitted password against the stored hash.
+3. The backend issues a signed JWT containing the user's email and roles.
+4. The client sends the token in the `Authorization: Bearer ...` header.
+5. Protected routes validate the signature, expiry, and required role before running business logic.
+
 ```java
 public record AuthUserDTO(String email, Set<String> roles){}
 ```
@@ -32,3 +40,7 @@ The goal was to secure user data and ensure safe authentication within the appli
 | **Not chosen**    | Plain-text storage is insecure; session-based authentication is less scalable; mutable DTOs increase the risk of unintended modification of security-related data |
 | **Risks downsides** | JWTs cannot easily be invalidated before expiration; records are less flexible if the DTO structure needs to change                                               |
 | **Mitigations**       | Use token expiration, validate tokens on each request, store secrets securely, and extend the record if additional fields are required                            |
+
+## Outcome
+
+Authentication became a defined boundary around the API rather than logic repeated inside individual endpoints. Passwords are never stored in plain text, protected routes receive an authenticated identity, and roles can be checked consistently. A future improvement would add a clearer token revocation or refresh strategy for longer-lived sessions.

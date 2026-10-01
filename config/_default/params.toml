@@ -183,5 +183,8 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
 
 [chatbot]
   enabled = true
+  # Add the deployed Cloudflare Worker endpoint to enable the custom interface.
+  # Until then, the existing Dify embed below remains active as a safe fallback.
+  proxyURL = "https://shay-portfolio-chat.dannyshay.workers.dev/chat"
   token = "gZ0TlIrvuoGtOj4U"
   baseURL = "https://udify.app"

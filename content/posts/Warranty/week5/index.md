@@ -51,3 +51,7 @@ Constraints included ensuring secure handling of sensitive data (e.g., API keys 
 | **Not chosen**    | Manual deployment is error-prone and not scalable; non-containerized setups reduce portability; Nginx requires more manual configuration for SSL compared to Caddy         |
 | **Risks downsides** | Increased system complexity; reliance on external services; automatic updates may introduce unstable versions                                                              |
 | **Mitigations**       | Use health checks, controlled update intervals in Watchtower, and environment variables for secure configuration                                                           |
+
+## Outcome
+
+The deployment process became repeatable from a push to `main` through image creation and production rollout. Docker keeps the runtime consistent, GitHub Actions builds and publishes the image, Watchtower updates the service, and Caddy provides routing and HTTPS. The main operational trade-off is that automatic deployment increases the importance of passing tests, health checks, version control, and a practical rollback plan before an image reaches production.

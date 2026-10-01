@@ -61,7 +61,7 @@
   }
 
   function resultLabel(type) {
-    return type === "project" ? "Project" : type === "article" ? "Article" : "Tag";
+    return type === "project" ? "Project" : "Article";
   }
 
   function makeResult(item) {
@@ -70,7 +70,6 @@
     var meta = document.createElement("span");
     var title = document.createElement("strong");
     var summary = document.createElement("span");
-    var arrow = document.createElement("i");
 
     link.href = item.externalUrl || item.permalink;
     link.dataset.searchResult = "";
@@ -82,12 +81,9 @@
     meta.textContent = resultLabel(item.resultType) + (item.date ? " · " + item.date : "");
     title.textContent = item.title;
     summary.className = "portfolio-search-result__summary";
-    summary.textContent = item.summary || (item.resultType === "tag" ? "Browse posts tagged " + item.title + "." : "Open this result.");
-    arrow.className = "portfolio-search-result__arrow";
-    arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = "↗";
+    summary.textContent = item.summary || "Open this result.";
 
-    link.append(meta, title, summary, arrow);
+    link.append(meta, title, summary);
     li.appendChild(link);
     return li;
   }
@@ -245,6 +241,12 @@
     menuButton.addEventListener("click", function () {
       setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
     });
+
+    if (document.querySelector(".portfolio-home")) {
+      window.addEventListener("scroll", function () {
+        if (menuButton.getAttribute("aria-expanded") === "true") setMenuOpen(false);
+      }, { passive: true });
+    }
   }
 
   document.addEventListener("click", function (event) {

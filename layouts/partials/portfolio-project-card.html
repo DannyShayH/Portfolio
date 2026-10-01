@@ -1,4 +1,6 @@
-<article class="portfolio-project-card">
+{{ $tagSlugs := slice }}
+{{ range .Params.tags }}{{ $tagSlugs = $tagSlugs | append (. | urlize) }}{{ end }}
+<article class="portfolio-project-card" data-project-card data-tags="{{ delimit $tagSlugs "," }}" data-reveal>
   <div class="portfolio-project-card__topline">
     <span>{{ with .Params.categories }}{{ index . 0 }}{{ else }}Project{{ end }}</span>
     <span>{{ printf "%02d" (.Weight | default 0) }}</span>
@@ -9,8 +11,7 @@
   </div>
   {{ with .Params.tags }}
     <ul class="portfolio-tag-list" aria-label="Technologies">
-      {{ range first 5 . }}<li>{{ . }}</li>{{ end }}
+      {{ range first 5 . }}<li><a href="{{ "posts/" | relLangURL }}?tag={{ . | urlize }}" data-project-tag="{{ . | urlize }}">{{ . }}</a></li>{{ end }}
     </ul>
   {{ end }}
-  <span class="portfolio-project-card__arrow" aria-hidden="true">↗</span>
 </article>

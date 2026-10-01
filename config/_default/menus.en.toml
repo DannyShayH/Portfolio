@@ -8,10 +8,5 @@ name = "Projects"
 pageRef = "posts"
 weight = 10
 
-[[main]]
-name = "Tags"
-pageRef = "tags"
-weight = 30
-
 [[footer]]
 none = "none"

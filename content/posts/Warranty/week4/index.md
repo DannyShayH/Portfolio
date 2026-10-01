@@ -22,6 +22,7 @@ decoding="async"
 width="1000"
 height="1000">
 </div>
+</div>
 
 >The image demonstrates manual testing of the REST API using `curl`, performed due to the absence of a frontend. A user is registered and then logs in to be authenticated, after which a JWT token is returned and used to authorize access to protected endpoints.
 
@@ -33,6 +34,7 @@ loading="lazy"
 decoding="async"
 width="1000"
 height="1000">
+</div>
 </div>
 
 >The image shows testing of a protected REST endpoint using the browser’s developer console. A `fetch` request is sent to `/user/all` with a JWT token included in the `Authorization` header. The successful response demonstrates that authentication is working and that access to protected resources is granted when a valid token is provided.
@@ -50,3 +52,7 @@ The goal was to expose application functionality through a REST API and ensure i
 | **Not chosen**    | Manual testing is unreliable and not repeatable; in-memory databases do not reflect real database behavior; session-based authentication breaks REST stateless design |
 | **Risks downsides** | Increased setup complexity for tests (containers, ports); slower test execution due to real database usage                                                            |
 | **Mitigations**       | Use Testcontainers for consistent environments, dynamic ports to avoid conflicts, and automated test setup/teardown to ensure isolation                               |
+
+## Outcome
+
+The API could now be exercised manually and verified automatically against a real PostgreSQL instance. The combination of RestAssured and Testcontainers made authentication, authorization, validation, and endpoint behavior repeatable across development machines and CI. Although container-based tests are slower than isolated unit tests, they provide stronger evidence that routing, security, persistence, and serialization work together correctly.

@@ -1,7 +1,7 @@
 {{ $suffix := .suffix }}
 <div class="portfolio-search-filters" role="group" aria-label="Filter search results">
-  {{ range slice "all" "project" "article" "tag" }}
-    {{ $label := cond (eq . "all") "All" (cond (eq . "project") "Projects" (cond (eq . "article") "Articles" "Tags")) }}
+  {{ range slice "all" "project" "article" }}
+    {{ $label := cond (eq . "all") "All" (cond (eq . "project") "Projects" "Articles") }}
     <button
       type="button"
       class="portfolio-filter-chip"

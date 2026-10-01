@@ -14,3 +14,7 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Cloudflare Worker development secrets
+cloudflare-worker/.dev.vars
+cloudflare-worker/.wrangler/

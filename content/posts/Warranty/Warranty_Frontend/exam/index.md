@@ -1,6 +1,6 @@
 ---
 title: Warranty - Exam
-description: Front-end enthusiast with a focus on UX/UI design, currently pursuing studies in software development with a growing interest in backend programming and new technologies.
+description: Exam notes covering Warrantour's external APIs, authentication, protected REST endpoints, integration tests, and technical trade-offs.
 date: 2026-02-03
 lastmod: 2026-04-10
 draft: true
@@ -20,8 +20,6 @@ categories: ["Projects"]
 | 🎥 YouTube Video   | https://youtu.be/9xVua2tuYdw                                         |
 </div>
 
----
-
 ## SendGrid & Retsinformation
 
 Integrated external RESTful APIs into the portfolio project to enhance functionality. The `Retsinformation API` was used to fetch legal documents in XML format, which were parsed using `XMLExtractor` into `LawDataDTO` objects and persisted via `LawDataDAO`. Additionally, the `SendGrid API` was used to send email notifications for warranties approaching expiration. The `WarrantyScheduler` class checks all warranties daily and triggers notifications at 90, 60, 30, and 0 days before expiration.
@@ -35,10 +33,9 @@ I initially struggled with choosing the correct API because we had only worked w
 
 The goal was to extend the project with real-world REST API integration. Fetching legal data ensures the system stays aligned with current regulations, `although it does not directly impact the end-user functionality, it ensures compliance with current legal regulations.` Automated warranty notifications improve user experience and prevent expired warranties from being overlooked. Constraints included ensuring reliable API communication, correct XML parsing from REST responses, and safe scheduling of notifications without blocking main application execution.
 
-## Tester
+## Deployment Test
 
-Commented `TestClassFactory.testClassWarranty();` method in App class. Used to test if `SendGrid API` works while deployed.
-Test class checks when a warranty is expired and sends Email notification every 5 minutes because of `watchtower` when program runs while deployed.
+The temporary `TestClassFactory.testClassWarranty()` call in the `App` class was used to verify SendGrid in the deployed environment. It creates a user, an expired warranty, and a related product, then invokes the scheduler. The accelerated test interval made it possible to confirm delivery without waiting for the production schedule. The call was disabled after the test to avoid generating repeated records and emails.
 
 ```java
 public static void testClassWarranty() {
@@ -74,8 +71,6 @@ public static void testClassWarranty() {
 | **Risks downsides** | Possible API failures, malformed XML, or missed notifications if the scheduler fails; increased system complexity                       |
 | **Mitigations**       | Use exception handling for REST responses, validate XML data, and schedule daily checks with `ScheduledExecutorService` for reliability |
 
----
-
 ## BCrypt & JWT
 
 Implemented core security features in the backend. A `PasswordService` was added to hash and verify user passwords using BCrypt before persistence. JWT-based authentication was introduced through `SecurityControllerService`, which handles token creation and validation using `JwtTokenService`. Tokens are generated during authentication and verified on protected endpoints by extracting them from the `Authorization` header. Role-based access control was also introduced to restrict endpoint access based on user roles.
@@ -105,8 +100,6 @@ The goal was to secure user data and ensure safe authentication within the appli
 | **Risks downsides** | JWTs cannot easily be invalidated before expiration; records are less flexible if the DTO structure needs to change                                               |
 | **Mitigations**       | Use token expiration, validate tokens on each request, store secrets securely, and extend the record if additional fields are required                            |
 
----
-
 ## Requests & Tests
 
 Implemented RESTful endpoints for the application using Javalin, covering user and security operations such as `/security/register`, `/security/login`, `/user/all`, and `/user/{id}`. Requests are tested using an HTTP client setup (`http-client.env.json`) to support both local and deployed environments, with JWT tokens included in the `Authorization` header for protected routes.
@@ -129,3 +122,9 @@ The goal was to expose application functionality through a REST API and ensure i
 | **Not chosen**    | Manual testing is unreliable and not repeatable; in-memory databases do not reflect real database behavior; session-based authentication breaks REST stateless design |
 | **Risks downsides** | Increased setup complexity for tests (containers, ports); slower test execution due to real database usage                                                            |
 | **Mitigations**       | Use Testcontainers for consistent environments, dynamic ports to avoid conflicts, and automated test setup/teardown to ensure isolation                               |
+
+## Overall Reflection
+
+The project connects several concerns that initially appeared separate: persistence, external APIs, scheduled work, authentication, protected routes, and repeatable integration testing. Working through the failures clarified where each responsibility belongs. Parsing and notification logic belong in focused services, authorization belongs in route configuration, and tests should run against infrastructure close enough to production to expose real integration problems.
+
+The strongest result is not any single library choice, but the way the components now form a complete request flow. A user can authenticate, call a protected endpoint, read or change persistent data, and rely on scheduled notifications. The next step would be to consolidate duplicated setup, expand negative test cases, and document recovery behavior for external API or deployment failures.

@@ -1,36 +1,54 @@
+{{ $github := "https://github.com/DannyShayH" }}
+{{ range .Site.Params.Author.links }}
+  {{ range $name, $url := . }}
+    {{ if eq $name "github" }}{{ $github = $url }}{{ end }}
+  {{ end }}
+{{ end }}
+
+<div class="portfolio-scroll-progress" data-scroll-progress aria-hidden="true"></div>
 <header class="portfolio-header print:hidden">
   <div class="portfolio-header__inner">
-    <a class="portfolio-wordmark" href="{{ "" | relLangURL }}" aria-label="Daniel Halawi — home">
-      <span>Daniel</span><span class="portfolio-wordmark__muted">Halawi</span>
-    </a>
-
+    <div class="portfolio-header__start">
+      {{ if not .IsHome }}
+        {{ $backURL := "" | relLangURL }}
+        {{ with .Parent }}{{ $backURL = .RelPermalink }}{{ end }}
+        <a class="portfolio-back" href="{{ $backURL }}" aria-label="Go back" title="Go back">←</a>
+      {{ end }}
+      <a class="portfolio-header__name" href="{{ "" | relLangURL }}" aria-label="Shay — home">Shay</a>
+    </div>
     <nav class="portfolio-nav" aria-label="Primary navigation">
       <a href="{{ "" | relLangURL }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>
       <a href="{{ "posts/" | relLangURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Projects</a>
-      <a href="{{ "tags/" | relLangURL }}"{{ if eq .Data.Singular "tag" }} aria-current="page"{{ end }}>Tags</a>
+      <a href="{{ "" | relLangURL }}#about">About</a>
+      <a href="{{ "" | relLangURL }}#contact">Contact</a>
     </nav>
 
-    {{ if .Site.Params.enableSearch | default false }}
-      <div class="portfolio-search-desktop" data-search-root data-url="{{ "" | absLangURL }}">
-        <label class="portfolio-search-pill" for="search-query-desktop">
-          <span aria-hidden="true">{{ partial "icon.html" "search" }}</span>
-          <span class="sr-only">Search projects, articles, and tags</span>
-          <input
-            id="search-query-desktop"
-            data-search-input
-            type="search"
-            inputmode="search"
-            autocomplete="off"
-            placeholder="Search"
-            aria-controls="desktop-search-panel"
-            aria-expanded="false">
-          <kbd>/</kbd>
-        </label>
-        <div id="desktop-search-panel" class="portfolio-search-panel" data-search-panel hidden>
-          {{ partial "search-content.html" (dict "suffix" "desktop") }}
+    <div class="portfolio-header__tools">
+      <a class="portfolio-header__social" href="mailto:{{ .Site.Params.Author.email }}" aria-label="Send Daniel an email">{{ partial "icon.html" "email" }}</a>
+      <a class="portfolio-header__social" href="{{ $github }}" target="_blank" rel="me noopener noreferrer" aria-label="View Daniel's GitHub profile">{{ partial "icon.html" "github" }}</a>
+
+      {{ if .Site.Params.enableSearch | default false }}
+        <div class="portfolio-search-desktop" data-search-root data-url="{{ "" | absLangURL }}">
+          <label class="portfolio-search-pill" for="search-query-desktop">
+            <span aria-hidden="true">{{ partial "icon.html" "search" }}</span>
+            <span class="sr-only">Search projects and articles</span>
+            <input
+              id="search-query-desktop"
+              data-search-input
+              type="search"
+              inputmode="search"
+              autocomplete="off"
+              placeholder="Search"
+              aria-controls="desktop-search-panel"
+              aria-expanded="false">
+            <kbd>/</kbd>
+          </label>
+          <div id="desktop-search-panel" class="portfolio-search-panel" data-search-panel hidden>
+            {{ partial "search-content.html" (dict "suffix" "desktop") }}
+          </div>
         </div>
-      </div>
-    {{ end }}
+      {{ end }}
+    </div>
 
     <div class="portfolio-header__mobile-actions">
       {{ if .Site.Params.enableSearch | default false }}
@@ -60,6 +78,11 @@
   <nav id="portfolio-mobile-menu" class="portfolio-mobile-menu" aria-label="Mobile navigation" hidden>
     <a href="{{ "" | relLangURL }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>
     <a href="{{ "posts/" | relLangURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Projects</a>
-    <a href="{{ "tags/" | relLangURL }}"{{ if eq .Data.Singular "tag" }} aria-current="page"{{ end }}>Tags</a>
+    <a href="{{ "" | relLangURL }}#about">About</a>
+    <a href="{{ "" | relLangURL }}#contact">Contact</a>
+    <div class="portfolio-mobile-menu__socials">
+      <a href="mailto:{{ .Site.Params.Author.email }}" aria-label="Send Daniel an email">{{ partial "icon.html" "email" }}</a>
+      <a href="{{ $github }}" target="_blank" rel="me noopener noreferrer" aria-label="View Daniel's GitHub profile">{{ partial "icon.html" "github" }}</a>
+    </div>
   </nav>
 </header>

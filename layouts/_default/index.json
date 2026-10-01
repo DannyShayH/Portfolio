@@ -7,10 +7,9 @@
 {{- range $pages -}}
   {{- $isProject := and (eq .Kind "section") (eq .Section "posts") $projectsPage (eq .Parent.RelPermalink $projectsPage.RelPermalink) -}}
   {{- $isArticle := and (eq .Section "posts") (ne .RelPermalink $projectsPage.RelPermalink) (not $isProject) -}}
-  {{- $isTag := and (eq .Kind "term") (eq .Data.Singular "tag") -}}
-  {{- $include := and (not .Params.excludeFromSearch) (or $isProject $isArticle $isTag) -}}
+  {{- $include := and (not .Params.excludeFromSearch) (or $isProject $isArticle) -}}
   {{- if $include -}}
-    {{- $resultType := cond $isProject "project" (cond $isArticle "article" "tag") -}}
+    {{- $resultType := cond $isProject "project" "article" -}}
     {{- $section := .Site.GetPage "section" .Section -}}
     {{- if .Date -}}
       {{- $index = $index | append (dict

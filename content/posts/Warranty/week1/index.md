@@ -9,8 +9,7 @@ categories: ["Projects"]
 
 ## JPA - JPQL - DAO
 
-The goal of this phase was to make the persistence layer reflect the real domain: users, register, products.
- Registrations may have receipts, and products have warranties. I implemented JPA mappings between `User`, `Product`, `ProductRegistration`, `Receipt`, and `Warranty`, then built a DAO layer that standardizes CRUD operations through `IDAO<T>` and uses JPQL for queries that traverse relationships (implemented in `RetrieveDAO` and selected methods in `UserDAO`/`SecurityDAO`).
+The goal of this phase was to make the persistence layer reflect the real domain: users register products, registrations may include receipts, and products have warranties. I implemented JPA mappings between `User`, `Product`, `ProductRegistration`, `Receipt`, and `Warranty`, then built a DAO layer that standardizes CRUD operations through `IDAO<T>` and uses JPQL for queries that traverse relationships. Those queries are implemented in `RetrieveDAO` and selected methods in `UserDAO` and `SecurityDAO`.
 
 <div class="row-image">
 <div class="image-center">
@@ -20,6 +19,7 @@ loading="lazy"
 decoding="async"
 width="300"
 height="300">
+</div>
 </div>
 
 A key focus was avoiding overly complex objects: data are handled explicitly (for example with `JOIN FETCH` when needed), and delete behavior is handled deliberately to avoid unintended cascades.
@@ -42,7 +42,7 @@ public User getByIDWithRegistrations(Long id) {
 }
 ```
 
-Issues related to retrieving users with or without a registrationlist caused `LazyInitializationException` when trying to retrieve users with a registrationlist, using `LEFT JOIN FETCH` ensures that a user is still returned even if the specific user has no registrationlist.
+Retrieving users together with their registrations initially caused a `LazyInitializationException` because the related collection was accessed after the persistence context had closed. Using `LEFT JOIN FETCH` loads the registrations as part of the query while still returning users whose registration list is empty.
 
 ## What
 
@@ -56,6 +56,7 @@ loading="lazy"
 decoding="async"
 width="1000"
 height="1000">
+</div>
 </div>
 
 Custom JPQL queries were added to handle relational data, including `getByIDWithRegistrations(Long id)`, which uses `LEFT JOIN FETCH` to retrieve a `User` together with its `registrationlist`.
@@ -76,3 +77,7 @@ Constraints included maintaining clear entity relationships, ensuring predictabl
 | **Risks  downsides** | More verbose queries and tighter coupling between query logic and entities                                                                         |
 | **Mitigations**       | Centralize query logic in DAO classes and reuse methods for consistency                                                                            |
 | **Next step**         | Introduce DTOs to handle larger datasets and improve performance                                                                     |
+
+## Outcome
+
+This phase established a persistence layer that matches the application's business model while keeping data access explicit. The main lesson was that entity mappings alone do not determine good query behavior: fetch strategy, transaction boundaries, and purpose-built JPQL queries all affect whether related data can be used safely and efficiently.

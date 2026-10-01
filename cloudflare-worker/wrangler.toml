@@ -1,0 +1,9 @@
+name = "shay-portfolio-chat"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+preview_urls = false
+
+[vars]
+DIFY_API_BASE = "https://api.dify.ai/v1"
+ALLOWED_ORIGINS = "https://dannyshayh.github.io,http://localhost:1313,http://127.0.0.1:1313"
