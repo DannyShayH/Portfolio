@@ -1522,6 +1522,30 @@ footer a[class*="border"] {
   }
 }
 
+/* Article image lightbox */
+#main-content .prose img.medium-zoom-image {
+  border-radius: 0.65rem;
+  cursor: zoom-in;
+}
+
+#main-content .prose img.medium-zoom-image:focus-visible {
+  outline: 2px solid var(--portfolio-accent);
+  outline-offset: 5px;
+}
+
+.medium-zoom-overlay {
+  z-index: 2100;
+}
+
+.medium-zoom-image--opened {
+  z-index: 2101;
+}
+
+html.portfolio-image-zoom-open,
+html.portfolio-image-zoom-open body {
+  overflow: hidden;
+}
+
 /* Custom portfolio assistant */
 .portfolio-chat {
   position: fixed;

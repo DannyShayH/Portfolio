@@ -178,36 +178,37 @@
     var sections = Array.from(document.querySelectorAll(".portfolio-home > [data-scroll-section]"));
     if (!sections.length || reducedMotion || window.innerWidth < 768) return;
     var locked = false;
-    var settleTimer = null;
     var fallbackTimer = null;
     var animationFrame = null;
+    var wheelCooldownUntil = 0;
+    var queuedKeyboardDirection = 0;
 
-    function unlock() {
+    function unlock(wheelCooldown) {
       locked = false;
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      if (settleTimer) window.clearTimeout(settleTimer);
       if (fallbackTimer) window.clearTimeout(fallbackTimer);
       animationFrame = null;
-      settleTimer = null;
       fallbackTimer = null;
+      wheelCooldownUntil = window.performance.now() + (wheelCooldown || 0);
       document.documentElement.classList.remove("portfolio-is-scrolling");
     }
 
-    window.addEventListener("scroll", function () {
-      if (!locked) return;
-      if (settleTimer) window.clearTimeout(settleTimer);
-      settleTimer = window.setTimeout(unlock, 120);
-    }, { passive: true });
+    function sectionTarget(index) {
+      var maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      if (index === sections.length - 1) return maximum;
+      var top = sections[index].getBoundingClientRect().top + window.scrollY;
+      return Math.max(0, Math.min(maximum, Math.round(top)));
+    }
 
     function currentIndex() {
-      var current = sections.reduce(function (closest, section, index) {
-        var distance = Math.abs(section.getBoundingClientRect().top - 72);
+      var current = sections.reduce(function (closest, _section, index) {
+        var distance = Math.abs(window.scrollY - sectionTarget(index));
         return !closest || distance < closest.distance ? { index: index, distance: distance } : closest;
       }, null);
       return current ? current.index : 0;
     }
 
-    function move(direction) {
+    function move(direction, inputType) {
       if (document.documentElement.classList.contains("portfolio-chat-open")) return false;
       if (locked) return false;
       var index = currentIndex();
@@ -215,15 +216,27 @@
       if (nextIndex === index) return false;
       locked = true;
       var start = window.scrollY;
-      var target = sections[nextIndex].getBoundingClientRect().top + start;
+      var target = sectionTarget(nextIndex);
       var distance = target - start;
       var duration = 620;
       var startedAt = null;
       document.documentElement.classList.add("portfolio-is-scrolling");
 
+      function complete() {
+        window.scrollTo(0, target);
+        animationFrame = null;
+        unlock(inputType === "wheel" ? 180 : 0);
+        if (queuedKeyboardDirection) {
+          var queuedDirection = queuedKeyboardDirection;
+          queuedKeyboardDirection = 0;
+          window.requestAnimationFrame(function () { move(queuedDirection, "keyboard"); });
+        }
+      }
+
       function animate(timestamp) {
         if (document.documentElement.classList.contains("portfolio-chat-open")) {
-          unlock();
+          queuedKeyboardDirection = 0;
+          unlock(0);
           return;
         }
         if (startedAt === null) startedAt = timestamp;
@@ -231,37 +244,39 @@
         var eased = 1 - Math.pow(1 - progress, 3);
         window.scrollTo(0, start + distance * eased);
         if (progress < 1) animationFrame = window.requestAnimationFrame(animate);
-        else {
-          animationFrame = null;
-          document.documentElement.classList.remove("portfolio-is-scrolling");
-        }
+        else complete();
       }
 
       animationFrame = window.requestAnimationFrame(animate);
-      fallbackTimer = window.setTimeout(unlock, duration + 180);
+      fallbackTimer = window.setTimeout(complete, duration + 240);
       return true;
     }
 
     window.addEventListener("wheel", function (event) {
       if (document.documentElement.classList.contains("portfolio-chat-open")) return;
       if ((event.target instanceof Element && event.target.closest(".portfolio-search-panel")) || event.ctrlKey) return;
-      if (locked) {
-        if (locked) event.preventDefault();
+      if (locked || window.performance.now() < wheelCooldownUntil) {
+        event.preventDefault();
         return;
       }
       if (Math.abs(event.deltaY) < 1) return;
-      if (move(event.deltaY > 0 ? 1 : -1)) event.preventDefault();
+      if (move(event.deltaY > 0 ? 1 : -1, "wheel")) event.preventDefault();
     }, { passive: false });
 
     window.addEventListener("keydown", function (event) {
       if (document.documentElement.classList.contains("portfolio-chat-open")) return;
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (event.target.matches("input, textarea, select, button, [contenteditable='true']")) return;
+      if (event.target.matches("input, textarea, select, [contenteditable='true']")) return;
       var direction = 0;
       if (event.key === "ArrowDown" || event.key === "PageDown") direction = 1;
       if (event.key === "ArrowUp" || event.key === "PageUp") direction = -1;
       if (!direction) return;
-      if (move(direction)) event.preventDefault();
+      event.preventDefault();
+      if (locked) {
+        queuedKeyboardDirection = direction;
+        return;
+      }
+      move(direction, "keyboard");
     });
   }
 
@@ -312,6 +327,44 @@
     });
   }
 
+  function initImageZoom() {
+    if (typeof window.mediumZoom !== "function") return;
+    var images = Array.from(document.querySelectorAll("#main-content .prose img:not(.nozoom)"))
+      .filter(function (image) { return !image.closest("a"); });
+    if (!images.length) return;
+
+    var keyboardTarget = null;
+    var zoom = window.mediumZoom(images, {
+      margin: 24,
+      background: "rgba(7, 8, 10, 0.94)",
+      scrollOffset: 48
+    });
+
+    images.forEach(function (image) {
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", image.alt
+        ? "Enlarge image: " + image.alt
+        : "Enlarge image");
+      image.title = image.title || "Click to enlarge";
+      image.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        keyboardTarget = image;
+        zoom.open({ target: image });
+      });
+    });
+
+    zoom.on("medium-zoom:opened", function () {
+      document.documentElement.classList.add("portfolio-image-zoom-open");
+    });
+    zoom.on("medium-zoom:closed", function () {
+      document.documentElement.classList.remove("portfolio-image-zoom-open");
+      if (keyboardTarget) keyboardTarget.focus({ preventScroll: true });
+      keyboardTarget = null;
+    });
+  }
+
   function initTagRouting() {
     document.addEventListener("click", function (event) {
       var tagLink = event.target.closest('a[href*="/tags/"]');
@@ -359,5 +412,6 @@
   initScrollProgress();
   initPointerEffects();
   initContactSurface();
+  initImageZoom();
   initTagRouting();
 })();
