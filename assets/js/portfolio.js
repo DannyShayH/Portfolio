@@ -180,13 +180,17 @@
     var locked = false;
     var settleTimer = null;
     var fallbackTimer = null;
+    var animationFrame = null;
 
     function unlock() {
       locked = false;
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
       if (settleTimer) window.clearTimeout(settleTimer);
       if (fallbackTimer) window.clearTimeout(fallbackTimer);
+      animationFrame = null;
       settleTimer = null;
       fallbackTimer = null;
+      document.documentElement.classList.remove("portfolio-is-scrolling");
     }
 
     window.addEventListener("scroll", function () {
@@ -210,8 +214,33 @@
       var nextIndex = Math.max(0, Math.min(sections.length - 1, index + direction));
       if (nextIndex === index) return false;
       locked = true;
-      sections[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
-      fallbackTimer = window.setTimeout(unlock, 900);
+      var start = window.scrollY;
+      var target = sections[nextIndex].getBoundingClientRect().top + start;
+      var distance = target - start;
+      var duration = 760;
+      var startedAt = null;
+      document.documentElement.classList.add("portfolio-is-scrolling");
+
+      function animate(timestamp) {
+        if (document.documentElement.classList.contains("portfolio-chat-open")) {
+          unlock();
+          return;
+        }
+        if (startedAt === null) startedAt = timestamp;
+        var progress = Math.min(1, (timestamp - startedAt) / duration);
+        var eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        window.scrollTo(0, start + distance * eased);
+        if (progress < 1) animationFrame = window.requestAnimationFrame(animate);
+        else {
+          animationFrame = null;
+          document.documentElement.classList.remove("portfolio-is-scrolling");
+        }
+      }
+
+      animationFrame = window.requestAnimationFrame(animate);
+      fallbackTimer = window.setTimeout(unlock, duration + 180);
       return true;
     }
 

@@ -5,7 +5,13 @@
   if (!root) return;
 
   const endpoint = root.dataset.chatEndpoint;
-  const siteBase = root.dataset.siteBase || "/";
+  const sourceMapElement = root.querySelector("[data-chat-source-map]");
+  let sourceMap = {};
+  try {
+    sourceMap = JSON.parse(sourceMapElement?.textContent || "{}");
+  } catch (_) {
+    sourceMap = {};
+  }
   const launcher = root.querySelector(".portfolio-chat__launcher");
   const panel = root.querySelector(".portfolio-chat__panel");
   const closeButton = root.querySelector("[data-chat-close]");
@@ -108,28 +114,12 @@
   };
 
   const sourceFromDocument = (documentName) => {
-    if (typeof documentName !== "string" || !documentName.startsWith("portfolio__")) return null;
-    const parts = documentName.slice("portfolio__".length).split("__").filter(Boolean);
-    if (!parts.length) return null;
-
-    const leaf = parts.pop();
-    if (!/\.md$/i.test(leaf)) return null;
-    if (!/^_?index\.md$/i.test(leaf)) parts.push(leaf.replace(/\.md$/i, ""));
-
-    const relativePath = parts.map((part) => encodeURIComponent(part.toLowerCase())).join("/");
-    const base = siteBase.endsWith("/") ? siteBase : `${siteBase}/`;
-    const href = new URL(`${base}${relativePath}${relativePath ? "/" : ""}`, window.location.origin).href;
-    const labelPart = parts.at(-1) || "Portfolio home";
-    const label = labelPart
-      .replace(/^\d{2}-/, "")
-      .replace(/[-_]+/g, " ")
-      .replace(/\b\w/g, (letter) => letter.toUpperCase())
-      .replace(/\bRag\b/g, "RAG")
-      .replace(/\bAida\b/g, "AIDA")
-      .replace(/\bApi\b/g, "API")
-      .replace(/\bLlm\b/g, "LLM")
-      .replace(/\bWeek(\d+)\b/g, "Week $1");
-    return { href, label };
+    const source = typeof documentName === "string" ? sourceMap[documentName] : null;
+    if (!source?.href || !source?.label) return null;
+    return {
+      href: new URL(source.href, window.location.origin).href,
+      label: source.label
+    };
   };
 
   const appendSources = (assistant, resources) => {
@@ -141,6 +131,21 @@
     });
     if (!unique.size) return;
 
+    const sourceItems = [...unique.values()].slice(0, 4);
+    const citationNote = document.createElement("p");
+    citationNote.className = "portfolio-chat__citation-note";
+    citationNote.append(document.createTextNode("This answer is grounded in "));
+    sourceItems.forEach((source, index) => {
+      const reference = document.createElement("a");
+      reference.href = source.href;
+      reference.textContent = `[${index + 1}]`;
+      reference.setAttribute("aria-label", `Citation ${index + 1}: ${source.label}`);
+      citationNote.append(reference);
+      if (index < sourceItems.length - 2) citationNote.append(document.createTextNode(", "));
+      if (index === sourceItems.length - 2) citationNote.append(document.createTextNode(" and "));
+    });
+    citationNote.append(document.createTextNode("."));
+
     const sources = document.createElement("nav");
     sources.className = "portfolio-chat__sources";
     sources.setAttribute("aria-label", "Sources for this answer");
@@ -148,17 +153,22 @@
     title.className = "portfolio-chat__sources-title";
     title.textContent = "Sources";
     const list = document.createElement("ol");
-    [...unique.values()].slice(0, 4).forEach((source) => {
+    sourceItems.forEach((source, index) => {
       const item = document.createElement("li");
       const link = document.createElement("a");
       link.href = source.href;
-      link.textContent = source.label;
+      const number = document.createElement("span");
+      number.className = "portfolio-chat__source-index";
+      number.textContent = `[${index + 1}]`;
+      const label = document.createElement("span");
+      label.textContent = source.label;
+      link.append(number, label);
       link.setAttribute("aria-label", `Open source: ${source.label}`);
       item.append(link);
       list.append(item);
     });
     sources.append(title, list);
-    assistant.bubble.append(sources);
+    assistant.bubble.append(citationNote, sources);
   };
 
   const renderWelcome = () => {

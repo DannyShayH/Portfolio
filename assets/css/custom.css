@@ -1775,6 +1775,25 @@ footer a[class*="border"] {
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
+.portfolio-chat__citation-note {
+  margin-top: 0.7rem !important;
+  color: #a9adb5;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.portfolio-chat__citation-note a {
+  color: #e1ad86;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.portfolio-chat__citation-note a:hover {
+  color: #f3c49f;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .portfolio-chat__sources-title {
   color: #858b94;
   font-size: 0.64rem;
@@ -1798,7 +1817,7 @@ footer a[class*="border"] {
 .portfolio-chat__sources a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.5rem;
   color: #d8a984;
   font-size: 0.72rem;
@@ -1808,7 +1827,14 @@ footer a[class*="border"] {
   transition: color 150ms ease, transform 150ms ease;
 }
 
+.portfolio-chat__source-index {
+  flex: 0 0 auto;
+  color: #8f949d;
+  font-variant-numeric: tabular-nums;
+}
+
 .portfolio-chat__sources a::after {
+  margin-left: auto;
   flex: 0 0 auto;
   content: "↗";
   color: #747981;
@@ -3011,6 +3037,11 @@ hr {
 .portfolio-home-page {
   scroll-padding-top: 4.5rem;
   scroll-snap-type: y mandatory;
+}
+
+html.portfolio-home-page.portfolio-is-scrolling {
+  scroll-behavior: auto;
+  scroll-snap-type: none;
 }
 
 .portfolio-home > .portfolio-scroll-section {
