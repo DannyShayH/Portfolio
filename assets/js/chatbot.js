@@ -184,7 +184,7 @@
     [
       {
         label: "What has Shay built?",
-        query: "Summarize the main software projects Shay has built. Use the portfolio project overview and project pages, explain what each project does, mention its main technologies, and ground the answer in retrieved sources."
+        query: "Using the RAG Chatbot project page and Warranty - Introduction project page, answer: What has Shay built? Summarize both projects, what they do, and their main technologies."
       },
       {
         label: "Tell me about the RAG project",
