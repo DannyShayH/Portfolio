@@ -182,13 +182,23 @@
     suggestions.dataset.chatSuggestions = "";
     suggestions.setAttribute("aria-label", "Suggested questions");
     [
-      "What has Shay built?",
-      "Tell me about the RAG project",
-      "What technologies does Shay use?"
-    ].forEach((label) => {
+      {
+        label: "What has Shay built?",
+        query: "Summarize the main software projects Shay has built. Use the portfolio project overview and project pages, explain what each project does, mention its main technologies, and ground the answer in retrieved sources."
+      },
+      {
+        label: "Tell me about the RAG project",
+        query: "Explain the RAG portfolio assistant Shay built, including its purpose, architecture, technologies, and lessons learned. Ground the answer in retrieved RAG project pages."
+      },
+      {
+        label: "What technologies does Shay use?",
+        query: "Summarize the technologies Shay has used across his portfolio projects. Group them into frontend, backend, data, AI, and deployment where appropriate, and ground the answer in retrieved project pages."
+      }
+    ].forEach(({ label, query }) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = label;
+      button.dataset.chatQuery = query;
       suggestions.append(button);
     });
     messages.append(suggestions);
@@ -296,12 +306,12 @@
     if (buffer.trim()) consumeBlock(buffer);
   };
 
-  const sendMessage = async (question) => {
+  const sendMessage = async (question, displayQuestion = question) => {
     const query = question.trim();
     if (!query || busy) return;
     suggestions?.remove();
     suggestions = null;
-    createMessage("user", query);
+    createMessage("user", displayQuestion.trim() || query);
     const assistant = createMessage("assistant");
     assistant.rawText = "";
     assistant.row.classList.add("is-thinking");
@@ -365,7 +375,9 @@
   });
   messages.addEventListener("click", (event) => {
     const button = event.target.closest("button");
-    if (button?.closest("[data-chat-suggestions]")) sendMessage(button.textContent || "");
+    if (button?.closest("[data-chat-suggestions]")) {
+      sendMessage(button.dataset.chatQuery || button.textContent || "", button.textContent || "");
+    }
     const sourceLink = event.target.closest("[data-chat-source-link]");
     if (sourceLink) setOpen(false, false);
   });
