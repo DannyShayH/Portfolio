@@ -14,7 +14,10 @@
         {{ with .Parent }}{{ $backURL = .RelPermalink }}{{ end }}
         <a class="portfolio-back" href="{{ $backURL }}" aria-label="Go back" title="Go back">←</a>
       {{ end }}
-      <a class="portfolio-header__name" href="{{ "" | relLangURL }}" aria-label="Shay — home">Shay</a>
+      <a class="portfolio-header__name" href="{{ "" | relLangURL }}" aria-label="Shay — home">
+        <span class="portfolio-header__name-full">Yep, that’s my nickname — Shay</span>
+        <span class="portfolio-header__name-short">Yep — Shay</span>
+      </a>
     </div>
     <nav class="portfolio-nav" aria-label="Primary navigation">
       <a href="{{ "" | relLangURL }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>

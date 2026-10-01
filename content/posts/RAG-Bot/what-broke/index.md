@@ -1,6 +1,6 @@
 ---
 title: "What Broke & What I Learned"
-weight: 4
+weight: 5
 date: 2026-08-28
 lastmod: 2026-08-29
 tags: ["rag", "dify", "security", "lessons"]

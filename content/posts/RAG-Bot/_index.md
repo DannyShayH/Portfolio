@@ -20,4 +20,5 @@ retrieval-augmented pipeline.
 
 This section is the progression: why a chatbot and how I picked the stack, how the
 indexing pipeline actually works (with a diagram), moving the whole loop to a
-self-hosted Dify for faster iteration, and the things that went wrong along the way.
+self-hosted Dify for faster iteration, the Cloudflare-backed custom interface used in
+production, and the things that went wrong along the way.
