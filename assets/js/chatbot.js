@@ -113,6 +113,14 @@
     element.replaceChildren(fragment);
   };
 
+  const cleanAnswerText = (element) => {
+    let text = element.textContent || "";
+    text = text.replace(/^\s*Answer:\s*/i, "");
+    const generatedSources = text.search(/\n\s*\n?(?:sources?|citations?):\s*\n/i);
+    if (generatedSources >= 0) text = text.slice(0, generatedSources);
+    element.textContent = text.trim();
+  };
+
   const sourceFromDocument = (documentName) => {
     const source = typeof documentName === "string" ? sourceMap[documentName] : null;
     if (!source?.href || !source?.label) return null;
@@ -132,31 +140,21 @@
     if (!unique.size) return;
 
     const sourceItems = [...unique.values()].slice(0, 4);
-    const citationNote = document.createElement("p");
-    citationNote.className = "portfolio-chat__citation-note";
-    citationNote.append(document.createTextNode("This answer is grounded in "));
-    sourceItems.forEach((source, index) => {
-      const reference = document.createElement("a");
-      reference.href = source.href;
-      reference.textContent = `[${index + 1}]`;
-      reference.setAttribute("aria-label", `Citation ${index + 1}: ${source.label}`);
-      citationNote.append(reference);
-      if (index < sourceItems.length - 2) citationNote.append(document.createTextNode(", "));
-      if (index === sourceItems.length - 2) citationNote.append(document.createTextNode(" and "));
-    });
-    citationNote.append(document.createTextNode("."));
-
-    const sources = document.createElement("nav");
+    const sources = document.createElement("details");
     sources.className = "portfolio-chat__sources";
-    sources.setAttribute("aria-label", "Sources for this answer");
-    const title = document.createElement("p");
-    title.className = "portfolio-chat__sources-title";
-    title.textContent = "Sources";
+    const summary = document.createElement("summary");
+    const summaryLabel = document.createElement("span");
+    summaryLabel.textContent = "View citations";
+    const count = document.createElement("span");
+    count.className = "portfolio-chat__sources-count";
+    count.textContent = String(sourceItems.length);
+    summary.append(summaryLabel, count);
     const list = document.createElement("ol");
     sourceItems.forEach((source, index) => {
       const item = document.createElement("li");
       const link = document.createElement("a");
       link.href = source.href;
+      link.dataset.chatSourceLink = "";
       const number = document.createElement("span");
       number.className = "portfolio-chat__source-index";
       number.textContent = `[${index + 1}]`;
@@ -167,8 +165,8 @@
       item.append(link);
       list.append(item);
     });
-    sources.append(title, list);
-    assistant.bubble.append(citationNote, sources);
+    sources.append(summary, list);
+    assistant.bubble.append(sources);
   };
 
   const renderWelcome = () => {
@@ -199,7 +197,14 @@
   };
 
   const setPageLocked = (locked) => {
-    if (locked === pageLocked) return;
+    if (locked && pageLocked) return;
+    if (!locked && !pageLocked) {
+      document.documentElement.classList.remove("portfolio-chat-open");
+      document.body.classList.remove("portfolio-chat-open");
+      document.body.style.removeProperty("--portfolio-chat-scroll-offset");
+      document.body.style.removeProperty("--portfolio-chat-scrollbar-width");
+      return;
+    }
     pageLocked = locked;
 
     if (locked) {
@@ -219,14 +224,14 @@
     window.scrollTo(0, lockedScrollY);
   };
 
-  const setOpen = (open) => {
+  const setOpen = (open, restoreFocus = true) => {
     setPageLocked(open);
     panel.hidden = !open;
     root.classList.toggle("is-open", open);
     launcher.setAttribute("aria-expanded", String(open));
     launcher.setAttribute("aria-label", open ? "Close Ask Shay" : "Open Ask Shay");
     if (open) window.setTimeout(() => input.focus(), 80);
-    else launcher.focus();
+    else if (restoreFocus) launcher.focus();
   };
 
   const readError = async (response) => {
@@ -249,6 +254,7 @@
       assistant.copy.textContent = event.answer || assistant.copy.textContent;
       assistant.row.classList.remove("is-thinking");
     } else if (event.event === "message_end") {
+      cleanAnswerText(assistant.copy);
       renderAnswerLinks(assistant.copy);
       appendSources(assistant, event.metadata?.retriever_resources);
       scrollToLatest();
@@ -352,9 +358,23 @@
   messages.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (button?.closest("[data-chat-suggestions]")) sendMessage(button.textContent || "");
+    const sourceLink = event.target.closest("[data-chat-source-link]");
+    if (sourceLink) setOpen(false, false);
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !panel.hidden) setOpen(false);
+  });
+
+  window.addEventListener("pagehide", () => {
+    panel.hidden = true;
+    root.classList.remove("is-open");
+    launcher.setAttribute("aria-expanded", "false");
+    launcher.setAttribute("aria-label", "Open Ask Shay");
+    setPageLocked(false);
+  });
+
+  window.addEventListener("pageshow", () => {
+    if (panel.hidden) setPageLocked(false);
   });
 
   resizeInput();

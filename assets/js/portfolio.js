@@ -217,7 +217,7 @@
       var start = window.scrollY;
       var target = sections[nextIndex].getBoundingClientRect().top + start;
       var distance = target - start;
-      var duration = 760;
+      var duration = 620;
       var startedAt = null;
       document.documentElement.classList.add("portfolio-is-scrolling");
 
@@ -228,9 +228,7 @@
         }
         if (startedAt === null) startedAt = timestamp;
         var progress = Math.min(1, (timestamp - startedAt) / duration);
-        var eased = progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        var eased = 1 - Math.pow(1 - progress, 3);
         window.scrollTo(0, start + distance * eased);
         if (progress < 1) animationFrame = window.requestAnimationFrame(animate);
         else {

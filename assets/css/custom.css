@@ -1775,36 +1775,58 @@ footer a[class*="border"] {
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-.portfolio-chat__citation-note {
-  margin-top: 0.7rem !important;
-  color: #a9adb5;
+.portfolio-chat__sources summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: #aeb2ba;
   font-size: 0.7rem;
-  line-height: 1.45;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  transition: color 150ms ease;
 }
 
-.portfolio-chat__citation-note a {
-  color: #e1ad86;
-  font-weight: 750;
-  text-decoration: none;
+.portfolio-chat__sources summary::-webkit-details-marker {
+  display: none;
 }
 
-.portfolio-chat__citation-note a:hover {
-  color: #f3c49f;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+.portfolio-chat__sources summary::before {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  content: "";
+  transform: rotate(-45deg);
+  transition: transform 180ms ease;
 }
 
-.portfolio-chat__sources-title {
-  color: #858b94;
-  font-size: 0.64rem;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.portfolio-chat__sources[open] summary::before {
+  transform: rotate(45deg) translate(-0.08rem, -0.08rem);
+}
+
+.portfolio-chat__sources summary:hover {
+  color: #e0b18e;
+}
+
+.portfolio-chat__sources-count {
+  display: grid;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  margin-left: auto;
+  padding-inline: 0.3rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(230, 170, 123, 0.1);
+  color: #c99a76;
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .portfolio-chat__sources ol {
   display: grid;
-  margin: 0.42rem 0 0;
+  margin: 0.65rem 0 0;
   padding: 0;
   gap: 0.32rem;
   list-style: none;
@@ -3036,7 +3058,7 @@ hr {
 
 .portfolio-home-page {
   scroll-padding-top: 4.5rem;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;
 }
 
 html.portfolio-home-page.portfolio-is-scrolling {
