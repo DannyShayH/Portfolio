@@ -14,7 +14,7 @@
             {{- $chatSourceMap = merge $chatSourceMap (dict $documentName (dict "href" $sourcePage.RelPermalink "label" $sourcePage.Title)) -}}
           {{- end -}}
         {{- end -}}
-        <script type="application/json" data-chat-source-map>{{ $chatSourceMap | jsonify | safeHTML }}</script>
+        <script type="application/json" data-chat-source-map>{{ $chatSourceMap | jsonify | safeJS }}</script>
         <button class="portfolio-chat__launcher" type="button" aria-label="Open Ask Shay" aria-haspopup="dialog" aria-expanded="false" aria-controls="portfolio-chat-dialog">
           <span class="portfolio-chat__peach" aria-hidden="true">🍑</span>
           <span class="portfolio-chat__hint" aria-hidden="true">Ask Shay</span>

@@ -9,6 +9,7 @@
   let sourceMap = {};
   try {
     sourceMap = JSON.parse(sourceMapElement?.textContent || "{}");
+    if (typeof sourceMap === "string") sourceMap = JSON.parse(sourceMap);
   } catch (_) {
     sourceMap = {};
   }
@@ -113,12 +114,16 @@
     element.replaceChildren(fragment);
   };
 
-  const cleanAnswerText = (element) => {
-    let text = element.textContent || "";
+  const displayAnswerText = (rawText) => {
+    let text = rawText || "";
     text = text.replace(/^\s*Answer:\s*/i, "");
     const generatedSources = text.search(/\n\s*\n?(?:sources?|citations?):\s*\n/i);
     if (generatedSources >= 0) text = text.slice(0, generatedSources);
-    element.textContent = text.trim();
+    return text.trim();
+  };
+
+  const cleanAnswerText = (assistant) => {
+    assistant.copy.textContent = displayAnswerText(assistant.rawText || assistant.copy.textContent);
   };
 
   const sourceFromDocument = (documentName) => {
@@ -247,14 +252,16 @@
     if (!event || event.event === "ping") return;
     if (event.conversation_id) sessionStorage.setItem(conversationKey, event.conversation_id);
     if (event.event === "message" || event.event === "agent_message") {
-      assistant.copy.textContent += event.answer || "";
+      assistant.rawText += event.answer || "";
+      assistant.copy.textContent = displayAnswerText(assistant.rawText);
       assistant.row.classList.remove("is-thinking");
       scrollToLatest();
     } else if (event.event === "message_replace") {
-      assistant.copy.textContent = event.answer || assistant.copy.textContent;
+      assistant.rawText = event.answer || assistant.rawText;
+      assistant.copy.textContent = displayAnswerText(assistant.rawText);
       assistant.row.classList.remove("is-thinking");
     } else if (event.event === "message_end") {
-      cleanAnswerText(assistant.copy);
+      cleanAnswerText(assistant);
       renderAnswerLinks(assistant.copy);
       appendSources(assistant, event.metadata?.retriever_resources);
       scrollToLatest();
@@ -296,6 +303,7 @@
     suggestions = null;
     createMessage("user", query);
     const assistant = createMessage("assistant");
+    assistant.rawText = "";
     assistant.row.classList.add("is-thinking");
     assistant.copy.setAttribute("aria-label", "Shay’s assistant is thinking");
     input.value = "";
