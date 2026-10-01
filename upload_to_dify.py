@@ -44,6 +44,7 @@ SUPPORTED_EXTENSIONS = {
     ".yaml",
     ".yml",
 }
+TEXT_EXTENSIONS = SUPPORTED_EXTENSIONS - {".pdf"}
 
 PROCESS_RULE = {
     "mode": "custom",
@@ -221,7 +222,30 @@ class DifyClient:
         response.raise_for_status()
         return response.json()
 
+    def _text_request(
+        self, suffix: str, path: Path, upload_name: str
+    ) -> dict[str, Any]:
+        """Send source files as text to avoid fragile multipart uploads."""
+        request_data = {
+            "name": upload_name,
+            "text": path.read_text(encoding="utf-8"),
+            "indexing_technique": "high_quality",
+            "process_rule": PROCESS_RULE,
+        }
+        response = self._request_with_retry(
+            lambda: self.session.post(
+                self._url(suffix), json=request_data, timeout=(10, 180)
+            ),
+            f"uploading {path.relative_to(PROJECT_ROOT)} as text",
+        )
+        response.raise_for_status()
+        return response.json()
+
     def create_document(self, path: Path, upload_name: str) -> dict[str, Any]:
+        if path.suffix.lower() in TEXT_EXTENSIONS:
+            return self._text_request(
+                "/document/create-by-text", path, upload_name
+            )
         return self._file_request(
             "POST", "/document/create-by-file", path, upload_name
         )
@@ -229,8 +253,12 @@ class DifyClient:
     def update_document(
         self, document_id: str, path: Path, upload_name: str
     ) -> dict[str, Any]:
+        if path.suffix.lower() in TEXT_EXTENSIONS:
+            return self._text_request(
+                f"/documents/{document_id}/update-by-text", path, upload_name
+            )
         return self._file_request(
-            "PATCH", f"/documents/{document_id}", path, upload_name
+            "POST", f"/documents/{document_id}/update-by-file", path, upload_name
         )
 
     def delete_document(self, document_id: str) -> None:
