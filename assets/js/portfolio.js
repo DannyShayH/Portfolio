@@ -204,6 +204,7 @@
     }
 
     function move(direction) {
+      if (document.documentElement.classList.contains("portfolio-chat-open")) return false;
       if (locked) return false;
       var index = currentIndex();
       var nextIndex = Math.max(0, Math.min(sections.length - 1, index + direction));
@@ -215,6 +216,7 @@
     }
 
     window.addEventListener("wheel", function (event) {
+      if (document.documentElement.classList.contains("portfolio-chat-open")) return;
       if ((event.target instanceof Element && event.target.closest(".portfolio-search-panel")) || event.ctrlKey) return;
       if (locked) {
         if (locked) event.preventDefault();
@@ -225,6 +227,7 @@
     }, { passive: false });
 
     window.addEventListener("keydown", function (event) {
+      if (document.documentElement.classList.contains("portfolio-chat-open")) return;
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
       if (event.target.matches("input, textarea, select, button, [contenteditable='true']")) return;
       var direction = 0;
