@@ -1,6 +1,6 @@
 ---
 title: "01 — Grill Me: Discovering the Supavisor Domain"
-description: "Using the current Supavisor artifact to separate known facts from assumptions and prepare the missing customer interview."
+description: "Using the current Supavisor artifacts to separate known facts from assumptions and prepare questions for a future customer interview."
 date: 2026-09-10
 lastmod: 2026-10-12
 weight: 1
@@ -12,7 +12,7 @@ categories: ["Projects"]
 
 In the AIDA Mini AI Hero workflow, Grill Me comes before specifications and code. The purpose is to challenge an incomplete brief through short rounds of customer questions. After each round, the team summarizes what is now known, which terms belong in the glossary, which choices need a written decision note, and which open questions still block a reliable spec.
 
-The available project material does not contain a complete interview transcript. Instead of inventing one, I began with evidence from the sketches, design, current code, GitHub issues, pull requests, and tests.
+No customer interview was recorded for this project. Instead of inventing answers or a transcript, I began with evidence from the sketches, design, current code, GitHub issues, pull requests, and tests.
 
 <div class="image-center">
 <img src="dashboard-whiteboard.png" alt="Early whiteboard sketch of the Supavisor administrator dashboard" loading="lazy" decoding="async">
