@@ -3,7 +3,7 @@ title: "Supavisor — Grill Me & Spec-Driven Project Journal"
 description: "Ten posts documenting Supavisor's design and full-stack development through the AIDA Grill Me and spec-driven development workflow."
 date: 2026-09-10
 lastmod: 2026-10-12
-weight: 1
+weight: 3
 tags: ["AIDA", "Supavisor", "Grill Me", "spec-driven development", "code agents"]
 categories: ["Projects"]
 ---
