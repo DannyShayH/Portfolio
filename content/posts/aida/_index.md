@@ -8,7 +8,7 @@ tags: ["AIDA", "Supavisor", "Grill Me", "spec-driven development", "code agents"
 categories: ["Projects"]
 ---
 
-Supavisor is a workforce-scheduling project for Morgendagens Måltid. It began as sketches and an interactive frontend and has developed into separate React and Spring Boot repositories with real API, database, authorization, scheduling, and test work. The project contains administrator and employee experiences for assignments, staffing, availability, projects, roles, qualifications, notifications, and account management.
+Supavisor is a workforce-scheduling project for Morgendagens Måltid. It began as sketches and an interactive frontend and has developed into separate React and Java/Javalin repositories with a REST API, PostgreSQL persistence through Hibernate, authorization, scheduling, and test work. The project contains administrator and employee experiences for assignments, staffing, availability, projects, roles, qualifications, notifications, and account management.
 
 > **AI's role in the project:** Supavisor does not currently contain an AI feature. There is no model, RAG pipeline, LLM API, or MCP integration inside the product. AI-assisted tools have instead been used to help design, build, debug, and iterate on the project. The distinction is important: this is software built *with* AI assistance, not an AI-driven feature for the end user.
 
@@ -24,7 +24,7 @@ This journal reviews that work retrospectively through the AIDA Mini AI Hero flo
 8. **Review:** check both code quality and whether the right product was built.
 9. **Theory building:** identify what the team understands and what is still only assumed.
 
-No customer interview was recorded for this project. The available material also does not include a formal glossary, set of decision notes, or original specification. These posts therefore do not invent those artifacts or present unanswered questions as customer decisions. They reconstruct the development story from whiteboard sketches, the Figma design, the current frontend, backend issues, pull requests, tests, and implemented behavior.
+No customer interview was recorded for this project. The backend repository does, however, contain shared engineering rules in `contributing.md` and detailed product documentation under `.scratch/project-management-tool/`, including the specification, prioritized user stories, blockers, and Figma slice map. These posts use those documents together with the sketches, Figma design, frontend, backend issues, pull requests, tests, and implemented behavior. Where the written sources do not settle a question, it remains open instead of being presented as a customer decision.
 
 The work was also personal and iterative. I was sick during the first three weeks. After returning, I concentrated heavily on rebuilding and connecting the frontend, while also completing backend issues concerning assignment acknowledgement, automatic acceptance, concurrent schedule updates, and production database validation. GitHub issues became the project backlog, while Git worktrees and the GitHub command-line tool (`gh`) helped me separate work and inspect repository state without mixing unrelated changes.
 

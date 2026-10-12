@@ -18,7 +18,7 @@ The remaining technical risk is now breadth and consistency rather than the abse
 
 ## Review track two: does it meet the spec?
 
-The repositories meet important parts of the retrospective spec:
+The repositories meet important parts of the documented specification in `.scratch/project-management-tool/spec.md`:
 
 - two distinct user experiences exist;
 - administrators can manage several real resources through frontend service calls;

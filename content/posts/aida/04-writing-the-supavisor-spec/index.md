@@ -1,6 +1,6 @@
 ---
-title: "04 — Writing a Retrospective Supavisor Spec"
-description: "Capturing the problem, users, goals, non-goals, flows, and design requirements demonstrated by the current Supavisor project."
+title: "04 — Reviewing the Supavisor Specification"
+description: "Reviewing the documented problem, users, goals, non-goals, flows, and implementation decisions for Supavisor."
 date: 2026-09-16
 lastmod: 2026-10-12
 weight: 4
@@ -8,9 +8,11 @@ tags: ["AIDA", "Supavisor", "specification", "Figma"]
 categories: ["Projects"]
 ---
 
-## Why this spec is retrospective
+## Using the documented specification
 
-The available material contains sketches, a Figma design, a React frontend, a Spring Boot backend, GitHub issues, and tests, but no single original specification that explains every choice. The document below records what those artifacts demonstrate. It is not a substitute for Grill Me: anything requiring customer confirmation remains an assumption.
+The backend repository contains a ready-for-agent specification at `.scratch/project-management-tool/spec.md`, supported by a user-story priority and blocker map, a Figma slice map, and the engineering conventions in `contributing.md`. These documents define the intended React frontend, Java/Javalin REST backend, PostgreSQL persistence, Hibernate mappings, domain model, delivery priorities, and testing boundaries. This article summarizes that written baseline and compares it with the implementation; it does not reconstruct a missing specification.
+
+No customer interview was recorded, so the specification is evidence of the team's documented product decisions rather than an interview transcript. Any behavior not settled by the specification, issues, or tests still needs explicit confirmation instead of being inferred from a screen or generated implementation.
 
 AI-assisted tools were used during design and implementation. They helped turn ideas and visual directions into React pages, supported the Figma conversion, and assisted with debugging and backend work. AI is therefore part of the development method, but not part of Supavisor's runtime product behavior. The application itself does not currently call a model or expose an AI feature to administrators or employees.
 
@@ -40,7 +42,7 @@ Scheduling work across employees, teams, assignments, locations, availability, a
 ## Goals demonstrated by the current project
 
 - Separate administrator and employee experiences and enforce sensitive boundaries on the backend.
-- Let administrators manage users, roles, qualifications, assignments, projects, customers, and products.
+- Let administrators manage users, roles, permissions, employee categories, qualifications, projects, tasks, assignments, resources, and expenses.
 - Let employees inspect their own profile and assignment information and take permitted actions.
 - Preserve assignment state history and important responsibility changes.
 - Reject stale schedule updates instead of silently overwriting newer work.
@@ -50,7 +52,7 @@ Scheduling work across employees, teams, assignments, locations, availability, a
 
 - Supavisor does not currently provide an AI assistant, model integration, RAG pipeline, or automated AI scheduling.
 - The portfolio does not claim that every open GitHub issue is finished or every frontend path is fully connected.
-- It does not claim payroll, time tracking, notification delivery, or legal-compliance guarantees unless those are proven by a specific issue and test.
+- It does not claim payroll calculations, email/SMS/push delivery, offline operation, GPS check-in, or legal-compliance guarantees.
 - It does not treat a completed screen as proof that authorization, persistence, and concurrency are complete.
 
 ## Primary administrator flow
@@ -74,8 +76,8 @@ Scheduling work across employees, teams, assignments, locations, availability, a
 
 The remade interface should preserve the intent of the Figma design while fitting the real component structure. CSS Modules should keep page styles scoped. Warnings and states must remain understandable without relying only on color. Administrator density and employee simplicity should remain distinct, and responsive layouts should keep the main actions usable.
 
-## Open blockers
+## Remaining validation
 
-Grill Me must still confirm the approval model, scheduling rules, privacy boundaries, status vocabulary, notification channels, and whether supervisors need a third role. The spec should not convert those uncertainties into accidental requirements.
+The written specification resolves much of the domain vocabulary and intended behavior, but it is not a recorded customer conversation. Future Grill Me work should validate that the documented baseline still reflects stakeholder intent, especially around override policy, privacy boundaries, configurable statuses, notification expectations, and whether organization-level roles remain sufficient. New behavior should be recorded as an explicit scope change rather than inferred from the interface.
 
 [AIDA source: Writing the spec in the Mini AI Hero flow](https://aida.kursusmaterialer.dk/07-spec-driven-dev/mini-ai-hero-quiz-oevelse/)

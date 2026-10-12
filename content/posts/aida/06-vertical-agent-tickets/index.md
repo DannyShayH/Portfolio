@@ -46,7 +46,7 @@ The AIDA workflow recommends vertical tickets that each produce something a pers
 
 ## What an agent should receive
 
-For one ticket, the AI coding assistant should receive the glossary, relevant decision notes, the retrospective spec, the ticket alone, and its acceptance criteria. It should not be asked to “finish Supavisor.” After implementation, it should report changed files, verification steps, assumptions, and blockers.
+For one ticket, the AI coding assistant should receive the shared glossary, the relevant material from `contributing.md` and `.scratch/project-management-tool/`, the ticket alone, and its acceptance criteria. It should not be asked to “finish Supavisor.” After implementation, it should report changed files, verification steps, assumptions, and blockers.
 
 Git worktrees helped isolate these slices so parallel or experimental changes did not contaminate the main checkout. The GitHub command-line tool (`gh`) helped inspect issues, pull requests, checks, and repository state from the development environment. Neither tool decides what Supavisor should do: the spec, issue, and review still provide that direction.
 
