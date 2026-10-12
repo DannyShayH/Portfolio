@@ -216,6 +216,17 @@ class DifyClient:
         response.raise_for_status()
         return response.json()
 
+    def set_document_status(self, document_id: str, action: str) -> None:
+        response = self._request_with_retry(
+            lambda: self.session.patch(
+                self._url(f"/documents/status/{action}"),
+                json={"document_ids": [document_id]},
+                timeout=(10, 60),
+            ),
+            f"setting document {document_id} status to {action}",
+        )
+        response.raise_for_status()
+
     def wait_until_updateable(
         self,
         document: dict[str, Any],
@@ -230,6 +241,23 @@ class DifyClient:
         current = document
         while True:
             status = current.get("indexing_status")
+            display_status = current.get("display_status")
+            if current.get("archived") or display_status == "archived":
+                print(
+                    f"RESTORE {current.get('name')} before updating.",
+                    flush=True,
+                )
+                self.set_document_status(document_id, "un_archive")
+                current = self.get_document(document_id)
+                continue
+            if current.get("enabled") is False or display_status == "disabled":
+                print(
+                    f"ENABLE {current.get('name')} before updating.",
+                    flush=True,
+                )
+                self.set_document_status(document_id, "enable")
+                current = self.get_document(document_id)
+                continue
             if status == "completed":
                 return current
             if status == "error":
