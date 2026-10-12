@@ -27,6 +27,16 @@ DEFAULT_BASE_URL = "https://api.dify.ai/v1"
 MAX_ATTEMPTS = 6
 RETRYABLE_STATUS_CODES = {429, 503}
 DEFAULT_WRITE_DELAY_SECONDS = 5.0
+DEFAULT_INDEXING_TIMEOUT_SECONDS = 600.0
+INDEXING_POLL_SECONDS = 10.0
+IN_PROGRESS_INDEXING_STATUSES = {
+    "waiting",
+    "queuing",
+    "parsing",
+    "cleaning",
+    "splitting",
+    "indexing",
+}
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -196,6 +206,60 @@ class DifyClient:
                 return documents
             page += 1
 
+    def get_document(self, document_id: str) -> dict[str, Any]:
+        response = self._request_with_retry(
+            lambda: self.session.get(
+                self._url(f"/documents/{document_id}"), timeout=(10, 60)
+            ),
+            f"checking document {document_id}",
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def wait_until_updateable(
+        self,
+        document: dict[str, Any],
+        timeout: float = DEFAULT_INDEXING_TIMEOUT_SECONDS,
+    ) -> dict[str, Any]:
+        """Wait for asynchronous indexing before updating a document."""
+        document_id = document.get("id")
+        if not document_id:
+            raise RuntimeError(f"Dify returned a document without an id: {document}")
+
+        deadline = time.monotonic() + timeout
+        current = document
+        while True:
+            status = current.get("indexing_status")
+            if status == "completed":
+                return current
+            if status == "error":
+                return current
+            if status == "paused":
+                raise RuntimeError(
+                    f"Dify document {document_id} ({current.get('name')}) is paused; "
+                    "resume or delete it in Dify before syncing."
+                )
+            if status not in IN_PROGRESS_INDEXING_STATUSES:
+                raise RuntimeError(
+                    f"Dify document {document_id} ({current.get('name')}) has "
+                    f"an unsupported indexing status: {status!r}."
+                )
+
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise RuntimeError(
+                    f"Timed out waiting for Dify document {document_id} "
+                    f"({current.get('name')}) to finish indexing (status: {status})."
+                )
+            delay = min(INDEXING_POLL_SECONDS, remaining)
+            print(
+                f"WAIT {current.get('name')} is {status}; checking again in "
+                f"{delay:g}s.",
+                flush=True,
+            )
+            time.sleep(delay)
+            current = self.get_document(document_id)
+
     def _file_request(
         self, method: str, suffix: str, path: Path, upload_name: str
     ) -> dict[str, Any]:
@@ -275,6 +339,7 @@ def sync(
     client: DifyClient,
     files: list[Path],
     write_delay: float = 0,
+    indexing_timeout: float = DEFAULT_INDEXING_TIMEOUT_SECONDS,
 ) -> tuple[int, int, int]:
     remote_documents = client.list_documents()
     by_name: dict[str, list[dict[str, Any]]] = {}
@@ -312,9 +377,27 @@ def sync(
         if not document_id:
             raise RuntimeError(f"Dify returned a document without an id: {primary}")
 
-        client.update_document(document_id, path, name)
-        print(f"UPDATE {path.relative_to(PROJECT_ROOT)} -> {name}")
-        updated += 1
+        primary = client.wait_until_updateable(primary, timeout=indexing_timeout)
+        if primary.get("indexing_status") == "error":
+            error = primary.get("error") or "unknown indexing error"
+            print(
+                f"RECREATE {path.relative_to(PROJECT_ROOT)} -> {name} "
+                f"(previous indexing failed: {error})",
+                flush=True,
+            )
+            client.delete_document(document_id)
+            result = client.create_document(path, name)
+            replacement = result.get("document", {})
+            if replacement.get("id"):
+                by_name[name] = [replacement]
+            created += 1
+        else:
+            print(
+                f"UPDATE {path.relative_to(PROJECT_ROOT)} -> {name}",
+                flush=True,
+            )
+            client.update_document(document_id, path, name)
+            updated += 1
 
         for duplicate in matches:
             duplicate_id = duplicate.get("id")
@@ -395,6 +478,19 @@ def main() -> int:
     except ValueError:
         print("DIFY_WRITE_DELAY_SECONDS must be a number.", file=sys.stderr)
         return 2
+    try:
+        indexing_timeout = max(
+            0.0,
+            float(
+                os.environ.get(
+                    "DIFY_INDEXING_TIMEOUT_SECONDS",
+                    str(DEFAULT_INDEXING_TIMEOUT_SECONDS),
+                )
+            ),
+        )
+    except ValueError:
+        print("DIFY_INDEXING_TIMEOUT_SECONDS must be a number.", file=sys.stderr)
+        return 2
     missing = [
         name
         for name, value in (
@@ -412,7 +508,12 @@ def main() -> int:
 
     client = DifyClient(api_key, dataset_id, base_url)
     try:
-        created, updated, removed = sync(client, files, write_delay=write_delay)
+        created, updated, removed = sync(
+            client,
+            files,
+            write_delay=write_delay,
+            indexing_timeout=indexing_timeout,
+        )
     except requests.HTTPError as error:
         response = error.response
         if response is not None and client.is_cloudflare_block(response):
