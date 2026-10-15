@@ -58,7 +58,7 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 14-7-4.5 14-2.7-5.8L5 12Z" /></svg>
             </button>
           </form>
-          <p class="portfolio-chat__note">Answers are generated from this portfolio’s content.</p>
+          <p class="portfolio-chat__note">AI-generated answers may be inaccurate. Please do not share personal or sensitive information.</p>
         </section>
       </div>
       {{- $chatbotJS := resources.Get "js/chatbot.js" | minify | fingerprint ($.Site.Params.fingerprintAlgorithm | default "sha512") -}}
